@@ -20,4 +20,21 @@
         Hybrid,
         LPG 
     }
+    public enum CarColor
+    {
+        Black,
+        White,
+        Silver,
+        Gray,
+        Red,
+        Blue,
+        Green,
+        Yellow,
+        Orange,
+        Brown,
+        Purple,
+        Pink,
+        Gold,
+        Beige
+    }
 }

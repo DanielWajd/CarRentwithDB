@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentwithDB.Migrations
 {
     [DbContext(typeof(CarRentDBContext))]
-    [Migration("20241013081027_InitialCreate")]
+    [Migration("20241014170835_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -70,13 +70,12 @@ namespace CarRentwithDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<decimal>("DailyRate")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
@@ -107,6 +106,10 @@ namespace CarRentwithDB.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
+                    b.Property<int>("carColor")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
+
                     b.Property<int>("carType")
                         .HasColumnType("int");
 
@@ -126,8 +129,8 @@ namespace CarRentwithDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");

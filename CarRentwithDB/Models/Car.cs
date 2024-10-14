@@ -30,20 +30,22 @@ namespace CarRentwithDB.Models
 
         [Required]
         [StringLength(30)]
-        public string Color { get; set; }
+        public CarColor carColor { get; set; }
 
         [Required]
         public decimal DailyRate { get; set; }
 
         [Required]
         [StringLength(20)]
-        public string VIN { get; set; } // Numer Identyfikacyjny Pojazdu (VIN)
+        public string VIN { get; set; } 
 
         [Required]
         [StringLength(10)]
         public string LicencePlate { get; set; }
 
         [Required]
-        public bool IsAvailable { get; set; } 
+        public bool IsAvailable { get; set; }
+
+        public string Image { get; set; }
     }
 }

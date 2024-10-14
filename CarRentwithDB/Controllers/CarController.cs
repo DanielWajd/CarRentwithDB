@@ -17,5 +17,10 @@ namespace CarRentwithDB.Controllers
             List<Car> cars = _context.Cars.ToList();
             return View(cars);
         }
+        public IActionResult Details(int id)
+        {
+            Car car = _context.Cars.FirstOrDefault(c => c.CarId == id);
+            return View(car);
+        }
     }
 }
