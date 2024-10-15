@@ -17,7 +17,9 @@ namespace CarRentwithDB.Models
         public string Model { get; set; } 
 
         [Required]
-        public int Year { get; set; } 
+        public int Year { get; set; }
+        [Required]
+        public string City { get; set; }
 
         [Required]
         public CarType carType { get; set; }
@@ -45,6 +47,8 @@ namespace CarRentwithDB.Models
 
         [Required]
         public bool IsAvailable { get; set; }
+        [Required]
+        public string Description { get; set; }
 
         public string Image { get; set; }
     }
