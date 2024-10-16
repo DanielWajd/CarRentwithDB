@@ -1,10 +1,13 @@
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
+using CarRentwithDB.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddDbContext<CarRentDBContext>(options =>
 {
     
