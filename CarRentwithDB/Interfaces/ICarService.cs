@@ -1,0 +1,16 @@
+﻿using CarRentwithDB.Models;
+
+namespace CarRentwithDB.Interfaces
+{
+    public interface ICarService
+    {
+
+        Task<IEnumerable<Car>> GetAll();
+        Task<Car> GetByIdAsync(int id);
+        Task<IEnumerable<Car>> GetCarByCity(string city);
+        bool Add(Car car);
+        bool Update(Car car);
+        bool Delete(Car car);
+        bool Save();
+    }
+}

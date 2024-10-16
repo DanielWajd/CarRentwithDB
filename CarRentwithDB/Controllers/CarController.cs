@@ -1,4 +1,6 @@
-﻿using CarRentwithDB.Models;
+﻿using CarRentwithDB.Interfaces;
+using CarRentwithDB.Models;
+using CarRentwithDB.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentwithDB.Controllers
@@ -6,20 +8,20 @@ namespace CarRentwithDB.Controllers
     
     public class CarController : Controller
     {
-        private readonly CarRentDBContext _context;
+        private readonly ICarService _carService;
 
-        public CarController(CarRentDBContext context)
+        public CarController(ICarService carService)
         {
-            _context = context;
+            _carService = carService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Car> cars = _context.Cars.ToList();
+            IEnumerable<Car> cars = await _carService.GetAll();
             return View(cars);
         }
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Car car = _context.Cars.FirstOrDefault(c => c.CarId == id);
+            Car car = await _carService.GetByIdAsync(id);
             return View(car);
         }
     }
