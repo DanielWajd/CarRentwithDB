@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 namespace CarRentwithDB.Models
 {
-    public class Customer
+    public class Customer : AppUser
     {
-        [Key]
-        public int CustomerId { get; set; }
-        [Required]
+        [ForeignKey("Address")]
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        [StringLength(20)]
         public string DrivingLicence { get; set; }
     }
 }
