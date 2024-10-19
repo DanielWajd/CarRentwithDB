@@ -1,67 +1,56 @@
-﻿namespace CarRentwithDB.Data.Enum
+﻿using CarRentwithDB.Data.Enum;
+
+public static class EnumExtensions
 {
-    public static class EnumExtensions
+    public static string TranslateCarType(CarType carType)
     {
-        public static string ToFriendlyString(this CarType carType)
+        switch (carType)
         {
-            return carType switch
-            {
-                CarType.Sedan => "Sedan",
-                CarType.SUV => "SUV",
-                CarType.Coupe => "Coupe",
-                CarType.Hatchback => "Hatchback",
-                CarType.Convertible => "Kabriolet",
-                CarType.Minivan => "Minivan",
-                CarType.PickupTruck => "Pickup",
-                CarType.StationWagon => "Kombi",
-                CarType.SportsCar => "Samochód sportowy",
-                _ => carType.ToString(),
-            };
+            case CarType.Sedan: return "Sedan";
+            case CarType.SUV: return "SUV";
+            case CarType.Coupe: return "Coupe";
+            case CarType.Hatchback: return "Hatchback";
+            case CarType.Convertible: return "Kabriolet";
+            case CarType.Minivan: return "Minivan";
+            case CarType.PickupTruck: return "Pickup";
+            case CarType.StationWagon: return "Kombi";
+            case CarType.SportsCar: return "Samochód sportowy";
+            default: return carType.ToString();
         }
+    }
 
-        public static string ToFriendlyString(this FuelType fuelType)
+    public static string TranslateFuelType(FuelType fuelType)
+    {
+        switch (fuelType)
         {
-            return fuelType switch
-            {
-                FuelType.Petrol => "Benzyna",
-                FuelType.Diesel => "Diesel",
-                FuelType.Electric => "Elektryczny",
-                FuelType.Hybrid => "Hybryda",
-                FuelType.LPG => "LPG",
-                _ => fuelType.ToString(),
-            };
+            case FuelType.Petrol: return "Benzyna";
+            case FuelType.Diesel: return "Diesel";
+            case FuelType.Electric: return "Elektryczny";
+            case FuelType.Hybrid: return "Hybrydowy";
+            case FuelType.LPG: return "LPG";
+            default: return fuelType.ToString();
         }
+    }
 
-        public static string ToFriendlyString(this CarColor carColor)
+    public static string TranslateCarColor(CarColor carColor)
+    {
+        switch (carColor)
         {
-            return carColor switch
-            {
-                CarColor.Black => "Czarny",
-                CarColor.White => "Biały",
-                CarColor.Silver => "Srebrny",
-                CarColor.Gray => "Szary",
-                CarColor.Red => "Czerwony",
-                CarColor.Blue => "Niebieski",
-                CarColor.Green => "Zielony",
-                CarColor.Yellow => "Żółty",
-                CarColor.Orange => "Pomarańczowy",
-                CarColor.Brown => "Brązowy",
-                CarColor.Purple => "Fioletowy",
-                CarColor.Pink => "Różowy",
-                CarColor.Gold => "Złoty",
-                CarColor.Beige => "Beżowy",
-                _ => carColor.ToString(),
-            };
-        }
-
-        public static string ToFriendlyString(this UserType userType)
-        {
-            return userType switch
-            {
-                UserType.Customer => "Klient",
-                UserType.Employee => "Pracownik",
-                _ => userType.ToString(),
-            };
+            case CarColor.Black: return "Czarny";
+            case CarColor.White: return "Biały";
+            case CarColor.Silver: return "Srebrny";
+            case CarColor.Gray: return "Szary";
+            case CarColor.Red: return "Czerwony";
+            case CarColor.Blue: return "Niebieski";
+            case CarColor.Green: return "Zielony";
+            case CarColor.Yellow: return "Żółty";
+            case CarColor.Orange: return "Pomarańczowy";
+            case CarColor.Brown: return "Brązowy";
+            case CarColor.Purple: return "Fioletowy";
+            case CarColor.Pink: return "Różowy";
+            case CarColor.Gold: return "Złoty";
+            case CarColor.Beige: return "Beżowy";
+            default: return carColor.ToString();
         }
     }
 }

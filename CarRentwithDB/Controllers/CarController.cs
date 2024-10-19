@@ -24,5 +24,21 @@ namespace CarRentwithDB.Controllers
             Car car = await _carService.GetByIdAsync(id);
             return View(car);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Car car)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(car);
+            }
+            _carService.Add(car);
+            return RedirectToAction("Index");
+        }
+        
+
     }
 }

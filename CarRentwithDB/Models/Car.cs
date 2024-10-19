@@ -31,7 +31,6 @@ namespace CarRentwithDB.Models
         public int Mileage { get; set; }
 
         [Required]
-        [StringLength(30)]
         public CarColor carColor { get; set; }
 
         [Required]
@@ -45,7 +44,6 @@ namespace CarRentwithDB.Models
         [StringLength(10)]
         public string LicencePlate { get; set; }
 
-        [Required]
         public bool IsAvailable { get; set; }
         [Required]
         public string Description { get; set; }
