@@ -1,4 +1,5 @@
-﻿using CarRentwithDB.Models;
+﻿using CarRentwithDB.Data;
+using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,13 +46,57 @@ namespace CarRentwithDB.Controllers
                         return RedirectToAction("Index", "Car");
                     }
                 }
-                //Password is incorrect
+                //When Password is incorrect
                 TempData["Error"] = "Złe hasło";
                 return View(loginViewModel);
             }
-            //User not found
+            //When User not found
             TempData["Error"] = "NIe ma takiego użytkownika";
             return View(loginViewModel);
         }
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel);
+            }
+
+            var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+            if (user != null)
+            {
+                TempData["Error"] = "This email is already in use";
+                return View(registerViewModel);
+            }
+            var newUser = new AppUser()
+            {
+                Name = registerViewModel.Name,
+                Surname = registerViewModel.Surname,
+                Phone = registerViewModel.Phone,
+                Email = registerViewModel.EmailAddress,
+                UserName = registerViewModel.EmailAddress
+                
+            };
+            var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+
+            if (newUserResponse.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
+            }
+            return RedirectToAction("Index", "Car");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Car");
+        }
+    
     }
 }
