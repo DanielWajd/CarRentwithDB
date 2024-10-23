@@ -1,4 +1,5 @@
 ﻿using CarRentwithDB.Data;
+using CarRentwithDB.Data.Enum;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -80,22 +81,37 @@ namespace CarRentwithDB.Controllers
                 Surname = registerViewModel.Surname,
                 Phone = registerViewModel.Phone,
                 Email = registerViewModel.EmailAddress,
-                UserName = registerViewModel.EmailAddress
-                
+                UserName = registerViewModel.EmailAddress,
+                UserType = registerViewModel.UserType
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
             if (newUserResponse.Succeeded)
             {
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
+                // Użytkownik został poprawnie zapisany do bazy, dodaj rolę
+                if (registerViewModel.UserType == UserType.Customer)
+                {
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
+                }
+                else if (registerViewModel.UserType == UserType.Employee)
+                {
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.Employee);
+                }
+
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Car");
+            else
+            {
+                // Błąd podczas tworzenia użytkownika
+                TempData["Error"] = "Error while creating the user";
+                return View(registerViewModel);
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Car");
+            return RedirectToAction("Index", "Home");
         }
     
     }
