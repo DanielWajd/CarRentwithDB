@@ -23,5 +23,7 @@ namespace CarRentwithDB.ViewModels
         public string Surname { get; set; }
 
         public string Phone { get; set; }
+
+        public UserType UserType { get; set; }
     }
 }
