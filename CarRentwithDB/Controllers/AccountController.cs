@@ -88,7 +88,7 @@ namespace CarRentwithDB.Controllers
 
             if (newUserResponse.Succeeded)
             {
-                // Użytkownik został poprawnie zapisany do bazy, dodaj rolę
+                
                 if (registerViewModel.UserType == UserType.Customer)
                 {
                     await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
@@ -102,7 +102,7 @@ namespace CarRentwithDB.Controllers
             }
             else
             {
-                // Błąd podczas tworzenia użytkownika
+                // Error in creating account
                 TempData["Error"] = "Error while creating the user";
                 return View(registerViewModel);
             }
