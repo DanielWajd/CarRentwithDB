@@ -31,7 +31,7 @@ namespace CarRentwithDB.Services
 
         public async Task<Car> GetByIdAsync(int id)
         {
-            return await _context.Cars.FirstOrDefaultAsync(i => i.CarId == id);
+            return await _context.Cars.Include(i => i.CarDetails).FirstOrDefaultAsync(i => i.CarId == id);
         }
 
         public async Task<IEnumerable<Car>> GetCarByCity(string city)

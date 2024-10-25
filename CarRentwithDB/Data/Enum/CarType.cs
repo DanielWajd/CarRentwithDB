@@ -37,5 +37,11 @@
         Gold,
         Beige
     }
-    
+    public enum TransmissionType
+    {
+        Manual,
+        Automatic,
+        SemiAutomatic,
+        CVT
+    }
 }

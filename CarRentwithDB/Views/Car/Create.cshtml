@@ -1,11 +1,13 @@
 ﻿@using CarRentwithDB.Data.Enum
-@model Car
+@using CarRentwithDB.ViewModels
+@model CreateCarViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 <form method="post" asp-action="Create">
+    <h4>Szczeóły ogólne</h4>
     <div class="form-group">
         <label asp-for="Make">Marka</label>
         <input asp-for="Make" class="form-control" placeholder="Dodaj marke">
@@ -25,14 +27,17 @@
     </div>
     <div class="form-group">
         <label asp-for="carType">Rodzaj auta</label>
-        <select asp-for="carType" asp-items="@Html.GetEnumSelectList<CarType>()" class="form-control form-control-lg">
+        <select asp-for="carType" asp-items="@Html.GetEnumSelectList<CarType>()" class="form-control">
             <option>--Wybierz--</option>
         </select>
     </div>
     <div class="form-group">
+        <label asp-for="Description">Opis</label>
+        <input asp-for="Description" class="form-control" placeholder="Dodaj opis">
+    </div>
+    <div class="form-group">
         <label asp-for="fuelType">Rodzaj paliwa</label>
-        <select asp-for="fuelType" asp-items="@Html.GetEnumSelectList<FuelType>()" class="form-control form-control-lg">
-            
+        <select asp-for="fuelType" asp-items="@Html.GetEnumSelectList<FuelType>()" class="form-control">
             <option>--Wybierz--</option>
         </select>
     </div>
@@ -42,7 +47,7 @@
     </div>
     <div class="form-group">
         <label asp-for="carColor">Kolor auta</label>
-        <select asp-for="carColor" asp-items="@Html.GetEnumSelectList<CarColor>()" class="form-control form-control-lg">
+        <select asp-for="carColor" asp-items="@Html.GetEnumSelectList<CarColor>()" class="form-control">
             <option>--Wybierz--</option>
         </select>
     </div>
@@ -63,12 +68,32 @@
         <input asp-for="IsAvailable" class="form-control" placeholder="Dodaj dostepnosc">
     </div>
     <div class="form-group">
-        <label asp-for="Description">Opis</label>
-        <input asp-for="Description" class="form-control" placeholder="Dodaj opis">
-    </div>
-    <div class="form-group">
         <label asp-for="Image">Zdjecie</label>
         <input asp-for="Image" class="form-control" placeholder="Dodaj zdjecie">
     </div>
+    <h4>Szczegóły techniczne</h4>
+    <div class="form-group">
+        <label asp-for="CarDetails.HorsePower">Konie mechaniczne</label>
+        <input asp-for="CarDetails.HorsePower" class="form-control" placeholder="Dodaj moc w koniach mechanicznych">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.Seats">Liczba miejsc</label>
+        <input asp-for="CarDetails.Seats" class="form-control" placeholder="Dodaj liczbę miejsc">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.EngineCapacity">Pojemność silnika (litry)</label>
+        <input asp-for="CarDetails.EngineCapacity" class="form-control" placeholder="Dodaj pojemność silnika">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.TrunkCapacity">Pojemność bagażnika (litry)</label>
+        <input asp-for="CarDetails.TrunkCapacity" class="form-control" placeholder="Dodaj pojemność bagażnika">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.TransmissionType">Typ skrzyni biegów</label>
+        <select asp-for="CarDetails.TransmissionType" asp-items="@Html.GetEnumSelectList<TransmissionType>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

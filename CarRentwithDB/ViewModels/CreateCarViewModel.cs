@@ -1,20 +1,16 @@
 ﻿using CarRentwithDB.Data.Enum;
+using CarRentwithDB.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace CarRentwithDB.Models
+namespace CarRentwithDB.ViewModels
 {
-    public class Car
+    public class CreateCarViewModel
     {
-        [Key]
-        public int CarId { get; set; } 
+        public string Make { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string Make { get; set; } 
-
-        [Required]
-        [StringLength(50)]
-        public string Model { get; set; } 
+        public string Model { get; set; }
 
         [Required]
         public int Year { get; set; }
@@ -38,7 +34,7 @@ namespace CarRentwithDB.Models
 
         [Required]
         [StringLength(20)]
-        public string VIN { get; set; } 
+        public string VIN { get; set; }
 
         [Required]
         [StringLength(10)]
@@ -47,8 +43,8 @@ namespace CarRentwithDB.Models
         public bool IsAvailable { get; set; }
         [Required]
         public string Description { get; set; }
-
+        [Required]
         public string Image { get; set; }
-        public CarDetails CarDetails { get; set; }
+        public CarDetailsViewModel CarDetails { get; set; }
     }
 }
