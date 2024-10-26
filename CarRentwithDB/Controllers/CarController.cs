@@ -66,7 +66,81 @@ namespace CarRentwithDB.Controllers
             _carService.Add(car);
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var car = await _carService.GetByIdAsyncNoTracking(id);
+            if (car == null)
+            {
+                return View("Error");
+            }
+            var carViewModel = new EditCarViewModel
+            {
+                Make = car.Make,
+                Model = car.Model,
+                Year = car.Year,
+                City = car.City,
+                carType = car.carType,
+                fuelType = car.fuelType,
+                Mileage = car.Mileage,
+                carColor = car.carColor,
+                DailyRate = car.DailyRate,
+                VIN = car.VIN,
+                LicencePlate = car.LicencePlate,
+                IsAvailable = car.IsAvailable,
+                Description = car.Description,
+                Image = car.Image,
+                CarDetails = new CarDetailsViewModel
+                {
+                    HorsePower = car.CarDetails.HorsePower,
+                    Seats = car.CarDetails.Seats,
+                    EngineCapacity = car.CarDetails.EngineCapacity,
+                    TrunkCapacity = car.CarDetails.TrunkCapacity,
+                    TransmissionType = car.CarDetails.TransmissionType
+                }
+            };
+            return View(carViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditCarViewModel editCarViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Nie można dokonać edycji");
+                return View("Edit", editCarViewModel);
+            }
+            var car = await _carService.GetByIdAsyncNoTracking(id);
+            if (car == null)
+            {
+                return View("Error");
+            }
 
+            car.Make = editCarViewModel.Make;
+            car.Model = editCarViewModel.Model;
+            car.Year = editCarViewModel.Year;
+            car.City = editCarViewModel.City;
+            car.carType = editCarViewModel.carType;
+            car.fuelType = editCarViewModel.fuelType;
+            car.Mileage = editCarViewModel.Mileage;
+            car.carColor = editCarViewModel.carColor;
+            car.DailyRate = editCarViewModel.DailyRate;
+            car.VIN = editCarViewModel.VIN;
+            car.LicencePlate = editCarViewModel.LicencePlate;
+            car.IsAvailable = editCarViewModel.IsAvailable;
+            car.Description = editCarViewModel.Description;
+            car.Image = editCarViewModel.Image;
+
+            if (car.CarDetails != null)
+            {
+                car.CarDetails.HorsePower = editCarViewModel.CarDetails.HorsePower;
+                car.CarDetails.Seats = editCarViewModel.CarDetails.Seats;
+                car.CarDetails.EngineCapacity = editCarViewModel.CarDetails.EngineCapacity;
+                car.CarDetails.TrunkCapacity = editCarViewModel.CarDetails.TrunkCapacity;
+                car.CarDetails.TransmissionType = editCarViewModel.CarDetails.TransmissionType;
+            }
+
+            _carService.Update(car);
+            return RedirectToAction("Index");
+        }
 
     }
 }

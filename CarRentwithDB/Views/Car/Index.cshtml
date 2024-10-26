@@ -21,10 +21,11 @@
                             <p class="card-text">@item.Year</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Podgląd</a>
                                     @if (User.IsInRole("employee"))
                                     {
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <a asp-controller="Car" asp-action="Edit" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Edytuj</a>
+
                                     }
                                 </div>
                             </div>
@@ -42,7 +43,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a asp-controller="Car" asp-action="Create" class="btn btn-sm btn-outline-secondary">Dodaj</a>
-                                
+                                    
                             </div>
                         </div>
                     </div>

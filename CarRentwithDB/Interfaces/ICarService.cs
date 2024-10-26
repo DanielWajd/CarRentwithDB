@@ -7,6 +7,7 @@ namespace CarRentwithDB.Interfaces
 
         Task<IEnumerable<Car>> GetAll();
         Task<Car> GetByIdAsync(int id);
+        Task<Car> GetByIdAsyncNoTracking(int id);
         Task<IEnumerable<Car>> GetCarByCity(string city);
         bool Add(Car car);
         bool Update(Car car);
