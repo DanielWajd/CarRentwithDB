@@ -33,7 +33,10 @@ namespace CarRentwithDB.Services
         {
             return await _context.Cars.Include(i => i.CarDetails).FirstOrDefaultAsync(i => i.CarId == id);
         }
-
+        public async Task<Car> GetByIdAsyncNoTracking(int id)
+        {
+            return await _context.Cars.Include(i => i.CarDetails).AsNoTracking().FirstOrDefaultAsync(i => i.CarId == id);
+        }
         public async Task<IEnumerable<Car>> GetCarByCity(string city)
         {
             return await _context.Cars.Where(i => i.City.Contains(city)).ToListAsync();
@@ -47,7 +50,8 @@ namespace CarRentwithDB.Services
 
         public bool Update(Car car)
         {
-            throw new NotImplementedException();
+            _context.Update(car);
+            return Save();
         }
     }
 }
