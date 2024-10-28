@@ -1,6 +1,7 @@
 using CarRentwithDB.Data;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
+using CarRentwithDB.Service;
 using CarRentwithDB.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<CarRentDBContext>(options =>
 {
     

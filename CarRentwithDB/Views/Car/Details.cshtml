@@ -22,44 +22,62 @@
         <div class="col-md-4">
             <h3 class="my-3">Opis</h3>
             <p>@Model.Description</p>
-            <h3 class="my-3">Dane samochodu</h3>
-            <ul>
-                <li>Miasto: @Model.City</li>
-                <li>Rodzaj paliwa: @Model.fuelType</li>
-                <li>Typ auta: @Model.carType</li>
-                <li>Cena za dzień: @Model.DailyRate zł</li>
-                @if (Model.CarDetails != null)
-                {
-                    <li>Konie mechaniczne: @Model.CarDetails.HorsePower KM</li>
-                }
-                else
-                {
-                    <li>Konie mechaniczne: brak danych</li>
-                }
-            </ul>
+            
         </div>
 
     </div>
-    <h3 class="my-4">Więcej aut</h3>
+    <h3 class="my-4">Dane szczegówłowe</h3>
 
     <div class="row">
 
         <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+            <h3 class="my-3">Ogólne</h3>
+            <ul>
+                <li>Nazwa: @($"{Model.Make} {Model.Model}")</li>
+                <li>Rocznik: @Model.Year</li>
+                <li>Miasto: @Model.City</li>
+                <li>Typ auta: @EnumExtensions.TranslateCarType(Model.carType)</li>
+                <li>Cena za dzień: @Model.DailyRate zł</li>
+                <li>Przebieg: @Model.Mileage km</li>
+                <li>Kolor: @EnumExtensions.TranslateCarColor(Model.carColor)</li>
+            </ul>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+            <h3 class="my-3">Techniczne</h3>
+            <ul>
+                @if (Model.CarDetails != null)
+                {
+                    <li>Paliwo: @EnumExtensions.TranslateFuelType(Model.fuelType) </li>
+                    <li>Konie mechaniczne: @Model.CarDetails.HorsePower KM</li>
+                    <li>Pojemność silnika: @Model.CarDetails.EngineCapacity L</li>
+                    <li>Skrzynia biegów: @EnumExtensions.TranslateTransmissionType(Model.CarDetails.TransmissionType)</li>
+                }
+                else
+                {
+                    <li>Paliwo: brak danych</li>
+                    <li>Konie mechaniczne: brak danych</li>
+                    <li>Pojemność silnika: brak danych</li>
+                    <li>Skrzynia biegów: brak danych</li>
+                }
+            </ul>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+            <h3 class="my-3">Ergonomiczne</h3>
+            <ul>
+                @if (Model.CarDetails != null)
+                {
+                    <li>Liczba miejsc: @Model.CarDetails.Seats </li>
+                    <li>pojemność bagażnika: @Model.CarDetails.TrunkCapacity L</li>
+
+                }
+                else
+                {
+                    <li>Liczba miejsc: brak danych </li>
+                    <li>pojemność bagażnika: brak danych</li>
+                }
+            </ul>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
@@ -69,5 +87,10 @@
         </div>
 
     </div>
-
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">Wypożycz</button>
+        </div>
+    }
 </div>
