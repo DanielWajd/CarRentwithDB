@@ -1,5 +1,6 @@
 ﻿using CarRentwithDB.Data;
 using CarRentwithDB.Data.Enum;
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,12 @@ namespace CarRentwithDB.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly CarRentDBContext _context;
+        private readonly IUserService _userService;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+        public AccountController(IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             CarRentDBContext context)
         {
-            _context = context;
+            _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -113,6 +114,11 @@ namespace CarRentwithDB.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-    
+        
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<AppUser> users = await _userService.GetAllUsers();
+            return View(users);
+        }
     }
 }

@@ -53,4 +53,15 @@ public static class EnumExtensions
             default: return carColor.ToString();
         }
     }
+    public static string TranslateTransmissionType(TransmissionType transmissionType)
+    {
+        switch (transmissionType)
+        {
+            case TransmissionType.Manual: return "Ręczna";
+            case TransmissionType.Automatic: return "Automatyczna";
+            case TransmissionType.SemiAutomatic: return "Półautomatyczna";
+            case TransmissionType.CVT: return "CVT (przekładnia bezstopniowa)";
+            default: return transmissionType.ToString();
+        }
+    }
 }
