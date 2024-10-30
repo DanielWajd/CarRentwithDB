@@ -6,6 +6,7 @@
 *@
 @{
 }
+@if (User.Identity.IsAuthenticated){
 <form method="post" asp-action="Create">
     <h4>Szczeóły ogólne</h4>
     <div class="form-group">
@@ -112,3 +113,4 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+}
