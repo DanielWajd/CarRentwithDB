@@ -80,17 +80,15 @@
             </ul>
         </div>
 
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
+        
 
     </div>
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated && User.IsInRole("customer"))
     {
         <div class="text-end mt-4">
-            <button type="submit" class="btn btn-primary">Wypożycz</button>
+            <form asp-controller="Rental" asp-action="Create" method="get">
+                <button type="submit" class="btn btn-primary">Wypożycz</button>
+            </form>
         </div>
     }
 </div>

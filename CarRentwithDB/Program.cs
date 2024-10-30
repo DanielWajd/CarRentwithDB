@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRentalService, RentalService>();
 builder.Services.AddDbContext<CarRentDBContext>(options =>
 {
     
