@@ -14,6 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRentalService, RentalService>();
+builder.Services.AddScoped<IDetailsBoardService, DetailsBoardService>();
 builder.Services.AddDbContext<CarRentDBContext>(options =>
 {
     

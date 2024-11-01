@@ -10,10 +10,11 @@ namespace CarRentwithDB.Controllers
     public class CarController : Controller
     {
         private readonly ICarService _carService;
-
-        public CarController(ICarService carService)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public CarController(ICarService carService, IHttpContextAccessor contextAccessor)
         {
             _carService = carService;
+            _contextAccessor = contextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -27,7 +28,10 @@ namespace CarRentwithDB.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            var createCarViewModel = new CreateCarViewModel { AppUserId = curUserId };
+            return View(createCarViewModel);
+
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarViewModel createCarViewModel)
@@ -53,6 +57,7 @@ namespace CarRentwithDB.Controllers
                 IsAvailable = createCarViewModel.IsAvailable,
                 Description = createCarViewModel.Description,
                 Image = createCarViewModel.Image,
+                AppUserId = createCarViewModel.AppUserId,
                 CarDetails = new CarDetails
                 {
                     HorsePower = createCarViewModel.CarDetails.HorsePower,

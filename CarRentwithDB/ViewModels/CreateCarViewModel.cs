@@ -46,5 +46,6 @@ namespace CarRentwithDB.ViewModels
         [Required]
         public string Image { get; set; }
         public CarDetailsViewModel CarDetails { get; set; }
+        public string AppUserId { get; set; }
     }
 }

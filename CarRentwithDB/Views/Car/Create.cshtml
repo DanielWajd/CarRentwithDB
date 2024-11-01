@@ -8,6 +8,7 @@
 }
 @if (User.Identity.IsAuthenticated){
 <form method="post" asp-action="Create">
+    <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
     <h4>Szczeóły ogólne</h4>
     <div class="form-group">
         <label asp-for="Make">Marka</label>
