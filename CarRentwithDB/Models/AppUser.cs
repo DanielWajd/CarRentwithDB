@@ -21,5 +21,6 @@ namespace CarRentwithDB.Models
         public string Phone { get; set; }
 
         public UserType UserType { get; set; }
+        public ICollection<Car> Cars { get; set; }
     }
 }
