@@ -61,8 +61,11 @@
         <input asp-for="LicencePlate" class="form-control" placeholder="Dodaj numer rejestracyjny">
     </div>
     <div class="form-group">
-        <label asp-for="IsAvailable">Dostepnosc</label>
-        <input asp-for="IsAvailable" class="form-control" placeholder="Dodaj dostepnosc">
+        <label asp-for="IsAvailable">Dostepność</label>
+        <div class="form-check">
+            <input asp-for="IsAvailable" class="form-chceck-input" type="checkbox">
+            <label class="form-check-label" for="IsAvailable">Dostępny</label>
+        </div>
     </div>
     <div class="form-group">
         <label asp-for="Image">Zdjecie</label>

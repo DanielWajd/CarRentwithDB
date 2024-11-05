@@ -4,8 +4,9 @@ namespace CarRentwithDB.ViewModels
 {
     public class RentalViewModel
     {
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Today;
 
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
+        public int CarId { get; set; }
     }
 }

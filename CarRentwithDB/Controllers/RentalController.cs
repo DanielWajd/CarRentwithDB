@@ -8,20 +8,27 @@ namespace CarRentwithDB.Controllers
     public class RentalController : Controller
     {
         private readonly IRentalService _rentalService;
-        public RentalController(IRentalService rentalService)
+        private readonly ICarService _carService;
+        public RentalController(IRentalService rentalService, ICarService carService)
         {
             _rentalService = rentalService;
+            _carService = carService;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int carId)
         {
-            return View();
+            var rentalViewModel = new RentalViewModel
+            {
+                CarId = carId
+            };
+            return View(rentalViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(RentalViewModel rentalViewModel) {
+        public async Task<IActionResult> Create(RentalViewModel rentalViewModel)
+        {
             if (!ModelState.IsValid)
             {
                 return View(rentalViewModel);
@@ -29,9 +36,11 @@ namespace CarRentwithDB.Controllers
             var rent = new Rental
             {
                 StartDate = rentalViewModel.StartDate,
-                EndDate = rentalViewModel.EndDate
+                EndDate = rentalViewModel.EndDate,
+                CarId = rentalViewModel.CarId
             };
             await _rentalService.CreateRental(rent);
+            await _carService.UpdateCarAvailability(rentalViewModel.CarId, false);
             return RedirectToAction("Index");
         }
 

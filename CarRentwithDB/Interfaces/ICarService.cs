@@ -13,5 +13,6 @@ namespace CarRentwithDB.Interfaces
         bool Update(Car car);
         bool Delete(Car car);
         bool Save();
+        Task UpdateCarAvailability(int carId, bool isAvailable);
     }
 }

@@ -53,5 +53,15 @@ namespace CarRentwithDB.Services
             _context.Update(car);
             return Save();
         }
+        public async Task UpdateCarAvailability(int carId, bool isAvailable)
+        {
+            var car = await _context.Cars.FindAsync(carId);
+            if (car != null)
+            {
+                car.IsAvailable = isAvailable;
+                await _context.SaveChangesAsync();
+            }
+
+        }
     }
 }
