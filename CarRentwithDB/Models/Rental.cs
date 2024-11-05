@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRentwithDB.Models
 {
@@ -11,5 +12,10 @@ namespace CarRentwithDB.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+        [Required]
+        public int CarId { get; set; }
+
+        [ForeignKey("CarId")]
+        public Car Car { get; set; }
     }
 }

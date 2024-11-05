@@ -64,4 +64,8 @@ public static class EnumExtensions
             default: return transmissionType.ToString();
         }
     }
+    public static string TranslateAvailability(bool isAvailable)
+    {
+        return isAvailable ? "Dostępny" : "Niedostępny";
+    }
 }

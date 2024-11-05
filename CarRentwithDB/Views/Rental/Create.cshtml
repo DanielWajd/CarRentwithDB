@@ -6,7 +6,10 @@
 @{
 }
 <form method="post" asp-action="Create">
-    <h4>Szczeóły wypożyczenia</h4>
+    <h4>Szczegóły wypożyczenia</h4>
+
+    <input type="hidden" asp-for="CarId" />
+
     <div class="form-group">
         <label asp-for="StartDate">Początek wypożyczenia</label>
         <input asp-for="StartDate" type="date" class="form-control" placeholder="Wybierz początek wypożyczenia">
@@ -15,8 +18,9 @@
 
     <div class="form-group">
         <label asp-for="EndDate">Koniec wypożyczenia</label>
-        <input asp-for="EndDate" type="date" class="form-control" placeholder="Wybierz koniec wypożyczenia">
+        <input asp-for="EndDate" type="date" class=" form-control" placeholder="Wybierz koniec wypożyczenia">
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-primary">Potwierdz</button>
 </form>
