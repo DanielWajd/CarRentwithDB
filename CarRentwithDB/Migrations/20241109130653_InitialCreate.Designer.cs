@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentwithDB.Migrations
 {
     [DbContext(typeof(CarRentDBContext))]
-    [Migration("20241101144140_UserCar")]
-    partial class UserCar
+    [Migration("20241109130653_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,11 @@ namespace CarRentwithDB.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -144,6 +149,10 @@ namespace CarRentwithDB.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator().HasValue("AppUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("CarRentwithDB.Models.Car", b =>
@@ -283,6 +292,13 @@ namespace CarRentwithDB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentalId"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -290,6 +306,10 @@ namespace CarRentwithDB.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("RentalId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("CarId");
 
                     b.ToTable("Rental");
                 });
@@ -427,6 +447,23 @@ namespace CarRentwithDB.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CarRentwithDB.Models.Customer", b =>
+                {
+                    b.HasBaseType("CarRentwithDB.Models.AppUser");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DrivingLicence")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasDiscriminator().HasValue("Customer");
+                });
+
             modelBuilder.Entity("CarRentwithDB.Models.Car", b =>
                 {
                     b.HasOne("CarRentwithDB.Models.AppUser", "AppUser")
@@ -443,6 +480,25 @@ namespace CarRentwithDB.Migrations
                         .HasForeignKey("CarRentwithDB.Models.CarDetails", "CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
+            modelBuilder.Entity("CarRentwithDB.Models.Rental", b =>
+                {
+                    b.HasOne("CarRentwithDB.Models.AppUser", "AppUser")
+                        .WithMany("Rentals")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarRentwithDB.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Car");
                 });
@@ -498,9 +554,22 @@ namespace CarRentwithDB.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CarRentwithDB.Models.Customer", b =>
+                {
+                    b.HasOne("CarRentwithDB.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("CarRentwithDB.Models.AppUser", b =>
                 {
                     b.Navigation("Cars");
+
+                    b.Navigation("Rentals");
                 });
 
             modelBuilder.Entity("CarRentwithDB.Models.Car", b =>

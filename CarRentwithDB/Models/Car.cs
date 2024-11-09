@@ -39,7 +39,9 @@ namespace CarRentwithDB.Models
 
         [Required]
         [StringLength(20)]
-        public string VIN { get; set; } 
+        public string VIN { get; set; }
+        [Required]
+        public SteeringSide steeringSide { get; set; }
 
         [Required]
         [StringLength(10)]

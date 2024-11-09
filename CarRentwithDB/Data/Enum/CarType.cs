@@ -44,4 +44,9 @@
         SemiAutomatic,
         CVT
     }
+    public enum SteeringSide
+    {
+        Left,
+        Right
+    }
 }

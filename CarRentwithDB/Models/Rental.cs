@@ -17,5 +17,13 @@ namespace CarRentwithDB.Models
 
         [ForeignKey("CarId")]
         public Car Car { get; set; }
+
+        [Required]
+        public string AppUserId { get; set; }
+        [ForeignKey("AppUserId")]
+        public AppUser AppUser { get; set; }
+        [Required]
+        public decimal Price { get; set; }
+        
     }
 }
