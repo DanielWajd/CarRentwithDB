@@ -68,4 +68,13 @@ public static class EnumExtensions
     {
         return isAvailable ? "Dostępny" : "Niedostępny";
     }
+    public static string TranslateSteeringSide(SteeringSide steeringSide)
+    {
+        switch (steeringSide)
+        {
+            case SteeringSide.Left: return "Lewa";
+            case SteeringSide.Right: return "Prawa";
+                default : return steeringSide.ToString();
+        }
+    }
 }

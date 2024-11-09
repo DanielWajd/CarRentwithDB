@@ -70,13 +70,14 @@
                 @if (Model.CarDetails != null)
                 {
                     <li>Liczba miejsc: @Model.CarDetails.Seats </li>
-                    <li>pojemność bagażnika: @Model.CarDetails.TrunkCapacity L</li>
-
+                    <li>Pojemność bagażnika: @Model.CarDetails.TrunkCapacity L</li>
+                    <li>Strona kierownicy: @EnumExtensions.TranslateSteeringSide(Model.steeringSide)</li>
                 }
                 else
                 {
                     <li>Liczba miejsc: brak danych </li>
                     <li>pojemność bagażnika: brak danych</li>
+                    <li>Strona kierownicy: brak danych</li>
                 }
             </ul>
         </div>

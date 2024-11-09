@@ -26,6 +26,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
+//builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")

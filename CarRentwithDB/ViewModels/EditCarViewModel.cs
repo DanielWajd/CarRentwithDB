@@ -24,6 +24,7 @@ namespace CarRentwithDB.ViewModels
         public decimal DailyRate { get; set; }
 
         public string VIN { get; set; }
+        public SteeringSide steeringSide { get; set; }
 
         public string LicencePlate { get; set; }
 

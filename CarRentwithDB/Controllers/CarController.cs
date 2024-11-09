@@ -53,6 +53,7 @@ namespace CarRentwithDB.Controllers
                 carColor = createCarViewModel.carColor,
                 DailyRate = createCarViewModel.DailyRate,
                 VIN = createCarViewModel.VIN,
+                steeringSide = createCarViewModel.steeringSide,
                 LicencePlate = createCarViewModel.LicencePlate,
                 IsAvailable = createCarViewModel.IsAvailable,
                 Description = createCarViewModel.Description,
@@ -90,6 +91,7 @@ namespace CarRentwithDB.Controllers
                 carColor = car.carColor,
                 DailyRate = car.DailyRate,
                 VIN = car.VIN,
+                steeringSide = car.steeringSide,
                 LicencePlate = car.LicencePlate,
                 IsAvailable = car.IsAvailable,
                 Description = car.Description,
@@ -129,6 +131,7 @@ namespace CarRentwithDB.Controllers
             car.carColor = editCarViewModel.carColor;
             car.DailyRate = editCarViewModel.DailyRate;
             car.VIN = editCarViewModel.VIN;
+            car.steeringSide = editCarViewModel.steeringSide;
             car.LicencePlate = editCarViewModel.LicencePlate;
             car.IsAvailable = editCarViewModel.IsAvailable;
             car.Description = editCarViewModel.Description;

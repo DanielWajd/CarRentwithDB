@@ -36,16 +36,22 @@
                             <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    @if (User.IsInRole("employee"))
+                                    if (User.IsInRole("employee"))
                                     {
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Index">Użytkownicy</a>
                                         </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="DetailsBoard" asp-action="Index">Szczegóły</a>
+                                        </li>
                                     }
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="DetailsBoard"
-                                           asp-action="Index">Szczegóły</a>
-                                    </li>
+                                    else if (User.IsInRole("customer"))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="DetailsBoard" asp-action="UserRentals">Szczegóły</a>
+                                        </li>
+                                    }
+
                                     <li>
                                         <form asp-area="" asp-controller="Account" asp-action="Logout" class="d-inline">
                                             <button type="submit" class="dropdown-item">Wyloguj</button>

@@ -68,6 +68,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label asp-for="steeringSide">Strona kierownicy</label>
+        <select asp-for="steeringSide" asp-items="@Html.GetEnumSelectList<SteeringSide>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+    <div class="form-group">
         <label asp-for="Image">Zdjecie</label>
         <input asp-for="Image" class="form-control" placeholder="Dodaj zdjecie">
     </div>
