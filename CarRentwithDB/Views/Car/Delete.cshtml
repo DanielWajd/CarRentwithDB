@@ -1,0 +1,115 @@
+﻿@using CarRentwithDB.Data.Enum
+@using CarRentwithDB.ViewModels
+@model CarRentwithDB.Models.Car
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Edit">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" value="CarDetailsId" id="CarDetailsId" />
+    <h4>Szczeóły ogólne</h4>
+    <div class="form-group">
+        <label asp-for="Make">Marka</label>
+        <input asp-for="Make" class="form-control" placeholder="Dodaj marke">
+        <span asp-validation-for="Make" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model">Model</label>
+        <input asp-for="Model" class="form-control" placeholder="Dodaj model">
+    </div>
+    <div class="form-group">
+        <label asp-for="Year">Rok produkcji</label>
+        <input asp-for="Year" class="form-control" placeholder="Dodaj rok">
+    </div>
+    <div class="form-group">
+        <label asp-for="City">Miasto</label>
+        <input asp-for="City" class="form-control" placeholder="Dodaj miasto">
+    </div>
+    <div class="form-group">
+        <label asp-for="carType">Rodzaj auta</label>
+        <select asp-for="carType" asp-items="@Html.GetEnumSelectList<CarType>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Opis</label>
+        <input asp-for="Description" class="form-control" placeholder="Dodaj opis">
+    </div>
+    <div class="form-group">
+        <label asp-for="fuelType">Rodzaj paliwa</label>
+        <select asp-for="fuelType" asp-items="@Html.GetEnumSelectList<FuelType>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Mileage">Przebieg</label>
+        <input asp-for="Mileage" class="form-control" placeholder="Dodaj przebieg">
+    </div>
+    <div class="form-group">
+        <label asp-for="carColor">Kolor auta</label>
+        <select asp-for="carColor" asp-items="@Html.GetEnumSelectList<CarColor>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="DailyRate">Cena za dzien</label>
+        <input asp-for="DailyRate" class="form-control" placeholder="Dodaj cene za dzien">
+    </div>
+    <div class="form-group">
+        <label asp-for="VIN">VIN</label>
+        <input asp-for="VIN" class="form-control" placeholder="Dodaj VIN">
+    </div>
+    <div class="form-group">
+        <label asp-for="LicencePlate">Numer rejestracyjny</label>
+        <input asp-for="LicencePlate" class="form-control" placeholder="Dodaj numer rejestracyjny">
+    </div>
+    <div class="form-group">
+        <label asp-for="IsAvailable">Dostepność</label>
+        <div class="form-check">
+            <input asp-for="IsAvailable" class="form-chceck-input" type="checkbox">
+            <label class="form-check-label" for="IsAvailable">Dostępny</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="steeringSide">Strona kierownicy</label>
+        <select asp-for="steeringSide" asp-items="@Html.GetEnumSelectList<SteeringSide>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image">Zdjecie</label>
+        <input asp-for="Image" class="form-control" placeholder="Dodaj zdjecie">
+    </div>
+    <h4>Szczegóły techniczne</h4>
+    <div class="form-group">
+        <label asp-for="CarDetails.HorsePower">Konie mechaniczne</label>
+        <input asp-for="CarDetails.HorsePower" class="form-control" placeholder="Dodaj moc w koniach mechanicznych">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.Seats">Liczba miejsc</label>
+        <input asp-for="CarDetails.Seats" class="form-control" placeholder="Dodaj liczbę miejsc">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.EngineCapacity">Pojemność silnika (litry)</label>
+        <input asp-for="CarDetails.EngineCapacity" class="form-control" placeholder="Dodaj pojemność silnika">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.TrunkCapacity">Pojemność bagażnika (litry)</label>
+        <input asp-for="CarDetails.TrunkCapacity" class="form-control" placeholder="Dodaj pojemność bagażnika">
+    </div>
+    <div class="form-group">
+        <label asp-for="CarDetails.TransmissionType">Typ skrzyni biegów</label>
+        <select asp-for="CarDetails.TransmissionType" asp-items="@Html.GetEnumSelectList<TransmissionType>()" class="form-control">
+            <option>--Wybierz--</option>
+        </select>
+    </div>
+
+</form>
+<div class="form-group">
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="CarId" />
+        <input type="submit" value="Usuń" class="btn btn-danger float-right mt-3" />
+    </form>
+</div>

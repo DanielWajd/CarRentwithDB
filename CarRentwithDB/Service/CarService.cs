@@ -24,6 +24,7 @@ namespace CarRentwithDB.Services
             return Save();
         }
 
+
         public async Task<IEnumerable<Car>> GetAll()
         {
             return await _context.Cars.ToListAsync();

@@ -217,6 +217,7 @@ namespace CarRentwithDB.Migrations
                     carColor = table.Column<int>(type: "int", nullable: false),
                     DailyRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     VIN = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    steeringSide = table.Column<int>(type: "int", nullable: false),
                     LicencePlate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -266,7 +267,8 @@ namespace CarRentwithDB.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {

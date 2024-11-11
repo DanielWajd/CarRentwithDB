@@ -150,5 +150,28 @@ namespace CarRentwithDB.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var carDetails = await _carService.GetByIdAsync(id);
+            if (carDetails == null) 
+            { 
+                return View("Error"); 
+            }
+            return View(carDetails);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            var carDetails = await _carService.GetByIdAsync(id);
+
+            if (carDetails == null)
+            {
+                return View("Error");
+            }
+
+            _carService.Delete(carDetails);
+            return RedirectToAction("Index");
+        }
     }
 }
