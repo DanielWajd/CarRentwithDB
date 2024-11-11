@@ -29,7 +29,7 @@
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("employee"))
                                     {
                                         <a asp-controller="Car" asp-action="Edit" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Edytuj</a>
-                                        <a asp-controller="Race" asp-action="Delete" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Usuń</a>
+                                        <a asp-controller="Car" asp-action="Delete" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Usuń</a>
                                     }
                                 </div>
                                 <small class="text-muted">@item.LicencePlate</small>

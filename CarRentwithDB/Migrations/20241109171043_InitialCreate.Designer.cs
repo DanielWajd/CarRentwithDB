@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentwithDB.Migrations
 {
     [DbContext(typeof(CarRentDBContext))]
-    [Migration("20241109130653_InitialCreate")]
+    [Migration("20241109171043_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -219,6 +219,9 @@ namespace CarRentwithDB.Migrations
                     b.Property<int>("fuelType")
                         .HasColumnType("int");
 
+                    b.Property<int>("steeringSide")
+                        .HasColumnType("int");
+
                     b.HasKey("CarId");
 
                     b.HasIndex("AppUserId");
@@ -301,6 +304,9 @@ namespace CarRentwithDB.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
