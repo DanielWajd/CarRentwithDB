@@ -120,5 +120,22 @@ namespace CarRentwithDB.Controllers
             IEnumerable<AppUser> users = await _userService.GetAllUsers();
             return View(users);
         }
+        public async Task<IActionResult> Details(string id)
+        {
+            var user = await _userService.GetUserById(id);
+            Console.WriteLine($"Liczba wypożyczeń: {user.Rentals?.Count()}");
+            var userDetailViewModel = new UserDetailViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+                Phone = user.Phone,
+                UserType = user.UserType,
+                Cars = user.Cars ?? new List<Car>(),  
+                Rentals = user.Rentals ?? new List<Rental>()
+            };
+            return View(userDetailViewModel);
+        }
     }
 }
