@@ -1,0 +1,60 @@
+﻿@using CarRentwithDB.ViewModels
+@model UserDetailViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+
+    <h1 class="my-4">
+        @($"{Model.Name} {Model.Surname}")
+        
+    </h1>
+
+    <h3 class="my-4">Dane: </h3>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <ul>
+                <li>Rodzaj użytkownika: @Model.UserType</li>
+                <li>Numer telefonu: @Model.Phone</li>
+                <li>Email: @Model.Email</li>
+                <li>Samochody: @Model.Cars.Count() samochodów</li> 
+                @if(Model.Cars != null && Model.Cars.Any())
+                {
+                    <ul>
+                        @foreach(var car in Model.Cars)
+                        {
+                            <li>
+                                <strong>Marka i model:</strong> @car.Make @car.Model  <br/>
+                                <strong>Numer rejestracyjny:</strong> @car.LicencePlate <br/>
+                            </li>
+                        }
+                    </ul>
+                }
+                <li>
+                    <strong>Wypożyczenia:</strong>
+                    @if (Model.Rentals != null && Model.Rentals.Any())
+                    {
+                        <ul>
+                            @foreach (var rental in Model.Rentals)
+                            {
+                                <li>
+                                    <strong>Marka i model:</strong> @rental.Car.Make @rental.Car.Model <br />
+                                    <strong>Numer rejestracyjny:</strong> @rental.Car.LicencePlate <br />
+                                    <strong>Data wypożyczenia:</strong> @rental.StartDate.ToShortDateString() <br />
+                                    <strong>Data zwrotu:</strong> @rental.EndDate.ToShortDateString()
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Brak wypożyczeń</p>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

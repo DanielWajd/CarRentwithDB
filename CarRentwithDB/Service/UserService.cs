@@ -16,5 +16,13 @@ namespace CarRentwithDB.Service
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<AppUser> GetUserById(string id)
+        {
+            return await _context.Users
+                         .Include(u => u.Cars)    
+                         .Include(u => u.Rentals) 
+                         .ThenInclude(r => r.Car)  
+                         .FirstOrDefaultAsync(u => u.Id == id);
+        }
     }
 }

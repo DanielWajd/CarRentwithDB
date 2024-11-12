@@ -16,9 +16,11 @@
                     <span>@item.Surname</span>
                     <span>@item.Email</span>
                     <span>@item.UserType</span>
+                        <a asp-controller="Account" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Podgląd</a>
                     </div>
                 </div>
             </div>
+            
         </div>
     }
 </div>
