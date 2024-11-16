@@ -6,55 +6,65 @@
 @{
 }
 <div class="container">
-
     <h1 class="my-4">
         @($"{Model.Name} {Model.Surname}")
-        
     </h1>
 
     <h3 class="my-4">Dane: </h3>
-
     <div class="row">
-        <div class="col-md-3 col-sm-6 mb-4">
+        <div class="col-md-6">
             <ul>
-                <li>Rodzaj użytkownika: @Model.UserType</li>
+                <li>Rodzaj użytkownika: @EnumExtensions.TranslateUserType(Model.UserType)</li>
                 <li>Numer telefonu: @Model.Phone</li>
                 <li>Email: @Model.Email</li>
-                <li>Samochody: @Model.Cars.Count() samochodów</li> 
-                @if(Model.Cars != null && Model.Cars.Any())
+                @if (User.IsInRole("employee"))
                 {
-                    <ul>
-                        @foreach(var car in Model.Cars)
-                        {
-                            <li>
-                                <strong>Marka i model:</strong> @car.Make @car.Model  <br/>
-                                <strong>Numer rejestracyjny:</strong> @car.LicencePlate <br/>
-                            </li>
-                        }
-                    </ul>
-                }
-                <li>
-                    <strong>Wypożyczenia:</strong>
-                    @if (Model.Rentals != null && Model.Rentals.Any())
+                    <li>Samochody: @Model.Cars.Count() samochodów</li>
+                    @if (Model.Cars != null && Model.Cars.Any())
                     {
                         <ul>
-                            @foreach (var rental in Model.Rentals)
+                            @foreach (var car in Model.Cars)
                             {
                                 <li>
-                                    <strong>Marka i model:</strong> @rental.Car.Make @rental.Car.Model <br />
-                                    <strong>Numer rejestracyjny:</strong> @rental.Car.LicencePlate <br />
-                                    <strong>Data wypożyczenia:</strong> @rental.StartDate.ToShortDateString() <br />
-                                    <strong>Data zwrotu:</strong> @rental.EndDate.ToShortDateString()
+                                    <strong>Marka i model:</strong> @car.Make @car.Model  <br />
+                                    <strong>Numer rejestracyjny:</strong> @car.LicencePlate <br />
                                 </li>
                             }
                         </ul>
                     }
-                    else
-                    {
-                        <p>Brak wypożyczeń</p>
-                    }
-                </li>
+                }
+                @if (User.IsInRole("customer"))
+                {
+                    <li>
+                        <strong>Wypożyczenia:</strong>
+                        @if (Model.Rentals != null && Model.Rentals.Any())
+                        {
+                            <ul>
+                                @foreach (var rental in Model.Rentals)
+                                {
+                                    <li>
+                                        <strong>Marka i model:</strong> @rental.Car.Make @rental.Car.Model <br />
+                                        <strong>Numer rejestracyjny:</strong> @rental.Car.LicencePlate <br />
+                                        <strong>Data wypożyczenia:</strong> @rental.StartDate.ToShortDateString() <br />
+                                        <strong>Data zwrotu:</strong> @rental.EndDate.ToShortDateString()
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>Brak wypożyczeń</p>
+                        }
+                    </li>
+                }
             </ul>
+        </div>
+
+        <div class="col-md-4 text-center">
+            <img src="@Model.Image"
+                 alt="Zdjęcie użytkownika"
+                 class="img-fluid rounded-circle float-end"
+                 style="max-width: 400px; max-height: 400px; object-fit: contain;" />
         </div>
     </div>
 </div>

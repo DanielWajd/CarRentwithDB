@@ -5,5 +5,12 @@
         Customer,
         Employee
     }
-    
+    public enum EmployeeType
+    {
+        Administrator,
+        Manager,
+        Salesperson,
+        SupportStaff,
+        Accountant
+    }
 }

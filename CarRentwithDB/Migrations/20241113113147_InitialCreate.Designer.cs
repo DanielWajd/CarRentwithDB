@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentwithDB.Migrations
 {
     [DbContext(typeof(CarRentDBContext))]
-    [Migration("20241109171043_InitialCreate")]
+    [Migration("20241113113147_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -457,7 +457,7 @@ namespace CarRentwithDB.Migrations
                 {
                     b.HasBaseType("CarRentwithDB.Models.AppUser");
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("DrivingLicence")
@@ -468,6 +468,16 @@ namespace CarRentwithDB.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasDiscriminator().HasValue("Customer");
+                });
+
+            modelBuilder.Entity("CarRentwithDB.Models.Employee", b =>
+                {
+                    b.HasBaseType("CarRentwithDB.Models.AppUser");
+
+                    b.Property<int>("EmployeeType")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Employee");
                 });
 
             modelBuilder.Entity("CarRentwithDB.Models.Car", b =>
@@ -564,9 +574,7 @@ namespace CarRentwithDB.Migrations
                 {
                     b.HasOne("CarRentwithDB.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
                 });

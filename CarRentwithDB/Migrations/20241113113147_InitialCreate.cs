@@ -70,6 +70,7 @@ namespace CarRentwithDB.Migrations
                     Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: true),
                     DrivingLicence = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    EmployeeType = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -91,8 +92,7 @@ namespace CarRentwithDB.Migrations
                         name: "FK_AspNetUsers_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
-                        principalColumn: "AddressId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "AddressId");
                 });
 
             migrationBuilder.CreateTable(

@@ -1,17 +1,17 @@
 ﻿@using CarRentwithDB.ViewModels
 @model LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Logowanie";
 }
 <div class="row">
     <div class="col-md-6 offset-3">
         <p>
-            <h4>Sign in to your account</h4>
+            <h4>Zaloguj się do swojego konta</h4>
         </p>
         @if (TempData["Error"] != null)
         {
             <div class="col-md-12 alert alert-danger">
-                <span><b>Sorry!</b> - @TempData["Error"]</span>
+                <span><b>Sorki!</b> - @TempData["Error"]</span>
             </div>
         }
         <div class="row">

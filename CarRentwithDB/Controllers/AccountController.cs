@@ -53,7 +53,7 @@ namespace CarRentwithDB.Controllers
                 return View(loginViewModel);
             }
             //When User not found
-            TempData["Error"] = "NIe ma takiego użytkownika";
+            TempData["Error"] = "Nie ma takiego użytkownika";
             return View(loginViewModel);
         }
         public IActionResult Register()
@@ -67,43 +67,71 @@ namespace CarRentwithDB.Controllers
         {
             if (!ModelState.IsValid)
             {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
                 return View(registerViewModel);
             }
 
             var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email is already in use";
+                TempData["Error"] = "Ten emial jest już zajęty";
                 return View(registerViewModel);
             }
-            var newUser = new AppUser()
+            IdentityResult newUserResponse;
+
+            if (registerViewModel.UserType == UserType.Customer)
             {
-                Name = registerViewModel.Name,
-                Surname = registerViewModel.Surname,
-                Phone = registerViewModel.Phone,
-                Email = registerViewModel.EmailAddress,
-                UserName = registerViewModel.EmailAddress,
-                UserType = registerViewModel.UserType
-            };
-            var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+                // Customer
+                var newCustomer = new Customer()
+                {
+                    Name = registerViewModel.Name,
+                    Surname = registerViewModel.Surname,
+                    Phone = registerViewModel.Phone,
+                    Email = registerViewModel.EmailAddress,
+                    UserName = registerViewModel.EmailAddress,
+                    UserType = UserType.Customer,
+                    DrivingLicence = registerViewModel.registerCustomer.DrivingLicence,
+                    Image = registerViewModel.Image
+                };
+
+                newUserResponse = await _userManager.CreateAsync(newCustomer, registerViewModel.Password);
+                if (newUserResponse.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
+                }
+            }
+            else
+            {
+                // Employee
+                var newEmployee = new Employee()
+                {
+                    Name = registerViewModel.Name,
+                    Surname = registerViewModel.Surname,
+                    Phone = registerViewModel.Phone,
+                    Email = registerViewModel.EmailAddress,
+                    UserName = registerViewModel.EmailAddress,
+                    UserType = UserType.Employee,
+                    EmployeeType = registerViewModel.registerEmployee.EmployeeType,
+                    Image = registerViewModel.Image
+                };
+                
+
+                newUserResponse = await _userManager.CreateAsync(newEmployee, registerViewModel.Password);
+                if (newUserResponse.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(newEmployee, UserRoles.Employee);
+                }
+            }
 
             if (newUserResponse.Succeeded)
             {
-                
-                if (registerViewModel.UserType == UserType.Customer)
-                {
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.Customer);
-                }
-                else if (registerViewModel.UserType == UserType.Employee)
-                {
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.Employee);
-                }
-
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                // Error in creating account
                 TempData["Error"] = "Error while creating the user";
                 return View(registerViewModel);
             }
@@ -123,6 +151,14 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var user = await _userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound(); 
+            }
+            if (string.IsNullOrEmpty(user.Image))
+            {
+                user.Image = "https://kolo6wola.ompzw.pl/img/defaults/user-350x350.png";
+            }
             Console.WriteLine($"Liczba wypożyczeń: {user.Rentals?.Count()}");
             var userDetailViewModel = new UserDetailViewModel
             {
@@ -131,10 +167,12 @@ namespace CarRentwithDB.Controllers
                 Surname = user.Surname,
                 Email = user.Email,
                 Phone = user.Phone,
+                Image = user.Image,
                 UserType = user.UserType,
                 Cars = user.Cars ?? new List<Car>(),  
                 Rentals = user.Rentals ?? new List<Rental>()
             };
+            
             return View(userDetailViewModel);
         }
     }

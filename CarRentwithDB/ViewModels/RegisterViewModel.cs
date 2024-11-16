@@ -5,7 +5,6 @@ namespace CarRentwithDB.ViewModels
 {
     public class RegisterViewModel
     {
-        [Display(Name = "Email address")]
         [Required(ErrorMessage ="Email address is required")]
         public string EmailAddress { get; set; }
         [Required]
@@ -17,13 +16,17 @@ namespace CarRentwithDB.ViewModels
         [Compare("Password", ErrorMessage ="Password do not match")]
         public string ConfirmPassword { get; set; }
 
-
+        [Required]
         public string Name { get; set; }
-
+        [Required]
         public string Surname { get; set; }
-
+        [Required]
         public string Phone { get; set; }
-
+        public string? Image { get; set; }
+        [Required]
         public UserType UserType { get; set; }
+        public RegisterCustomerViewModel? registerCustomer { get; set; }
+        public RegisterEmployeeViewModel? registerEmployee { get; set; }
+
     }
 }

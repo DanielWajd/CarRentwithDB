@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +13,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarRentwithDB.styles.css" asp-append-version="true" />
+    <style>
+        .navbar {
+            margin-bottom: 0 !important;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,14 +30,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Car" asp-action="Index">Samochody</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Car" asp-action="Index">Car</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Prywatność</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -47,6 +58,9 @@
                                     }
                                     else if (User.IsInRole("customer"))
                                     {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Details" asp-route-id="@currentUser.Id">Profil</a>
+                                        </li>
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="DetailsBoard" asp-action="UserRentals">Szczegóły</a>
                                         </li>
