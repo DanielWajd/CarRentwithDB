@@ -1,12 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Car rent";
+    ViewData["Title"] = "Wypożyczalnia";
 }
 
-<section class="py-5 text-center bg-image" style="background-image: url('https://idsb.tmgrup.com.tr/ly/uploads/images/2022/09/13/230591.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; margin-left: calc(50% - 50vw); min-height: 600px;" ">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto text-white">
-            <h1 class="fw-light">Album example</h1>
-            <p class="lead">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+<section class="py-5 text-center bg-image position-relative" style="background-image: url('https://idsb.tmgrup.com.tr/ly/uploads/images/2022/09/13/230591.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; margin-left: calc(50% - 50vw); min-height: 600px;">
+    <div class="overlay"></div>
+
+    <div class="row py-lg-5 position-relative">
+        <div class="col-lg-6 col-md-8 mx-auto text-white ">
+            <h1 class="fw-bold">Wypożyczalnia Samochodów</h1>
+            <p class="lead fw-bold">Witaj w naszej wypożyczalni! Wybierz idealny samochód dla siebie i ciesz się komfortową podróżą.</p>
             <form class="d-flex justify-content-center mt-4" role="search">
                 <input class="form-control me-2" type="search" placeholder="Szukaj..." aria-label="Search" style="max-width: 400px;">
                 <button class="btn btn-primary" type="submit">Szukaj</button>
@@ -14,21 +16,25 @@
         </div>
     </div>
 </section>
+
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Najgorętsze oferty w tym miesiącu</h2>
+        </div>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
                     <div class="card-body">
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Oferujemy szeroki wybór samochodów na każdą okazję. Sprawdź nasze najnowsze promocje!</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
                             </div>
-                            <small class="text-body-secondary">9 mins</small>
+                            <small class="text-muted">9 min temu</small>
                         </div>
                     </div>
                 </div>
@@ -37,13 +43,13 @@
                 <div class="card shadow-sm">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
                     <div class="card-body">
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Znajdź samochód idealny na rodzinne wakacje, weekendowy wypad lub podróż służbową.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
                             </div>
-                            <small class="text-body-secondary">9 mins</small>
+                            <small class="text-muted">15 min temu</small>
                         </div>
                     </div>
                 </div>
@@ -52,15 +58,17 @@
                 <div class="card shadow-sm">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
                     <div class="card-body">
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Nasze auta są regularnie serwisowane, aby zapewnić Ci pełne bezpieczeństwo.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
                             </div>
-                            <small class="text-body-secondary">9 mins</small>
+                            <small class="text-muted">30 min temu</small>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
+    </div>
+</div>

@@ -77,4 +77,26 @@ public static class EnumExtensions
                 default : return steeringSide.ToString();
         }
     }
+    public static string TranslateUserType(UserType userType)
+    {
+        switch (userType)
+        {
+            case UserType.Customer: return "Klient";
+            case UserType.Employee: return "Pracownik";
+            default: return userType.ToString();
+        }
+    }
+
+    public static string TranslateEmployeeType(EmployeeType employeeType)
+    {
+        switch (employeeType)
+        {
+            case EmployeeType.Administrator: return "Administrator";
+            case EmployeeType.Manager: return "Menadżer";
+            case EmployeeType.Salesperson: return "Sprzedawca";
+            case EmployeeType.SupportStaff: return "Personel wsparcia";
+            case EmployeeType.Accountant: return "Księgowy";
+            default: return employeeType.ToString();
+        }
+    }
 }

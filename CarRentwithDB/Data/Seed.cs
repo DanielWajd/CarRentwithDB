@@ -27,7 +27,7 @@ namespace CarRentwithDB.Data
                 var employeeUser = await userManager.FindByEmailAsync(employeeUserEmail);
                 if (employeeUser == null)
                 {
-                    var newEmployeeUser = new AppUser()
+                    var newEmployeeUser = new Employee()
                     {
                         UserName = employeeUserEmail,
                         Email = employeeUserEmail,
@@ -35,7 +35,8 @@ namespace CarRentwithDB.Data
                         Name = "Jan",
                         Surname = "Pierwszy",
                         Phone = "123456789",
-                        UserType = UserType.Employee
+                        UserType = UserType.Employee,
+                        EmployeeType = EmployeeType.Manager
                     };
                     await userManager.CreateAsync(newEmployeeUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newEmployeeUser, UserRoles.Employee);
