@@ -1,4 +1,5 @@
-﻿using CarRentwithDB.Interfaces;
+﻿using CarRentwithDB.Data.Enum;
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,17 @@ namespace CarRentwithDB.Services
         public async Task<IEnumerable<Car>> GetCarByCity(string city)
         {
             return await _context.Cars.Where(i => i.City.Contains(city)).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Car>> GetCarByType(string type)
+        {
+
+            if (Enum.TryParse(type, true, out CarType carTypeEnum))
+            {
+                return await _context.Cars.Where(i => i.carType == carTypeEnum).ToListAsync();
+            }
+
+            return Enumerable.Empty<Car>();
         }
 
         public bool Save()

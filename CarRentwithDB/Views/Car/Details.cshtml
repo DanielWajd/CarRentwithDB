@@ -85,12 +85,12 @@
         
 
     </div>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("customer"))
+    @if (User.Identity.IsAuthenticated && User.IsInRole("customer") && Model.IsAvailable)
     {
         <div class="text-end mt-4">
             <form asp-controller="Rental" asp-action="Create" method="get">
                 <input type="hidden" name="carId" value="@Model.CarId" />
-                <button type="submit" class="btn btn-primary">Wypożycz</button>
+                <button type="submit" class="btn btn-success btn-sm">Wypożycz</button>
             </form>
         </div>
     }

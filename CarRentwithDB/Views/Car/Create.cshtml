@@ -10,24 +10,27 @@
 <form method="post" asp-action="Create">
     <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
     <h4>Szczeóły ogólne</h4>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="Make">Marka</label>
         <input asp-for="Make" class="form-control" placeholder="Dodaj marke">
         <span asp-validation-for="Make" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="Model">Model</label>
         <input asp-for="Model" class="form-control" placeholder="Dodaj model">
+        <span asp-validation-for="Model" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="Year">Rok produkcji</label>
         <input asp-for="Year" class="form-control" placeholder="Dodaj rok">
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="City">Miasto</label>
         <input asp-for="City" class="form-control" placeholder="Dodaj miasto">
+        <span asp-validation-for="City" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="carType">Rodzaj auta</label>
         <select asp-for="carType" class="form-control">
             <option value="">--Wybierz--</option>
@@ -36,12 +39,14 @@
                 <option value="@carType">@EnumExtensions.TranslateCarType(carType)</option>
             }
         </select>
+        <span asp-validation-for="carType" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="Description">Opis</label>
         <input asp-for="Description" class="form-control" placeholder="Dodaj opis">
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="fuelType">Rodzaj paliwa</label>
         <select asp-for="fuelType" class="form-control">
             <option>--Wybierz--</option>
@@ -50,12 +55,14 @@
                 <option value="@fuelType">@EnumExtensions.TranslateFuelType(fuelType)</option>
             }
         </select>
+        <span asp-validation-for="fuelType" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="Mileage">Przebieg</label>
         <input asp-for="Mileage" class="form-control" placeholder="Dodaj przebieg">
+        <span asp-validation-for="Mileage" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="carColor">Kolor auta</label>
         <select asp-for="carColor" class="form-control">
             <option>--Wybierz--</option>
@@ -64,27 +71,32 @@
                 <option value="@carColor">@EnumExtensions.TranslateCarColor(carColor)</option>
             }
         </select>
+        <span asp-validation-for="carColor" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="DailyRate">Cena za dzien</label>
         <input asp-for="DailyRate" class="form-control" placeholder="Dodaj cene za dzien">
+        <span asp-validation-for="DailyRate" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="VIN">VIN</label>
         <input asp-for="VIN" class="form-control" placeholder="Dodaj VIN">
+        <span asp-validation-for="VIN" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="LicencePlate">Numer rejestracyjny</label>
         <input asp-for="LicencePlate" class="form-control" placeholder="Dodaj numer rejestracyjny">
+        <span asp-validation-for="LicencePlate" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="IsAvailable">Dostepność</label>
         <div class="form-check">
         <input asp-for="IsAvailable" class="form-chceck-input" type="checkbox">
         <label class="form-check-label" for="IsAvailable">Dostępny</label>
+        <span asp-validation-for="IsAvailable" class="text-danger"></span>
         </div>
     </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label asp-for="steeringSide">Strona kierownicy</label>
             <select asp-for="steeringSide" class="form-control">
                 <option>--Wybierz--</option>
@@ -93,35 +105,42 @@
                     <option value="@steeringSide">@EnumExtensions.TranslateSteeringSide(steeringSide)</option>
                 }
             </select>
+            <span asp-validation-for="steeringSide" class="text-danger"></span>
         </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="Image">Zdjecie</label>
         <input asp-for="Image" class="form-control" placeholder="Dodaj zdjecie">
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
     <h4>Szczegóły techniczne</h4>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="CarDetails.HorsePower">Konie mechaniczne</label>
         <input asp-for="CarDetails.HorsePower" class="form-control" placeholder="Dodaj moc w koniach mechanicznych">
+        <span asp-validation-for="CarDetails.HorsePower" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="CarDetails.Seats">Liczba miejsc</label>
         <input asp-for="CarDetails.Seats" class="form-control" placeholder="Dodaj liczbę miejsc">
+        <span asp-validation-for="CarDetails.Seats" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="CarDetails.EngineCapacity">Pojemność silnika (litry)</label>
         <input asp-for="CarDetails.EngineCapacity" class="form-control" placeholder="Dodaj pojemność silnika">
+        <span asp-validation-for="CarDetails.EngineCapacity" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="CarDetails.TrunkCapacity">Pojemność bagażnika (litry)</label>
         <input asp-for="CarDetails.TrunkCapacity" class="form-control" placeholder="Dodaj pojemność bagażnika">
+        <span asp-validation-for="CarDetails.TrunkCapacity" class="text-danger"></span>
     </div>
-    <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="CarDetails.TransmissionType">Typ skrzyni biegów</label>
         <select asp-for="CarDetails.TransmissionType" asp-items="@Html.GetEnumSelectList<TransmissionType>()" class="form-control">
             <option>--Wybierz--</option>
         </select>
+        <span asp-validation-for="CarDetails.TransmissionType" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success btn-sm">Stwórz</button>
 </form>
 }

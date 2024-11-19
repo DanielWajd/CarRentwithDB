@@ -21,6 +21,8 @@ namespace CarRentwithDB.Service
             return userCars.ToList();
         }
 
+        
+
         public async Task<List<Car>> GetAllRentedCars()
         {
             var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
