@@ -5,19 +5,19 @@ namespace CarRentwithDB.ViewModels
 {
     public class CarDetailsViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Liczba koni pojazdu jest wymagana")]
         public int HorsePower { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ilość miejsc pojazdu jest wymagana")]
         public int Seats { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pojemność silnika pojazdu jest wymagana")]
         public decimal EngineCapacity { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pojemnośc bagażnika pojazdu jest wymagana")]
         public decimal TrunkCapacity { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Rodzaj skrzyni biegów pojazdu jest wymagany")]
         public TransmissionType TransmissionType { get; set; }
     }
 }

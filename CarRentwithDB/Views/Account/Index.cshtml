@@ -5,22 +5,28 @@
 @{
 }
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-12 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                    <span>@item.Name</span>
-                    <span>@item.Surname</span>
-                    <span>@item.Email</span>
-                    <span>@EnumExtensions.TranslateUserType(item.UserType)</span>
-                        <a asp-controller="Account" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Podgląd</a>
+<h1 class="display-4 fw-normal">Lista użytkowników</h1>
+<div class="album py-5">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 mb-4">
+                    <div class="bg-white rounded shadow p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">@item.Name @item.Surname</h5>
+                                <p class="mb-1">Email: <span class="text-muted">@item.Email</span></p>
+                                <p class="mb-1">Typ użytkownika: <span class="badge bg-primary">@EnumExtensions.TranslateUserType(item.UserType)</span></p>
+                            </div>
+                            <div>
+                                <a asp-controller="Account" asp-action="Details" asp-route-id="@item.Id" 
+                                   class="btn btn-success btn-sm">Podgląd</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
+            }
         </div>
-    }
+    </div>
 </div>

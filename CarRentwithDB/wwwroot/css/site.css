@@ -37,3 +37,20 @@ body {
 .position-relative .row {
     z-index: 2;
 }
+/*For cars in home page*/
+.cars-row {
+    gap: 20px; 
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+}
+
+.car-icon {
+    flex: 0 0 auto; 
+    width: 120px; 
+    text-align: center;
+}
+
+.car-icon img {
+    width: 100%;
+    height: auto;
+}

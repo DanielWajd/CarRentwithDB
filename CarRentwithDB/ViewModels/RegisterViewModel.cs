@@ -5,25 +5,30 @@ namespace CarRentwithDB.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage ="Email address is required")]
+        [Display(Name = "Email")]
+        [Required(ErrorMessage ="Adres Email jest wymagany")]
         public string EmailAddress { get; set; }
-        [Required]
+        [Display(Name = "Hasło")]
+        [Required(ErrorMessage = "Hasło jest wymagane")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Display(Name = "Confirm password")]
-        [Required(ErrorMessage = "Confirm password is required")]
+        [Display(Name = "Potwierdź hasło")]
+        [Required(ErrorMessage = "Potwierdzone hasło jest wymagane")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage ="Password do not match")]
+        [Compare("Password", ErrorMessage ="Hasło nie pasuje")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
+        [Display(Name = "Imie")]
+        [Required(ErrorMessage = "Imię jest wymagane")]
         public string Name { get; set; }
-        [Required]
+        [Display(Name = "Nazwisko")]
+        [Required(ErrorMessage = "Nazwisko jest wymagane")]
         public string Surname { get; set; }
-        [Required]
+        [Display(Name = "Numer telefonu")]
+        [Required(ErrorMessage = "Numer telefonu jest wymagany")]
         public string Phone { get; set; }
         public string? Image { get; set; }
-        [Required]
+        [Display(Name = "Typ użytkownika")]
+        [Required(ErrorMessage = "Typ użytkownika jest wymagany")]
         public UserType UserType { get; set; }
         public RegisterCustomerViewModel? registerCustomer { get; set; }
         public RegisterEmployeeViewModel? registerEmployee { get; set; }
