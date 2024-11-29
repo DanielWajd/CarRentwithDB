@@ -1,4 +1,5 @@
 ﻿using CarRentwithDB.Models;
+using CarRentwithDB.ViewModels;
 
 namespace CarRentwithDB.Interfaces
 {
@@ -15,5 +16,6 @@ namespace CarRentwithDB.Interfaces
         bool Delete(Car car);
         bool Save();
         Task UpdateCarAvailability(int carId, bool isAvailable);
+        Task<IEnumerable<Car>> GetFilteredCars(string city, string type);
     }
 }

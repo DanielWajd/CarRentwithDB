@@ -6,5 +6,6 @@ namespace CarRentwithDB.Interfaces
     {
         Task<List<Car>> GetAllCreatedCars();
         Task<List<Car>> GetAllRentedCars();
+        Task<List<Rental>> GetAllRentals();
     }
 }

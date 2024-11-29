@@ -20,6 +20,8 @@
                             <div class="flex-grow-1">
                                 <h5 class="mb-1">@item.Make @item.Model</h5>
                                 <p class="mb-1">Numer rejestracyjny: @item.LicencePlate</p>
+                                <p class="mb-0"><strong>Start:</strong> @Model.StartDate.ToString("dd-MM-yyyy")</p>
+                                <p class="mb-0"><strong>End:</strong> @Model.EndDate.ToString("dd-MM-yyyy")</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId"
@@ -33,6 +35,7 @@
                                         }
                                     </div>
                                     <small class="text-muted">@item.LicencePlate</small>
+                                   
                                 </div>
                             </div>
                         </div>

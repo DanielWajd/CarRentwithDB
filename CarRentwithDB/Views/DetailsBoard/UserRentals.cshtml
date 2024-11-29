@@ -8,25 +8,71 @@
 @{
 }
 <h1 class="display-4 fw-normal">Twoje wypożyczenia</h1>
+
 <div class="album py-5">
     <div class="container">
+        <h2>Aktualne wypożyczenia</h2>
         <div class="row">
-            @foreach (var item in Model.Cars)
+            @if (Model.Rentals != null && Model.Rentals.Any(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
             {
-                <div class="col-12 mb-4 ">
-                    <div class="bg-white rounded shadow p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <img src="@item.Image" alt="@item.Make @item.Model" class="img-fluid rounded" style="max-width: 150px;">
-                            </div>
-                            <div>
-                                <h5 class="mb-1">@item.Make @item.Model</h5>
-                                <p class="mb-1">Numer rejestracyjny: @item.LicencePlate</p>
-                                <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId"
-                                   class="btn btn-success btn-sm">Podgląd</a>
+                @foreach (var rental in Model.Rentals.Where(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
+                {
+                    <div class="col-12 mb-4">
+                        <div class="bg-white rounded shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <img src="@rental.Car.Image" alt="@rental.Car.Make @rental.Car.Model" class="img-fluid rounded" style="max-width: 150px;">
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">@rental.Car.Make @rental.Car.Model</h5>
+                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@rental.Car.CarId"
+                                       class="btn btn-success btn-sm">Podgląd</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Brak aktualnych wypożyczeń do wyświetlenia.</p>
+                </div>
+            }
+        </div>
+
+        <h2>Wszystkie wypożyczenia</h2>
+        <div class="row">
+            @if (Model.Rentals != null && Model.Rentals.Any())
+            {
+                @foreach (var rental in Model.Rentals)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="bg-white rounded shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <img src="@rental.Car.Image" alt="@rental.Car.Make @rental.Car.Model" class="img-fluid rounded" style="max-width: 150px;">
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">@rental.Car.Make @rental.Car.Model</h5>
+                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@rental.Car.CarId"
+                                       class="btn btn-success btn-sm">Podgląd</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Brak wypożyczeń do wyświetlenia.</p>
                 </div>
             }
         </div>

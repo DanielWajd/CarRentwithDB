@@ -32,7 +32,11 @@ namespace CarRentwithDB.Controllers
             {
                 CarId = carId,
                 AppUserId = curUserId,
-                DailyRate = car.DailyRate
+                DailyRate = car.DailyRate,
+                Image = car.Image,
+                Make = car.Make,
+                Model = car.Model
+                
             };
             return View(rentalViewModel);
         }

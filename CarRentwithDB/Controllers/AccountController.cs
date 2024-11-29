@@ -85,6 +85,15 @@ namespace CarRentwithDB.Controllers
             if (registerViewModel.UserType == UserType.Customer)
             {
                 // Customer
+
+                var newAddress = new Address
+                {
+                    Street = registerViewModel.registerCustomer.Street,
+                    City = registerViewModel.registerCustomer.City,
+                    HouseNumber = registerViewModel.registerCustomer.HouseNumber,
+                    Voivodeship = registerViewModel.registerCustomer.Voivodeship,
+                    Zip = registerViewModel.registerCustomer.Zip
+                };
                 var newCustomer = new Customer()
                 {
                     Name = registerViewModel.Name,
@@ -94,7 +103,8 @@ namespace CarRentwithDB.Controllers
                     UserName = registerViewModel.EmailAddress,
                     UserType = UserType.Customer,
                     DrivingLicence = registerViewModel.registerCustomer.DrivingLicence,
-                    Image = registerViewModel.Image
+                    Image = registerViewModel.Image,
+                    Address = newAddress
                 };
 
                 newUserResponse = await _userManager.CreateAsync(newCustomer, registerViewModel.Password);
@@ -159,7 +169,6 @@ namespace CarRentwithDB.Controllers
             {
                 user.Image = "https://kolo6wola.ompzw.pl/img/defaults/user-350x350.png";
             }
-            Console.WriteLine($"Liczba wypożyczeń: {user.Rentals?.Count()}");
             var userDetailViewModel = new UserDetailViewModel
             {
                 Id = user.Id,
