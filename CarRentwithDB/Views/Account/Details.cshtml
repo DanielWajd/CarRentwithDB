@@ -6,40 +6,54 @@
 @{
 }
 <div class="container">
-    <h1 class="my-4">
+    <h1 class="display-4 fw-normal my-4">
         @($"{Model.Name} {Model.Surname}")
     </h1>
 
-    <h3 class="my-4">Dane: </h3>
     <div class="row">
-        <div class="col-md-6">
-            <ul>
-                <li>Rodzaj użytkownika: @EnumExtensions.TranslateUserType(Model.UserType)</li>
-                <li>Numer telefonu: @Model.Phone</li>
-                <li>Email: @Model.Email</li>
-                @if (User.IsInRole("employee"))
+        <div class="col-md-8">
+            <h3 class="my-3">Dane użytkownika:</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item border-success">
+                    <strong>Rodzaj użytkownika:</strong> @EnumExtensions.TranslateUserType(Model.UserType)
+                </li>
+                <li class="list-group-item border-success">
+                    <strong>Numer telefonu:</strong> @Model.Phone
+                </li>
+                <li class="list-group-item border-success">
+                    <strong>Email:</strong> @Model.Email
+                </li>
+
+                @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Employee)
                 {
-                    <li>Samochody: @Model.Cars.Count() samochodów</li>
-                    @if (Model.Cars != null && Model.Cars.Any())
-                    {
-                        <ul>
-                            @foreach (var car in Model.Cars)
-                            {
-                                <li>
-                                    <strong>Marka i model:</strong> @car.Make @car.Model  <br />
-                                    <strong>Numer rejestracyjny:</strong> @car.LicencePlate <br />
-                                </li>
-                            }
-                        </ul>
-                    }
+                    <li class="list-group-item">
+                        <strong>Dodane samochody:</strong> @Model.Cars.Count() samochodów
+                        @if (Model.Cars != null && Model.Cars.Any())
+                        {
+                            <ul class="mt-2">
+                                @foreach (var car in Model.Cars)
+                                {
+                                    <li>
+                                        <strong>Marka i model:</strong> @car.Make @car.Model <br />
+                                        <strong>Numer rejestracyjny:</strong> @car.LicencePlate
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="mt-2 text-muted">Brak dodanych aut</p>
+                        }
+                    </li>
                 }
-                @if (User.IsInRole("customer"))
+
+                @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
                 {
-                    <li>
+                    <li class="list-group-item">
                         <strong>Wypożyczenia:</strong>
                         @if (Model.Rentals != null && Model.Rentals.Any())
                         {
-                            <ul>
+                            <ul class="mt-2">
                                 @foreach (var rental in Model.Rentals)
                                 {
                                     <li>
@@ -53,18 +67,18 @@
                         }
                         else
                         {
-                            <p>Brak wypożyczeń</p>
+                            <p class="mt-2 text-muted">Brak wypożyczeń</p>
                         }
                     </li>
                 }
             </ul>
         </div>
 
-        <div class="col-md-4 text-center">
+        <div class="col-md-4 text-center ">
             <img src="@Model.Image"
                  alt="Zdjęcie użytkownika"
-                 class="img-fluid rounded-circle float-end"
-                 style="max-width: 400px; max-height: 400px; object-fit: contain;" />
+                 class="img-fluid rounded-circle shadow border border-success"
+                 style="max-width: 300px; max-height: 300px; object-fit: cover; " />
         </div>
     </div>
 </div>

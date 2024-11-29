@@ -21,7 +21,17 @@ namespace CarRentwithDB.Service
             return userCars.ToList();
         }
 
-        
+        public async Task<List<Rental>> GetAllRentals()
+        {
+            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
+
+            var userRentals = await _context.Rental
+                .Include(r => r.Car) 
+                .Where(r => r.AppUserId == curUser)
+                .ToListAsync();
+
+            return userRentals;
+        }
 
         public async Task<List<Car>> GetAllRentedCars()
         {

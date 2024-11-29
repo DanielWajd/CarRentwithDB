@@ -1,6 +1,7 @@
 ﻿using CarRentwithDB.Data.Enum;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
+using CarRentwithDB.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Services
@@ -76,5 +77,21 @@ namespace CarRentwithDB.Services
             }
 
         }
+        public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type)
+        {
+            var query = _context.Cars.AsQueryable();
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(car => car.City.Contains(city));
+            }
+
+            if (!string.IsNullOrEmpty(type) && Enum.TryParse(type, true, out CarType carTypeEnum))
+            {
+                query = query.Where(car => car.carType == carTypeEnum);
+            }
+            return await query.ToListAsync();
+        }
+
     }
 }

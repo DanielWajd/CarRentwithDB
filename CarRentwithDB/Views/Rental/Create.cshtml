@@ -8,27 +8,48 @@
     <input type="hidden" asp-for="CarId" />
     <input type="hidden" id="DailyRate" value="@Model.DailyRate" />
 
-    <div class="form-group">
-        <label asp-for="StartDate">Początek wypożyczenia</label>
-        <input asp-for="StartDate" id="StartDate" type="date" class="form-control"
-               placeholder="Wybierz początek wypożyczenia" min="@DateTime.Today.ToString("yyyy-MM-dd")">
-        <span asp-validation-for="StartDate" class="text-danger"></span>
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="StartDate">Początek wypożyczenia</label>
+                <input asp-for="StartDate" id="StartDate" type="date" class="form-control"
+                       placeholder="Wybierz początek wypożyczenia" min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate">Koniec wypożyczenia</label>
+                <input asp-for="EndDate" id="EndDate" type="date" class="form-control"
+                       placeholder="Wybierz koniec wypożyczenia" min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price">Cena</label>
+                <input asp-for="Price" id="Price" type="text" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-white rounded shadow p-4">
+                <div class="text-center">
+                    <img src="@Model.Image" alt="@Model.Make @Model.Model" class="img-fluid rounded mb-3" style="max-width: 250px;">
+                </div>
+                <h5 class="mb-2 text-center">@Model.Make @Model.Model</h5>
+                <div class="bg-light rounded p-2 w-100 text-center">
+                    <p class="mb-0"><strong>Cena za dzień:</strong> <span class="text-primary">@Model.DailyRate zł</span></p>
+                </div>
+               <div class="d-flex justify-content-end mt-3">
+                    <a asp-controller="Car" asp-action="Details" asp-route-id="@Model.CarId" class="btn btn-success btn-sm mt-3">Podgląd</a>
+                 </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="EndDate">Koniec wypożyczenia</label>
-        <input asp-for="EndDate" id="EndDate" type="date" class="form-control"
-               placeholder="Wybierz koniec wypożyczenia" min="@DateTime.Today.ToString("yyyy-MM-dd")">
-        <span asp-validation-for="EndDate" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Price">Cena</label>
-        <input asp-for="Price" id="Price" type="text" class="form-control"  readonly />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Potwierdź</button>
+    <button type="submit" class="btn btn-success btn-sm mt-3">Potwierdź</button>
 </form>
+
 
 @section Scripts {
     <script src="~/js/rentalCalculator.js"></script>

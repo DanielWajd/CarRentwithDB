@@ -4,12 +4,16 @@
 
     const existingDrivingLicenceField = document.getElementById("drivingLicenceField");
     const existingEmployeeTypeField = document.getElementById("employeeTypeField");
+    const existingAddressFileds = document.getElementById("addressFields")
 
     if (existingDrivingLicenceField) {
         existingDrivingLicenceField.remove();
     }
     if (existingEmployeeTypeField) {
         existingEmployeeTypeField.remove();
+    }
+    if (existingAddressFileds) {
+        existingAddressFileds.remove();
     }
 
     if (userType === "Customer") {
@@ -24,6 +28,39 @@
         `;
 
         formContainer.appendChild(drivingLicenceDiv);
+
+        const addressDiv = document.createElement("div");
+        addressDiv.id = "addressFields";
+
+        addressDiv.innerHTML = `
+            <div class="form-group">
+                <label for="street" class="control-label">Ulica</label>
+                <input type="text" name="registerCustomer.Street" id="street" class="form-control" />
+                <span class="text-danger" id="streetError"></span>
+            </div>
+            <div class="form-group">
+                <label for="houseNumber" class="control-label">Numer Domu</label>
+                <input type="text" name="registerCustomer.HouseNumber" id="houseNumber" class="form-control" />
+                <span class="text-danger" id="houseNumberError"></span>
+            </div>
+            <div class="form-group">
+                <label for="city" class="control-label">Miasto</label>
+                <input type="text" name="registerCustomer.City" id="city" class="form-control" />
+                <span class="text-danger" id="cityError"></span>
+            </div>
+            <div class="form-group">
+                <label for="voivodeship" class="control-label">Województwo</label>
+                <input type="text" name="registerCustomer.Voivodeship" id="voivodeship" class="form-control" />
+                <span class="text-danger" id="voivodeshipError"></span>
+            </div>
+            <div class="form-group">
+                <label for="zip" class="control-label">Kod Pocztowy</label>
+                <input type="text" name="registerCustomer.Zip" id="zip" class="form-control" />
+                <span class="text-danger" id="zipError"></span>
+            </div>
+        `;
+
+        formContainer.appendChild(addressDiv);
     }
     else if (userType === "Employee") {
         const employeeTypeDiv = document.createElement("div");

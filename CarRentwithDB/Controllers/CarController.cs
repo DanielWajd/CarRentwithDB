@@ -1,4 +1,5 @@
-﻿using CarRentwithDB.Interfaces;
+﻿using CarRentwithDB.Data.Enum;
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.Services;
 using CarRentwithDB.ViewModels;
@@ -27,12 +28,12 @@ namespace CarRentwithDB.Controllers
             Car car = await _carService.GetByIdAsync(id);
             return View(car);
         }
+        //TO DO AYSNC
         public IActionResult Create()
         {
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var createCarViewModel = new CreateCarViewModel { AppUserId = curUserId };
             return View(createCarViewModel);
-
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateCarViewModel createCarViewModel)
@@ -173,6 +174,33 @@ namespace CarRentwithDB.Controllers
 
             _carService.Delete(carDetails);
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListCarByCity(string city)
+        {
+            if (string.IsNullOrEmpty(city))
+            {
+                return RedirectToAction("Index");
+            }
+            var cars = await _carService.GetCarByCity(city);
+            return View("Index", cars);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListCarByType(string type)
+        {
+            if (string.IsNullOrEmpty(type))
+            {
+                return RedirectToAction("Index");
+            }
+            var cars = await _carService.GetCarByType(type);
+            return View("Index", cars);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FilterCars(string city, string type)
+        {
+            var cars = await _carService.GetFilteredCars(city, type);
+            return View("Index", cars);
         }
     }
 }

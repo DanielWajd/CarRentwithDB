@@ -54,3 +54,14 @@ body {
     width: 100%;
     height: auto;
 }
+/*Delete hyperlinks from car icons*/
+.car-icon a{
+    text-decoration: none;
+    color: inherit;
+}
+/*Extra effects for icons*/
+.car-icon a:hover {
+    color: #198754;
+    text-decoration: underline;
+}
+
