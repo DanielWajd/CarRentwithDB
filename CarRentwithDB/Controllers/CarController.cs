@@ -197,9 +197,9 @@ namespace CarRentwithDB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FilterCars(string city, string type)
+        public async Task<IActionResult> FilterCars(string city, string type, string makeModel)
         {
-            var cars = await _carService.GetFilteredCars(city, type);
+            var cars = await _carService.GetFilteredCars(city, type, makeModel);
             return View("Index", cars);
         }
     }

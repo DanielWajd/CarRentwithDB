@@ -1,4 +1,6 @@
-﻿@{
+﻿@using CarRentwithDB.ViewModels
+@model UserDetailViewModel
+@{
     ViewData["Title"] = "Wypożyczalnia";
 }
 
@@ -8,16 +10,27 @@
     <div class="row py-lg-5 position-relative">
         <div class="col-lg-6 col-md-8 mx-auto text-white">
             <h1>Wypożyczalnia Samochodów</h1>
-            <p class="lead">Witaj w naszej wypożyczalni! Wybierz idealny samochód dla siebie i ciesz się komfortową podróżą.</p>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="lead">
+                 Witaj w naszej wypożyczalni! Wybierz idealny samochód dla siebie i ciesz się komfortową podróżą.
+                </p>   
+            }
+            else
+            {
+                <p class="lead">Witaj w naszej wypożyczalni! Zaloguj się, aby móc wybrać idealny samochód dla siebie i cieszyć się komfortową podróżą.</p>
+            }
             <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="FilterCars" asp-controller="Car">
+                <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search" style="max-width: 400px;">
                 <input class="form-control me-2" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search" style="max-width: 400px;">
                 <select class="form-control me-2" name="type" style="max-width: 400px;">
-                    <option value="">Wybierz typ samochodu</option>
+                    <option value="" >Wybierz typ samochodu</option>
                     @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
                     {
                         <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
                     }
                 </select>
+                
                 <button class="btn btn-success" type="submit">Szukaj</button>
             </form>
         </div>
