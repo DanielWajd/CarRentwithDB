@@ -6,86 +6,104 @@
 }
 
 <div class="container">
-
-    <h1 class="my-4">
-        @($"{Model.Make} {Model.Model}")
-        <small>@Model.Year</small>
-    </h1>
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h1 class="text-dark">
+            @($"{Model.Make} {Model.Model}") <small class="text-muted">@Model.Year</small>
+        </h1>
+        <span class="badge @(Model.IsAvailable ? "bg-success" : "bg-danger") fs-5">
+            @EnumExtensions.TranslateAvailability(Model.IsAvailable)
+        </span>
+    </div>
 
     <div class="row">
-
-        <div class="col-md-8">
-            <img class="card-img-top img-fluid" src="@Model.Image" alt="Card image cap" style="width: 100%;">
+        <!-- Zdjęcie -->
+        <div class="col-md-7">
+            <img class="img-fluid rounded shadow" src="@Model.Image" alt="Zdjęcie auta" style="width: 100%;">
         </div>
 
+        <!-- Szczegóły i cena -->
+        <div class="col-md-5">
+            <div class="card shadow p-3">
+                <h3 class="text-center text-dark mb-4">Cena za dzień</h3>
+                <div class="text-center mb-4">
+                    <span class="display-4 fw-bold text-success">@Model.DailyRate zł</span>
+                </div>
+                <h4>Opis</h4>
+                <p>@Model.Description</p>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("customer") && Model.IsAvailable)
+                {
+                    <div class="text-center mt-4">
+                        <form asp-controller="Rental" asp-action="Create" method="get">
+                            <input type="hidden" name="carId" value="@Model.CarId" />
+                            <button type="submit" class="btn btn-success btn-lg w-100">Wypożycz teraz</button>
+                        </form>
+                    </div>
+                }else if (!User.Identity.IsAuthenticated)
+                {
+                    <small>Zaloguj sie, aby wypożyczyć!</small>
+                    <div class="text-center mt-4">
+                        <form asp-controller="Account" asp-action="Login">
+                            <button type="submit" class="btn btn-success btn-lg w-100">Logowanie</button>
+                        </form>
+                    </div>
+                }
 
+            </div>
+        </div>
+
+    </div>
+    
+    <h3 class="my-5 text-dark">Dane szczegółowe</h3>
+    <div class="row">
+        <!-- Ogólne dane -->
         <div class="col-md-4">
-            <h3 class="my-3">Opis</h3>
-            <p>@Model.Description</p>
-            
-        </div>
-
-    </div>
-    <h3 class="my-4">Dane szczegówłowe</h3>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <h3 class="my-3">Ogólne</h3>
-            <ul>
-                <li>Nazwa: @($"{Model.Make} {Model.Model}")</li>
-                <li>Rocznik: @Model.Year</li>
-                <li>Miasto: @Model.City</li>
-                <li>Typ auta: @EnumExtensions.TranslateCarType(Model.carType)</li>
-                <li>Cena za dzień: @Model.DailyRate zł</li>
-                <li>Przebieg: @Model.Mileage km</li>
-                <li>Kolor: @EnumExtensions.TranslateCarColor(Model.carColor)</li>
-                <li>Dostępność: @EnumExtensions.TranslateAvailability(Model.IsAvailable)</li>
+            <h4 class="mb-3">Ogólne</h4>
+            <ul class="list-group">
+                <li class="list-group-item">Marka: <strong>@($"{Model.Make} {Model.Model}")</strong></li>
+                <li class="list-group-item">Rocznik: <strong>@Model.Year</strong></li>
+                <li class="list-group-item">Miasto: <strong>@Model.City</strong></li>
+                <li class="list-group-item">Typ auta: <strong>@EnumExtensions.TranslateCarType(Model.carType)</strong></li>
+                <li class="list-group-item">Przebieg: <strong>@Model.Mileage km</strong></li>
+                <li class="list-group-item">Kolor: <strong>@EnumExtensions.TranslateCarColor(Model.carColor)</strong></li>
             </ul>
         </div>
 
-        <div class="col-md-3 col-sm-6 mb-4">
-            <h3 class="my-3">Techniczne</h3>
-            <ul>
+        <!-- Dane techniczne -->
+        <div class="col-md-4">
+            <h4 class="mb-3">Techniczne</h4>
+            <ul class="list-group">
                 @if (Model.CarDetails != null)
                 {
-                    <li>Paliwo: @EnumExtensions.TranslateFuelType(Model.fuelType) </li>
-                    <li>Konie mechaniczne: @Model.CarDetails.HorsePower KM</li>
-                    <li>Pojemność silnika: @Model.CarDetails.EngineCapacity L</li>
-                    <li>Skrzynia biegów: @EnumExtensions.TranslateTransmissionType(Model.CarDetails.TransmissionType)</li>
+                    <li class="list-group-item">Paliwo: <strong>@EnumExtensions.TranslateFuelType(Model.fuelType)</strong></li>
+                    <li class="list-group-item">Konie mechaniczne: <strong>@Model.CarDetails.HorsePower KM</strong></li>
+                    <li class="list-group-item">Pojemność silnika: <strong>@Model.CarDetails.EngineCapacity L</strong></li>
+                    <li class="list-group-item">Skrzynia biegów: <strong>@EnumExtensions.TranslateTransmissionType(Model.CarDetails.TransmissionType)</strong></li>
                 }
                 else
                 {
-                    <li>Paliwo: brak danych</li>
-                    <li>Konie mechaniczne: brak danych</li>
-                    <li>Pojemność silnika: brak danych</li>
-                    <li>Skrzynia biegów: brak danych</li>
+                    <li class="list-group-item">Dane techniczne: brak</li>
                 }
             </ul>
         </div>
 
-        <div class="col-md-3 col-sm-6 mb-4">
-            <h3 class="my-3">Ergonomiczne</h3>
-            <ul>
+        <!-- Ergonomiczne -->
+        <div class="col-md-4">
+            <h4 class="mb-3">Ergonomiczne</h4>
+            <ul class="list-group">
                 @if (Model.CarDetails != null)
                 {
-                    <li>Liczba miejsc: @Model.CarDetails.Seats </li>
-                    <li>Pojemność bagażnika: @Model.CarDetails.TrunkCapacity L</li>
-                    <li>Strona kierownicy: @EnumExtensions.TranslateSteeringSide(Model.steeringSide)</li>
+                    <li class="list-group-item">Liczba miejsc: <strong>@Model.CarDetails.Seats</strong></li>
+                    <li class="list-group-item">Bagażnik: <strong>@Model.CarDetails.TrunkCapacity L</strong></li>
+                    <li class="list-group-item">Strona kierownicy: <strong>@EnumExtensions.TranslateSteeringSide(Model.steeringSide)</strong></li>
                 }
                 else
                 {
-                    <li>Liczba miejsc: brak danych </li>
-                    <li>pojemność bagażnika: brak danych</li>
-                    <li>Strona kierownicy: brak danych</li>
+                    <li class="list-group-item">Dane ergonomiczne: brak</li>
                 }
             </ul>
         </div>
-
-        
-
     </div>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("customer") && Model.IsAvailable)
+    @* @if (User.Identity.IsAuthenticated && User.IsInRole("customer") && Model.IsAvailable)
     {
         <div class="text-end mt-4">
             <form asp-controller="Rental" asp-action="Create" method="get">
@@ -93,5 +111,6 @@
                 <button type="submit" class="btn btn-success btn-sm">Wypożycz</button>
             </form>
         </div>
-    }
+    } *@
+    </<div>
 </div>

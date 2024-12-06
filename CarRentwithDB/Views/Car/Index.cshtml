@@ -10,17 +10,33 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row py-lg-4 position-relative">
-            <div class="col-lg-6 col-lg-8 mx-auto text-dark text-center">
+            <div class="col-lg-8 mx-auto text-dark text-center">
                 <h1>Jakiego auta szukasz?</h1>
+                <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="FilterCars" asp-controller="Car">
+                    <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search" style="max-width: 400px;">
+                    <input class="form-control me-2" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search" style="max-width: 400px;">
+                    <select class="form-control me-2" name="type" style="max-width: 400px;">
+                        <option value="">Wybierz typ samochodu</option>
+                        @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
+                        {
+                            <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
+                        }
+                    </select>
+
+                    <button class="btn btn-success" type="submit">Szukaj</button>
+                </form>
             </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach(var item in Model){
-                <div class="col">
+    </div>
+    <div class="container shadow p-4 bg-white rounded">
+        <div class="row g-3">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-4">
                     <div class="card shadow-sm">
                         <img class="card-img-top img-fluid" src="@item.Image" alt="Card image cap" style="height: 225px; object-fit: cover;">
                         <div class="overlay-category" style="position: absolute; top: 0; left: 0; width: 30%; background-color: rgba(0, 0, 0, 0.3); color: white; padding: 5px; text-align: center; border-radius: 4px;">
-                            @item.City 
+                            @item.City
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">@($"{item.Make} {item.Model}")</h5>
@@ -34,8 +50,10 @@
                                         <a asp-controller="Car" asp-action="Delete" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Usuń</a>
                                     }
                                 </div>
-                                <small class="@(item.IsAvailable ? "text-success" : "text-danger")">
-                                    @EnumExtensions.TranslateAvailability(item.IsAvailable)
+                                <small class="d-block mt-2 text-muted fw-bold">
+                                    <span class="badge @(item.IsAvailable ? "bg-success" : "bg-danger")">
+                                        @EnumExtensions.TranslateAvailability(item.IsAvailable)
+                                    </span>
                                 </small>
                             </div>
                         </div>
@@ -44,21 +62,20 @@
             }
             @if (User.IsInRole("employee"))
             {
-                <div class="col">
+                <div class="col-12 col-md-4">
                     <div class="card shadow-sm">
-                    <img class="card-img-top img-fluid" src="https://us.123rf.com/450wm/ariesticon/ariesticon2006/ariesticon200600197/149275546-plus-ikona-na-bia%C5%82ym-tle-dodaj-ikon%C4%99-plusa-znak-dodawania-medyczna-ikona-plusa.jpg" alt="Card image cap" style="height: 225px; object-fit: cover;">
-                    <div class="card-body">
-                        <p class="card-text">Dodaj</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a asp-controller="Car" asp-action="Create" class="btn btn-sm btn-outline-secondary">Dodaj</a>
-                                    
+                        <img class="card-img-top img-fluid" src="https://us.123rf.com/450wm/ariesticon/ariesticon2006/ariesticon200600197/149275546-plus-ikona-na-bia%C5%82ym-tle-dodaj-ikon%C4%99-plusa-znak-dodawania-medyczna-ikona-plusa.jpg" alt="Card image cap" style="height: 225px; object-fit: cover;">
+                        <div class="card-body">
+                            <p class="card-text">Dodaj</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Car" asp-action="Create" class="btn btn-sm btn-outline-secondary">Dodaj</a>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
+            
             }
         </div>
     </div>

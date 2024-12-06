@@ -3,10 +3,10 @@ using CarRentwithDB.Models;
 
 namespace CarRentwithDB.Service
 {
-    public class RentalService : IRentalService
+    public class RentalRepository : IRentalService
     {
         private readonly CarRentDBContext _context;
-        public RentalService(CarRentDBContext context)
+        public RentalRepository(CarRentDBContext context)
         {
             _context = context;
         }

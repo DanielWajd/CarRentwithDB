@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Services
 {
-    public class CarService : ICarService
+    public class CarRepository : ICarService
     {
         private readonly CarRentDBContext _context;
 
-        public CarService(CarRentDBContext context)
+        public CarRepository(CarRentDBContext context)
         {
             _context = context;
         }
@@ -77,7 +77,7 @@ namespace CarRentwithDB.Services
             }
 
         }
-        public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type)
+        public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel)
         {
             var query = _context.Cars.AsQueryable();
 
@@ -89,6 +89,23 @@ namespace CarRentwithDB.Services
             if (!string.IsNullOrEmpty(type) && Enum.TryParse(type, true, out CarType carTypeEnum))
             {
                 query = query.Where(car => car.carType == carTypeEnum);
+            }
+            if (!string.IsNullOrEmpty(makeModel))
+            {
+                var parts = makeModel.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length > 1)
+                {
+                    var make = parts[0];
+                    var model = string.Join(" ", parts.Skip(1));
+
+                    query = query.Where(car => car.Make.Contains(make) && car.Model.Contains(model));
+                }
+                else
+                {
+                    var search = parts[0];
+                    query = query.Where(car => car.Make.Contains(search) || car.Model.Contains(search));
+                }
             }
             return await query.ToListAsync();
         }

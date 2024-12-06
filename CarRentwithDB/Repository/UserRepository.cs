@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Service
 {
-    public class UserService : IUserService
+    public class UserRepository : IUserService
     {
         private readonly CarRentDBContext _context;
 
-        public UserService(CarRentDBContext context)
+        public UserRepository(CarRentDBContext context)
         {
             _context = context;
         }
