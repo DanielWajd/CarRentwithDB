@@ -13,12 +13,14 @@ namespace CarRentwithDB.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountController(IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+        public AccountController(IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
             CarRentDBContext context)
         {
             _userService = userService;
             _userManager = userManager;
+            _contextAccessor = httpContextAccessor;
             _signInManager = signInManager;
         }
         //Get
@@ -183,6 +185,76 @@ namespace CarRentwithDB.Controllers
             };
             
             return View(userDetailViewModel);
+        }
+        public async Task<IActionResult> EditUserProfile()
+        {
+            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            var user = await _userService.GetUserById(curUserId);
+            if (user == null) {
+                return View("Error");
+            }
+            var editUserViewModel = new EditUserProfileViewModel
+            {
+                Id = curUserId,
+                Name = user.Name,
+                Surname = user.Surname,
+                EmailAddress = user.Email,
+                Phone = user.Phone,
+                Image = user.Image
+
+            };
+            return View(editUserViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUserProfile(EditUserProfileViewModel editUserProfile)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Niepowodzenie w edycji profilu");
+                return View("EditUserProfile", editUserProfile);
+            }
+            var user = await _userService.GetIdByNoTracking(editUserProfile.Id);
+
+            if (user == null)
+            {
+                TempData["Error"] = "Nie znaleziono użytkownika.";
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            user.Name = editUserProfile.Name;
+            user.Surname = editUserProfile.Surname;
+            user.Email = editUserProfile.EmailAddress;
+            user.Phone = editUserProfile.Phone;
+            user.Image = editUserProfile.Image;
+
+            if (!string.IsNullOrEmpty(editUserProfile.CurrentPassword) && !string.IsNullOrEmpty(editUserProfile.NewPassword) && !string.IsNullOrEmpty(editUserProfile.ConfirmNewPassword))
+            {
+                var passwordCheck = await _userService.VerifyPasswordAsync(user, editUserProfile.CurrentPassword);
+                if (!passwordCheck)
+                {
+                    ModelState.AddModelError("", "Aktualne hasło jest nieprawidłowe.");
+                    return View("EditUserProfile", editUserProfile);
+                }
+
+                if (editUserProfile.NewPassword != editUserProfile.ConfirmNewPassword)
+                {
+                    ModelState.AddModelError("", "Nowe hasło i potwierdzenie nowego hasła nie są zgodne.");
+                    return View("EditUserProfile", editUserProfile);
+                }
+
+                var passwordUpdateResult = await _userService.UpdatePasswordAsync(user, editUserProfile.NewPassword);
+                if (!passwordUpdateResult)
+                {
+                    ModelState.AddModelError("", "Nie udało się zaktualizować hasła.");
+                    return View("EditUserProfile", editUserProfile);
+                }
+            }
+
+            _userService.UpdateUser(user);
+
+            TempData["Success"] = "Profil został zaktualizowany.";
+            return RedirectToAction("Index", "Car");
         }
     }
 }

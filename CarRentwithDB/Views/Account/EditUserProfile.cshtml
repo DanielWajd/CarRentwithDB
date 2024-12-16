@@ -1,0 +1,90 @@
+﻿@using CarRentwithDB.ViewModels
+@model EditUserProfileViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <p>
+            <h1>Jakie dane chcesz zmienić?</h1>
+        </p>
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Sorki!</b> - @TempData["Error"]</span>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form method="post" asp-action="EditUserProfile" enctype="multipart/form-data">
+                    <input type="hidden" id="Id" name="Id" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <!-- Dane użytkownika -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Surname" class="control-label"></label>
+                        <input asp-for="Surname" class="form-control">
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="EmailAddress" class="control-label"></label>
+                        <input asp-for="EmailAddress" class="form-control">
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+
+                    <div id="passwordChangeSection" style="display: none;">
+                        <div class="form-group mb-3">
+                            <label asp-for="CurrentPassword" class="control-label">Aktualne hasło</label>
+                            <input asp-for="CurrentPassword" class="form-control" type="password">
+                            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="NewPassword" class="control-label">Nowe hasło</label>
+                            <input asp-for="NewPassword" class="form-control" type="password">
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ConfirmNewPassword" class="control-label">Potwierdź nowe hasło</label>
+                            <input asp-for="ConfirmNewPassword" class="form-control" type="password">
+                            <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <a  id="togglePasswordChange" class="btn-link text-muted">Zmień hasło</a>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Potwierdź" />
+                        <a class="btn btn-success btn-sm" asp-controller="Home" asp-action="Index">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("togglePasswordChange").addEventListener("click", function () {
+        var section = document.getElementById("passwordChangeSection");
+        if (section.style.display === "none") {
+            section.style.display = "block"; 
+            this.textContent = "Ukryj zmianę hasła"; 
+        } else {
+            section.style.display = "none";
+            this.textContent = "Zmień hasło";
+        }
+    });
+</script>
+

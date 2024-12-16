@@ -23,15 +23,6 @@ namespace CarRentwithDB.Controllers
             return View(detailsboardViewModel);
         }
         
-        //public async Task<IActionResult> UserRentals()
-        //{
-        //    var userCar = await _detailsBoardService.GetAllRentedCars();
-        //    var detailsBoardViewModel = new DetailsBoardViewModel()
-        //    {
-        //        Cars = userCar
-        //    };
-        //    return View(detailsBoardViewModel);
-        //}
         public async Task<IActionResult> UserRentals()
         {
             var userRentals = await _detailsBoardService.GetAllRentals();
