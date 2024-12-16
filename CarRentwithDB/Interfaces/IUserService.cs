@@ -6,5 +6,10 @@ namespace CarRentwithDB.Interfaces
     {
         Task<IEnumerable<AppUser>> GetAllUsers();
         Task<AppUser> GetUserById(string id);
+        Task<AppUser> GetIdByNoTracking(string id);
+        Task<bool> UpdateUser(AppUser user);
+        Task<bool> Save();
+        Task<bool> VerifyPasswordAsync(AppUser user, string currentPassword);
+        Task<bool> UpdatePasswordAsync(AppUser user, string newPassword);
     }
 }

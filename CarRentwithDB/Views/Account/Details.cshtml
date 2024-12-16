@@ -6,8 +6,14 @@
 @{
 }
 <div class="container">
-    <h1 class="display-4 fw-normal my-4">
+    <h1 class="display-4 fw-normal my-4 d-flex justify-content-between align-items-center">
         @($"{Model.Name} {Model.Surname}")
+        @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
+        {
+            <a href="@Url.Action("EditUserProfile", "Account")" class="btn btn-primary">
+                Edytuj
+            </a>
+        }
     </h1>
 
     <div class="row">
