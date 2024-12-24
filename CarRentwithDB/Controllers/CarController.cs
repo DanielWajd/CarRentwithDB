@@ -202,5 +202,18 @@ namespace CarRentwithDB.Controllers
             var cars = await _carService.GetFilteredCars(city, type, makeModel);
             return View("Index", cars);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUnAvailableCars()
+        {
+            var unavailableCars = await _carService.GetUnAvailableCarsAsync();
+            return View("Index", unavailableCars);
+        }
+        //[HttpGet]
+        //public async Task<IActionResult> SortCars(string? sort)
+        //{
+        //    var cars = await _carService.GetSortedCars(sort);
+        //    return View("Index", cars);
+        //}
     }
 }

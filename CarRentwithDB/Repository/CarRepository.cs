@@ -81,10 +81,7 @@ namespace CarRentwithDB.Services
         {
             var query = _context.Cars.AsQueryable();
 
-            if (!string.IsNullOrEmpty(city))
-            {
-                query = query.Where(car => car.City.Contains(city));
-            }
+            
 
             if (!string.IsNullOrEmpty(type) && Enum.TryParse(type, true, out CarType carTypeEnum))
             {
@@ -106,9 +103,22 @@ namespace CarRentwithDB.Services
                     var search = parts[0];
                     query = query.Where(car => car.Make.Contains(search) || car.Model.Contains(search));
                 }
+
+            }
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(car => car.City.Contains(city));
             }
             return await query.ToListAsync();
         }
 
+        public async Task<List<Car>> GetUnAvailableCarsAsync()
+        {
+            return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCars").ToListAsync();
+        }
+        public async Task<List<Car>> GetSortedCars(string sort)
+        {
+            return await _context.Cars.FromSqlRaw("EXEC GetCarsSortedByPrice @SortDirection = {0}", sort).ToListAsync();
+        }
     }
 }
