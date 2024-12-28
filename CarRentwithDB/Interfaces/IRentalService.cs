@@ -5,5 +5,6 @@ namespace CarRentwithDB.Interfaces
     public interface IRentalService
     {
         Task<bool> CreateRental(Rental rental);
+        Task<List<Rental>> GetAllRentals();
     }
 }

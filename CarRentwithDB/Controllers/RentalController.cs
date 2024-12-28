@@ -16,9 +16,27 @@ namespace CarRentwithDB.Controllers
             _carService = carService;
             _contextAccessor = contextAccessor;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            
+            var rentals = await _rentalService.GetAllRentals();
+            
+            
+            var allRentalsViewModel = rentals.Select(rental => new AllRentalsViewModel
+            {
+                RentalId = rental.RentalId,
+                StartDate = rental.StartDate,
+                EndDate = rental.EndDate,
+                Price = rental.Price,
+                Make = rental.Car.Make,  
+                Model = rental.Car.Model,
+                Image = rental.Car.Image, 
+                UserName = rental.AppUser.Name,  
+                UserSurname = rental.AppUser.Surname 
+            }).ToList();
+
+            
+            return View(allRentalsViewModel);
         }
         public async Task<IActionResult> Create(int carId)
         {
