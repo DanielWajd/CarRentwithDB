@@ -25,7 +25,7 @@ namespace CarRentwithDB.Controllers
         
         public async Task<IActionResult> UserRentals()
         {
-            var userRentals = await _detailsBoardService.GetAllRentals();
+            var userRentals = await _detailsBoardService.GetAllUserRentals();
 
             var detailsBoardViewModel = new DetailsBoardViewModel()
             {

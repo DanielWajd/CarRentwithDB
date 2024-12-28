@@ -1,6 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Wypozyczenia</h1>
+﻿@using CarRentwithDB.ViewModels
+@model List<AllRentalsViewModel>
+
+<h1 class="display-4 fw-normal">Wypożyczenia klientów</h1>
+
+<div class="album py-5">
+    <div class="container">
+        <h2>Aktualne wypożyczenia</h2>
+        <div class="row">
+            @if (Model != null && Model.Any(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
+            {
+                @foreach (var rental in Model.Where(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
+                {
+                    <div class="col-12 mb-4">
+                        <div class="bg-white rounded shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                        <img src="@rental.Image" alt="@rental.Make @rental.Model" class="img-fluid rounded" style="max-width: 150px;">
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">@rental.Make @rental.Model</h5>
+                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <p class="mb-1">Użytkownik: @rental.UserName @rental.UserSurname</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Brak aktualnych wypożyczeń do wyświetlenia.</p>
+                </div>
+            }
+        </div>
+
+        <h2>Wszystkie wypożyczenia</h2>
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var rental in Model)
+                {
+                    <div class="col-12 mb-4">
+                        <div class="bg-white rounded shadow p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                        <img src="@rental.Image" alt="@rental.Make @rental.Model" class="img-fluid rounded" style="max-width: 150px;">
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">@rental.Make @rental.Model</h5>
+                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <p class="mb-1">Użytkownik: @rental.UserName @rental.UserSurname</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Brak wypożyczeń do wyświetlenia.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

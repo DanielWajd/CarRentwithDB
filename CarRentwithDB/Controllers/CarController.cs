@@ -25,11 +25,11 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            Car car = await _carService.GetByIdAsync(id);
-            return View(car);
+            var car = await _carService.GetByIdAsync(id);
+            return car == null ? NotFound() : View(car);
         }
-        //TO DO AYSNC
-        public IActionResult Create()
+        
+        public async Task<IActionResult> Create()
         {
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var createCarViewModel = new CreateCarViewModel { AppUserId = curUserId };
