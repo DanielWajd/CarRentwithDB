@@ -19,12 +19,15 @@ namespace CarRentwithDB.ViewModels
         public string ConfirmPassword { get; set; }
         [Display(Name = "Imie")]
         [Required(ErrorMessage = "Imię jest wymagane")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Imie musi skłądac się tylko z liter")]
         public string Name { get; set; }
         [Display(Name = "Nazwisko")]
         [Required(ErrorMessage = "Nazwisko jest wymagane")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Nazwisko musi skąłdać się tylko z liter")]
         public string Surname { get; set; }
         [Display(Name = "Numer telefonu")]
         [Required(ErrorMessage = "Numer telefonu jest wymagany")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "Numer telefonu musi składać się z 9 cyfr!")]
         public string Phone { get; set; }
         public string? Image { get; set; }
         [Display(Name = "Typ użytkownika")]

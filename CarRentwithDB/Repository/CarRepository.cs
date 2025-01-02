@@ -112,13 +112,17 @@ namespace CarRentwithDB.Services
             return await query.ToListAsync();
         }
 
+        public async Task<List<Car>> GetUnAvailableCarsAsyncToUpdate()
+        {
+            return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCarsToUpdate").ToListAsync();
+        }
         public async Task<List<Car>> GetUnAvailableCarsAsync()
         {
-            return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCars").ToListAsync();
+            return await _context.Cars.FromSqlRaw("EXEC GetUnavailableCars").ToListAsync();
         }
-        public async Task<List<Car>> GetSortedCars(string sort)
-        {
-            return await _context.Cars.FromSqlRaw("EXEC GetCarsSortedByPrice @SortDirection = {0}", sort).ToListAsync();
-        }
+        //public async Task<List<Car>> GetSortedCars(string sort)
+        //{
+        //    return await _context.Cars.FromSqlRaw("EXEC GetCarsSortedByPrice @SortDirection = {0}", sort).ToListAsync();
+        //}
     }
 }

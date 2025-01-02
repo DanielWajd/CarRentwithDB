@@ -204,6 +204,12 @@ namespace CarRentwithDB.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetUnAvailableCarsToUpdate()
+        {
+            var unavailableCarsToUpade = await _carService.GetUnAvailableCarsAsyncToUpdate();
+            return View("Index", unavailableCarsToUpade);
+        }
+        [HttpGet]
         public async Task<IActionResult> GetUnAvailableCars()
         {
             var unavailableCars = await _carService.GetUnAvailableCarsAsync();

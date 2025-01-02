@@ -17,7 +17,8 @@ namespace CarRentwithDB.Interfaces
         bool Save();
         Task UpdateCarAvailability(int carId, bool isAvailable);
         Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel);
+        Task<List<Car>> GetUnAvailableCarsAsyncToUpdate();
         Task<List<Car>> GetUnAvailableCarsAsync();
-        Task<List<Car>> GetSortedCars(string sort);
+        //Task<List<Car>> GetSortedCars(string sort);
     }
 }
