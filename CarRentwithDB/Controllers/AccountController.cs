@@ -169,7 +169,7 @@ namespace CarRentwithDB.Controllers
             }
             if (string.IsNullOrEmpty(user.Image))
             {
-                user.Image = "https://kolo6wola.ompzw.pl/img/defaults/user-350x350.png";
+                user.Image = "/img/user.png";
             }
             var userDetailViewModel = new UserDetailViewModel
             {
