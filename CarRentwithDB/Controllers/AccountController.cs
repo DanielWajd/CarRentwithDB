@@ -69,6 +69,7 @@ namespace CarRentwithDB.Controllers
         {
             if (!ModelState.IsValid)
             {
+                //Errors 
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
                     Console.WriteLine(error.ErrorMessage);
@@ -144,7 +145,10 @@ namespace CarRentwithDB.Controllers
             }
             else
             {
-                TempData["Error"] = "Error while creating the user";
+                foreach (var error in newUserResponse.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
                 return View(registerViewModel);
             }
         }

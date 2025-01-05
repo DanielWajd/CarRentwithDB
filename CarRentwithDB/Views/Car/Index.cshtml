@@ -15,14 +15,20 @@
                 <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="FilterCars" asp-controller="Car">
                     <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search" style="max-width: 400px;">
                     <input class="form-control me-2" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search" style="max-width: 400px;">
-                    <select class="form-control me-2" name="type" style="max-width: 400px;">
+                    <select class="form-control me-2 text-muted" name="type" style="max-width: 400px;">
                         <option value="">Wybierz typ samochodu</option>
                         @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
                         {
                             <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
                         }
                     </select>
-
+                    <select class="form-control me-2 text-muted" name="sortOrder" style="max-width: 400px;">
+                        <option value="">Sortuj według</option>
+                        <option value="PriceAsc">Cena rosnąco</option>
+                        <option value="PriceDesc">Cena malejąco</option>
+                        <option value="MakeAsc">Marka A-Z</option>
+                        <option value="MakeDesc">Marka Z-A</option>
+                    </select>
                     <button class="btn btn-success" type="submit">Szukaj</button>
                 </form>
 

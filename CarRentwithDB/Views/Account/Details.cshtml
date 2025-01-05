@@ -5,86 +5,91 @@
 *@
 @{
 }
-<div class="container">
-    <h1 class="display-4 fw-normal my-4 d-flex justify-content-between align-items-center">
-        @($"{Model.Name} {Model.Surname}")
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-dark">
+            @($"{Model.Name} {Model.Surname}")
+        </h1>
         @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
         {
-            <a href="@Url.Action("EditUserProfile", "Account")" class="btn btn-primary">
-                Edytuj
-            </a>
+            <a href="@Url.Action("EditUserProfile", "Account")" class="btn btn-success shadow">Edytuj profil</a>
         }
-    </h1>
+    </div>
 
     <div class="row">
         <div class="col-md-8">
-            <h3 class="my-3">Dane użytkownika:</h3>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item border-success">
-                    <strong>Rodzaj użytkownika:</strong> @EnumExtensions.TranslateUserType(Model.UserType)
-                </li>
-                <li class="list-group-item border-success">
-                    <strong>Numer telefonu:</strong> @Model.Phone
-                </li>
-                <li class="list-group-item border-success">
-                    <strong>Email:</strong> @Model.Email
-                </li>
-
-                @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Employee)
-                {
-                    <li class="list-group-item">
-                        <strong>Dodane samochody:</strong> @Model.Cars.Count() samochodów
-                        @if (Model.Cars != null && Model.Cars.Any())
-                        {
-                            <ul class="mt-2">
-                                @foreach (var car in Model.Cars)
-                                {
-                                    <li>
-                                        <strong>Marka i model:</strong> @car.Make @car.Model <br />
-                                        <strong>Numer rejestracyjny:</strong> @car.LicencePlate
-                                    </li>
-                                }
-                            </ul>
-                        }
-                        else
-                        {
-                            <p class="mt-2 text-muted">Brak dodanych aut</p>
-                        }
+            <div class="card shadow p-4 mb-4">
+                <h3 class="card-title text-dark">Dane użytkownika</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0">
+                        <strong>Rodzaj użytkownika:</strong> @EnumExtensions.TranslateUserType(Model.UserType)
                     </li>
-                }
-
-                @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
-                {
-                    <li class="list-group-item">
-                        <strong>Wypożyczenia:</strong>
-                        @if (Model.Rentals != null && Model.Rentals.Any())
-                        {
-                            <ul class="mt-2">
-                                @foreach (var rental in Model.Rentals)
-                                {
-                                    <li>
-                                        <strong>Marka i model:</strong> @rental.Car.Make @rental.Car.Model <br />
-                                        <strong>Numer rejestracyjny:</strong> @rental.Car.LicencePlate <br />
-                                        <strong>Data wypożyczenia:</strong> @rental.StartDate.ToShortDateString() <br />
-                                        <strong>Data zwrotu:</strong> @rental.EndDate.ToShortDateString()
-                                    </li>
-                                }
-                            </ul>
-                        }
-                        else
-                        {
-                            <p class="mt-2 text-muted">Brak wypożyczeń</p>
-                        }
+                    <li class="list-group-item border-0">
+                        <strong>Numer telefonu:</strong> @Model.Phone
                     </li>
-                }
-            </ul>
+                    <li class="list-group-item border-0">
+                        <strong>Email:</strong> @Model.Email
+                    </li>
+                </ul>
+            </div>
+
+            @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Employee)
+            {
+                <div class="card shadow p-4 mb-4">
+                    <h3 class="card-title text-dark">Dodane samochody</h3>
+                    @if (Model.Cars != null && Model.Cars.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var car in Model.Cars)
+                            {
+                                <li class="list-group-item border-0">
+                                    <strong>Marka i model:</strong> @car.Make @car.Model <br />
+                                    <strong>Numer rejestracyjny:</strong> @car.LicencePlate
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Brak dodanych aut</p>
+                    }
+                </div>
+            }
+
+            @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
+            {
+                <div class="card shadow p-4">
+                    <h3 class="card-title text-dark">Wypożyczenia</h3>
+                    @if (Model.Rentals != null && Model.Rentals.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var rental in Model.Rentals)
+                            {
+                                <li class="list-group-item border-0">
+                                    <strong>Marka i model:</strong> @rental.Car.Make @rental.Car.Model <br />
+                                    <strong>Numer rejestracyjny:</strong> @rental.Car.LicencePlate <br />
+                                    <strong>Data wypożyczenia:</strong> @rental.StartDate.ToShortDateString() <br />
+                                    <strong>Data zwrotu:</strong> @rental.EndDate.ToShortDateString()
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Brak wypożyczeń</p>
+                    }
+                </div>
+            }
         </div>
 
         <div class="col-md-4 text-center ">
-            <img src="@Model.Image"
-                 alt="Zdjęcie użytkownika"
-                 class="img-fluid rounded-circle shadow border border-success"
-                 style="max-width: 300px; max-height: 300px; object-fit: cover; " />
+            <div class="card shadow text-center p-4 d-flex justify-content-center align-items-center">
+                <img src="@Model.Image"
+                     alt="Zdjęcie użytkownika"
+                     class="img-fluid rounded-circle shadow-sm mb-3"
+                     style="max-width: 300px; max-height: 300px; object-fit: cover;" />
+                <h4 class="text-dark mt-3">@($"{Model.Name} {Model.Surname}")</h4>
+            </div>
         </div>
     </div>
 </div>

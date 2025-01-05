@@ -77,7 +77,7 @@ namespace CarRentwithDB.Services
             }
 
         }
-        public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel)
+        public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel, string sortOrder)
         {
             var query = _context.Cars.AsQueryable();
 
@@ -108,6 +108,24 @@ namespace CarRentwithDB.Services
             if (!string.IsNullOrEmpty(city))
             {
                 query = query.Where(car => car.City.Contains(city));
+            }
+            switch (sortOrder)
+            {
+                case "PriceAsc":
+                    query = query.OrderBy(car => car.DailyRate);
+                    break;
+                case "PriceDesc":
+                    query = query.OrderByDescending(car => car.DailyRate);
+                    break;
+                case "MakeAsc":
+                    query = query.OrderBy(car => car.Make);
+                    break;
+                case "MakeDesc":
+                    query = query.OrderByDescending(car => car.Make);
+                    break;
+                default:
+                    query = query.OrderBy(car => car.CarId);
+                    break;
             }
             return await query.ToListAsync();
         }
