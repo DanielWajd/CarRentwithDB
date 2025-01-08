@@ -6,9 +6,7 @@ namespace CarRentwithDB.Models
 {
     public class CarDetails
     {
-        [Key]
-        public int CarDetailsId { get; set; }
-
+        [Key, ForeignKey("Car")]
         public int CarId { get; set; }
         public Car Car { get; set; }
         [Required]
