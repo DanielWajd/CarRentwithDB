@@ -255,7 +255,7 @@ namespace CarRentwithDB.Controllers
                 }
             }
 
-            _userService.UpdateUser(user);
+            await _userService.UpdateUser(user);
 
             TempData["Success"] = "Profil został zaktualizowany.";
             return RedirectToAction("Index", "Car");

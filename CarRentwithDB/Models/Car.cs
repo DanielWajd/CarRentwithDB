@@ -48,6 +48,7 @@ namespace CarRentwithDB.Models
         public string LicencePlate { get; set; }
 
         public bool IsAvailable { get; set; }
+        public bool IsActive { get; set; } = true;
         [Required]
         public string Description { get; set; }
 

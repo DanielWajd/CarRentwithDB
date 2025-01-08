@@ -21,6 +21,10 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Car> cars = await _carService.GetAll();
+            if(User.IsInRole("customer") || !User.Identity.IsAuthenticated)
+            {
+                cars = cars.Where(car => car.IsAvailable);
+            }
             return View(cars);
         }
         public async Task<IActionResult> Details(int id)
@@ -71,7 +75,7 @@ namespace CarRentwithDB.Controllers
                 }
             };
 
-            _carService.Add(car);
+            await _carService.Add(car);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Edit(int id)
@@ -148,7 +152,7 @@ namespace CarRentwithDB.Controllers
                 car.CarDetails.TransmissionType = editCarViewModel.CarDetails.TransmissionType;
             }
 
-            _carService.Update(car);
+            await _carService.Update(car);
             return RedirectToAction("Index");
         }
 
@@ -171,8 +175,11 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
+            //To do usuwania całkowitego z bazy danych
+            //_carService.Delete(carDetails);
 
-            _carService.Delete(carDetails);
+            carDetails.IsActive = false;
+            await _carService.Update(carDetails);
             return RedirectToAction("Index");
         }
         [HttpGet]

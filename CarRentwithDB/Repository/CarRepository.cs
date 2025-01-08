@@ -14,22 +14,22 @@ namespace CarRentwithDB.Services
         {
             _context = context;
         }
-        public bool Add(Car car)
+        public async Task<bool> Add(Car car)
         {
             _context.Add(car);
-            return Save();
+            return await Save();
         }
 
-        public bool Delete(Car car)
+        public async Task<bool> Delete(Car car)
         {
             _context.Remove(car);
-            return Save();
+            return await Save();
         }
 
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            return await _context.Cars.ToListAsync();
+            return await _context.Cars.Where(car=>car.IsActive).ToListAsync();
         }
 
         public async Task<Car> GetByIdAsync(int id)
@@ -56,16 +56,16 @@ namespace CarRentwithDB.Services
             return Enumerable.Empty<Car>();
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
+            var saved = _context.SaveChangesAsync();
+            return await saved > 0 ? true : false;
         }
 
-        public bool Update(Car car)
+        public async Task<bool> Update(Car car)
         {
             _context.Update(car);
-            return Save();
+            return await Save();
         }
         public async Task UpdateCarAvailability(int carId, bool isAvailable)
         {
@@ -79,7 +79,7 @@ namespace CarRentwithDB.Services
         }
         public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel, string sortOrder)
         {
-            var query = _context.Cars.AsQueryable();
+            var query = _context.Cars.Where(car=>car.IsAvailable).AsQueryable();
 
             
 
