@@ -1,4 +1,10 @@
-﻿@model IEnumerable<Car>
+﻿@using CarRentwithDB.ViewModels
+@* @using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<Car>
+@model IEnumerable<Car>*@
+@model CarIndexViewModel
+
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,24 +18,39 @@
         <div class="row py-lg-4 position-relative">
             <div class="col-lg-8 mx-auto text-dark text-center">
                 <h1>Jakiego auta szukasz?</h1>
-                <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="FilterCars" asp-controller="Car">
-                    <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search" style="max-width: 400px;">
-                    <input class="form-control me-2" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search" style="max-width: 400px;">
-                    <select class="form-control me-2 text-muted" name="type" style="max-width: 400px;">
-                        <option value="">Wybierz typ samochodu</option>
-                        @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
-                        {
-                            <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
-                        }
-                    </select>
-                    <select class="form-control me-2 text-muted" name="sortOrder" style="max-width: 400px;">
-                        <option value="">Sortuj według</option>
-                        <option value="PriceAsc">Cena rosnąco</option>
-                        <option value="PriceDesc">Cena malejąco</option>
-                        <option value="MakeAsc">Marka A-Z</option>
-                        <option value="MakeDesc">Marka Z-A</option>
-                    </select>
-                    <button class="btn btn-success" type="submit">Szukaj</button>
+                <form class="row g-2 justify-content-center mt-4" role="search" method="get" asp-action="Index" asp-controller="Car">
+                    <div class="col-md-3">
+                        <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group me-2">
+                            <span class="input-group-text bg-white" id="location-btn">
+                                <img src="~/img/location.png" alt="Lokalizacja" style="width: 20px; height: 20px;">
+                            </span>
+                            <input class="form-control" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control me-2 text-muted" name="type">
+                            <option value="">Typ auta</option>
+                            @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
+                            {
+                                <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control me-2 text-muted" name="sortOrder">
+                            <option value="">Sortuj</option>
+                            <option value="PriceAsc">Cena rosnąco</option>
+                            <option value="PriceDesc">Cena malejąco</option>
+                            <option value="MakeAsc">Marka A-Z</option>
+                            <option value="MakeDesc">Marka Z-A</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 d-grid">
+                        <button class="btn btn-success" type="submit">Szukaj</button>
+                    </div>
                 </form>
 
             </div>
@@ -56,7 +77,7 @@
                 </div>
 
             }
-            @foreach (var item in Model)
+            @foreach (var item in Model.Cars)
             {
                 <div class="col-12 col-md-4">
                     <div class="card shadow-sm">
@@ -86,7 +107,29 @@
                     </div>
                 </div>
             }
-            
+            @* <div class="pagination">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort }))
+            </div> *@
+
         </div>
     </div>
+    <div class="d-flex justify-content-end mt-3">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">2</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
+
+@* <script src="~/js/location.js"></script> *@

@@ -1,23 +1,23 @@
 ﻿using CarRentwithDB.Data.Enum;
-using System.ComponentModel.DataAnnotations;
 
 namespace CarRentwithDB.ViewModels
 {
     public class CarDetailsViewModel
     {
-        [Required(ErrorMessage = "Liczba koni pojazdu jest wymagana")]
-        public int HorsePower { get; set; }
-
-        [Required(ErrorMessage = "Ilość miejsc pojazdu jest wymagana")]
-        public int Seats { get; set; }
-
-        [Required(ErrorMessage = "Pojemność silnika pojazdu jest wymagana")]
-        public decimal EngineCapacity { get; set; }
-
-        [Required(ErrorMessage = "Pojemnośc bagażnika pojazdu jest wymagana")]
-        public decimal TrunkCapacity { get; set; }
-
-        [Required(ErrorMessage = "Rodzaj skrzyni biegów pojazdu jest wymagany")]
-        public TransmissionType TransmissionType { get; set; }
+        public int CarId { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+        public string City { get; set; }
+        public CarType carType { get; set; }
+        public int Mileage { get; set; }
+        public CarColor carColor { get; set; }
+        public FuelType fuelType { get; set; }
+        public TechCarDetailsViewModel TechCarDetails { get; set; }
+        public SteeringSide steeringSide { get; set; }
+        public decimal DailyRate { get; set; }
+        public string Description { get; set; }
+        public bool IsAvailable { get; set; }
+        public string Image { get; set; }
     }
 }

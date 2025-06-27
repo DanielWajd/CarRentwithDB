@@ -46,9 +46,9 @@ namespace CarRentwithDB.ViewModels
         public string Description { get; set; }
         [Required(ErrorMessage = "Zdjęcie pojazdu jest wymagana")]
         public string Image { get; set; }
-        public CarDetailsViewModel CarDetails { get; set; }
         public string AppUserId { get; set; }
         [Required(ErrorMessage = "Strona kierownicy pojazdu jest wymagana")]
         public SteeringSide steeringSide { get; set; }
+        public TechCarDetailsViewModel CarDetails { get; set; }
     }
 }

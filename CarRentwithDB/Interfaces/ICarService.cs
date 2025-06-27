@@ -19,6 +19,7 @@ namespace CarRentwithDB.Interfaces
         Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel, string sortOrder);
         Task<List<Car>> GetUnAvailableCarsAsyncToUpdate();
         Task<List<Car>> GetUnAvailableCarsAsync();
+        Task<List<string>> GetCarsCities();
         //Task<List<Car>> GetSortedCars(string sort);
     }
 }

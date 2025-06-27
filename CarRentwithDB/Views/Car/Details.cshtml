@@ -1,4 +1,5 @@
-﻿@model Car
+﻿@using CarRentwithDB.ViewModels
+@model CarDetailsViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -38,7 +39,8 @@
                             <button type="submit" class="btn btn-success btn-lg w-100">Wypożycz teraz</button>
                         </form>
                     </div>
-                }else if (!User.Identity.IsAuthenticated)
+                }
+                else if (!User.Identity.IsAuthenticated)
                 {
                     <small>Zaloguj sie, aby wypożyczyć!</small>
                     <div class="text-center mt-4">
@@ -52,7 +54,7 @@
         </div>
 
     </div>
-    
+
     <h3 class="my-5 text-dark">Dane szczegółowe</h3>
     <div class="row">
         <!-- Ogólne dane -->
@@ -72,12 +74,12 @@
         <div class="col-md-4">
             <h4 class="mb-3">Techniczne</h4>
             <ul class="list-group">
-                @if (Model.CarDetails != null)
+                @if (Model.TechCarDetails != null)
                 {
                     <li class="list-group-item">Paliwo: <strong>@EnumExtensions.TranslateFuelType(Model.fuelType)</strong></li>
-                    <li class="list-group-item">Konie mechaniczne: <strong>@Model.CarDetails.HorsePower KM</strong></li>
-                    <li class="list-group-item">Pojemność silnika: <strong>@Model.CarDetails.EngineCapacity L</strong></li>
-                    <li class="list-group-item">Skrzynia biegów: <strong>@EnumExtensions.TranslateTransmissionType(Model.CarDetails.TransmissionType)</strong></li>
+                    <li class="list-group-item">Konie mechaniczne: <strong>@Model.TechCarDetails.HorsePower KM</strong></li>
+                    <li class="list-group-item">Pojemność silnika: <strong>@Model.TechCarDetails.EngineCapacity L</strong></li>
+                    <li class="list-group-item">Skrzynia biegów: <strong>@EnumExtensions.TranslateTransmissionType(Model.TechCarDetails.TransmissionType)</strong></li>
                 }
                 else
                 {
@@ -90,10 +92,10 @@
         <div class="col-md-4">
             <h4 class="mb-3">Ergonomiczne</h4>
             <ul class="list-group">
-                @if (Model.CarDetails != null)
+                @if (Model.TechCarDetails != null)
                 {
-                    <li class="list-group-item">Liczba miejsc: <strong>@Model.CarDetails.Seats</strong></li>
-                    <li class="list-group-item">Bagażnik: <strong>@Model.CarDetails.TrunkCapacity L</strong></li>
+                    <li class="list-group-item">Liczba miejsc: <strong>@Model.TechCarDetails.Seats</strong></li>
+                    <li class="list-group-item">Bagażnik: <strong>@Model.TechCarDetails.TrunkCapacity L</strong></li>
                     <li class="list-group-item">Strona kierownicy: <strong>@EnumExtensions.TranslateSteeringSide(Model.steeringSide)</strong></li>
                 }
                 else
@@ -105,12 +107,12 @@
     </div>
     @* @if (User.Identity.IsAuthenticated && User.IsInRole("customer") && Model.IsAvailable)
     {
-        <div class="text-end mt-4">
-            <form asp-controller="Rental" asp-action="Create" method="get">
-                <input type="hidden" name="carId" value="@Model.CarId" />
-                <button type="submit" class="btn btn-success btn-sm">Wypożycz</button>
-            </form>
-        </div>
+    <div class="text-end mt-4">
+    <form asp-controller="Rental" asp-action="Create" method="get">
+    <input type="hidden" name="carId" value="@Model.CarId" />
+    <button type="submit" class="btn btn-success btn-sm">Wypożycz</button>
+    </form>
+    </div>
     } *@
     </<div>
-</div>
+    </div>

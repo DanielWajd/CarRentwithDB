@@ -29,7 +29,7 @@ namespace CarRentwithDB.Services
 
         public async Task<IEnumerable<Car>> GetAll()
         {
-            return await _context.Cars.Where(car=>car.IsActive).ToListAsync();
+            return await _context.Cars.Where(car => car.IsActive).ToListAsync();
         }
 
         public async Task<Car> GetByIdAsync(int id)
@@ -79,9 +79,9 @@ namespace CarRentwithDB.Services
         }
         public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel, string sortOrder)
         {
-            var query = _context.Cars.Where(car=>car.IsAvailable).AsQueryable();
+            var query = _context.Cars.AsQueryable();
 
-            
+
 
             if (!string.IsNullOrEmpty(type) && Enum.TryParse(type, true, out CarType carTypeEnum))
             {
@@ -136,7 +136,13 @@ namespace CarRentwithDB.Services
         }
         public async Task<List<Car>> GetUnAvailableCarsAsync()
         {
-            return await _context.Cars.FromSqlRaw("EXEC GetUnavailableCars").ToListAsync();
+            //return await _context.Cars.FromSqlRaw("EXEC GetUnavailableCars").ToListAsync();
+            return await _context.Cars.Where(c => !c.IsAvailable).ToListAsync();
+        }
+
+        public async Task<List<string>> GetCarsCities()
+        {
+            return await _context.Cars.Where(c => c.IsAvailable).Select(c => c.City).Distinct().ToListAsync();
         }
         //public async Task<List<Car>> GetSortedCars(string sort)
         //{

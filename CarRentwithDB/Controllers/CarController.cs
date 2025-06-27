@@ -6,9 +6,10 @@ using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
+
 namespace CarRentwithDB.Controllers
 {
-    
+
     public class CarController : Controller
     {
         private readonly ICarService _carService;
@@ -18,21 +19,61 @@ namespace CarRentwithDB.Controllers
             _carService = carService;
             _contextAccessor = contextAccessor;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, string city, string type, string makeModel, string sortOrder)
         {
-            IEnumerable<Car> cars = await _carService.GetAll();
-            if(User.IsInRole("customer") || !User.Identity.IsAuthenticated)
+            //IEnumerable<Car> cars = await _carService.GetAll();
+            var cars = await _carService.GetFilteredCars(city, type, makeModel, sortOrder);
+            if (User.IsInRole("customer") || !User.Identity.IsAuthenticated)
             {
                 cars = cars.Where(car => car.IsAvailable);
             }
-            return View(cars);
+            var carIndexViewModel = new CarIndexViewModel
+            {
+                Cars = cars,
+                City = city,
+                Type = type,
+                MakeModel = makeModel,
+                SortOrder = sortOrder
+            };
+
+            int pageSize = 6;
+            int pageNumber = page ?? 1;
+            //return View(cars.ToPagedList(pageNumber, pageSize));
+            return View(carIndexViewModel);
         }
         public async Task<IActionResult> Details(int id)
         {
             var car = await _carService.GetByIdAsync(id);
-            return car == null ? NotFound() : View(car);
+            var carDetailsViewModel = new CarDetailsViewModel
+            {
+                CarId = car.CarId,
+                Make = car.Make,
+                Model = car.Model,
+                Year = car.Year,
+                City = car.City,
+                carType = car.carType,
+                Mileage = car.Mileage,
+                carColor = car.carColor,
+                fuelType = car.fuelType,
+                DailyRate = car.DailyRate,
+                Description = car.Description,
+                IsAvailable = car.IsAvailable,
+                Image = car.Image,
+                steeringSide = car.steeringSide,
+                TechCarDetails = new TechCarDetailsViewModel
+                {
+                    HorsePower = car.CarDetails.HorsePower,
+                    EngineCapacity = car.CarDetails.EngineCapacity,
+                    Seats = car.CarDetails.Seats,
+                    TrunkCapacity = car.CarDetails.TrunkCapacity,
+                    TransmissionType = car.CarDetails.TransmissionType
+                }
+            };
+
+
+            return View(carDetailsViewModel);
         }
-        
+
         public async Task<IActionResult> Create()
         {
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
@@ -102,7 +143,7 @@ namespace CarRentwithDB.Controllers
                 IsAvailable = car.IsAvailable,
                 Description = car.Description,
                 Image = car.Image,
-                CarDetails = new CarDetailsViewModel
+                CarDetails = new TechCarDetailsViewModel
                 {
                     HorsePower = car.CarDetails.HorsePower,
                     Seats = car.CarDetails.Seats,
@@ -160,9 +201,9 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var carDetails = await _carService.GetByIdAsync(id);
-            if (carDetails == null) 
-            { 
-                return View("Error"); 
+            if (carDetails == null)
+            {
+                return View("Error");
             }
             return View(carDetails);
         }
@@ -182,45 +223,38 @@ namespace CarRentwithDB.Controllers
             await _carService.Update(carDetails);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public async Task<IActionResult> ListCarByCity(string city)
-        {
-            if (string.IsNullOrEmpty(city))
-            {
-                return RedirectToAction("Index");
-            }
-            var cars = await _carService.GetCarByCity(city);
-            return View("Index", cars);
-        }
-        [HttpGet]
-        public async Task<IActionResult> ListCarByType(string type)
-        {
-            if (string.IsNullOrEmpty(type))
-            {
-                return RedirectToAction("Index");
-            }
-            var cars = await _carService.GetCarByType(type);
-            return View("Index", cars);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> FilterCars(string city, string type, string makeModel, string sortOrder)
-        {
-            var cars = await _carService.GetFilteredCars(city, type, makeModel, sortOrder);
-            return View("Index", cars);
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetUnAvailableCarsToUpdate()
         {
             var unavailableCarsToUpade = await _carService.GetUnAvailableCarsAsyncToUpdate();
-            return View("Index", unavailableCarsToUpade);
+            var model = new CarIndexViewModel
+            {
+                Cars = unavailableCarsToUpade,
+                City = null,
+                Type = null,
+                MakeModel = null,
+                SortOrder = null
+            };
+
+            return View("Index", model);
+            //return View("Index", unavailableCarsToUpade);
         }
         [HttpGet]
         public async Task<IActionResult> GetUnAvailableCars()
         {
             var unavailableCars = await _carService.GetUnAvailableCarsAsync();
-            return View("Index", unavailableCars);
+            var model = new CarIndexViewModel
+            {
+                Cars = unavailableCars,
+                City = null,
+                Type = null,
+                MakeModel = null,
+                SortOrder = null
+            };
+
+            return View("Index", model);
+            //return View("Index", unavailableCars);
         }
         //[HttpGet]
         //public async Task<IActionResult> SortCars(string? sort)
