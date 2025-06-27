@@ -130,7 +130,7 @@ namespace CarRentwithDB.Controllers
                     EmployeeType = registerViewModel.registerEmployee.EmployeeType,
                     Image = registerViewModel.Image
                 };
-                
+
 
                 newUserResponse = await _userManager.CreateAsync(newEmployee, registerViewModel.Password);
                 if (newUserResponse.Succeeded)
@@ -152,13 +152,86 @@ namespace CarRentwithDB.Controllers
                 return View(registerViewModel);
             }
         }
+        public IActionResult RegisterCustomer()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegisterCustomer(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                //Errors 
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                return View(registerViewModel);
+            }
+
+            var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+            if (user != null)
+            {
+                TempData["Error"] = "Ten emial jest już zajęty";
+                return View(registerViewModel);
+            }
+            IdentityResult newUserResponse;
+
+
+            // Customer
+
+            var newAddress = new Address
+            {
+                Street = registerViewModel.registerCustomer.Street,
+                City = registerViewModel.registerCustomer.City,
+                HouseNumber = registerViewModel.registerCustomer.HouseNumber,
+                Voivodeship = registerViewModel.registerCustomer.Voivodeship,
+                Zip = registerViewModel.registerCustomer.Zip
+            };
+            var newCustomer = new Customer()
+            {
+                Name = registerViewModel.Name,
+                Surname = registerViewModel.Surname,
+                Phone = registerViewModel.Phone,
+                Email = registerViewModel.EmailAddress,
+                UserName = registerViewModel.EmailAddress,
+                UserType = UserType.Customer,
+                DrivingLicence = registerViewModel.registerCustomer.DrivingLicence,
+                Image = registerViewModel.Image,
+                Address = newAddress
+            };
+
+            newUserResponse = await _userManager.CreateAsync(newCustomer, registerViewModel.Password);
+            if (newUserResponse.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newCustomer, UserRoles.Customer);
+            }
+
+
+
+
+            if (newUserResponse.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                foreach (var error in newUserResponse.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(registerViewModel);
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        
+
         public async Task<IActionResult> Index()
         {
             IEnumerable<AppUser> users = await _userService.GetAllUsers();
@@ -169,7 +242,7 @@ namespace CarRentwithDB.Controllers
             var user = await _userService.GetUserById(id);
             if (user == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             if (string.IsNullOrEmpty(user.Image))
             {
@@ -184,17 +257,18 @@ namespace CarRentwithDB.Controllers
                 Phone = user.Phone,
                 Image = user.Image,
                 UserType = user.UserType,
-                Cars = user.Cars ?? new List<Car>(),  
+                Cars = user.Cars ?? new List<Car>(),
                 Rentals = user.Rentals ?? new List<Rental>()
             };
-            
+
             return View(userDetailViewModel);
         }
         public async Task<IActionResult> EditUserProfile()
         {
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var user = await _userService.GetUserById(curUserId);
-            if (user == null) {
+            if (user == null)
+            {
                 return View("Error");
             }
             var editUserViewModel = new EditUserProfileViewModel

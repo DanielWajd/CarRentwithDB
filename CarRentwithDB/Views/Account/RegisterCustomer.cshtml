@@ -1,0 +1,98 @@
+﻿@using CarRentwithDB.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Rejestracja";
+}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <p>
+            <h1>Stwórz nowe konto </h1>
+        </p>
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Sorki!</b> - @TempData["Error"]</span>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <p>Coding@1234?</p>
+                <form asp-action="Register" enctype="multipart/form-data">
+                    <h4>Ogólne Informacje</h4>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Surname" class="control-label"></label>
+                        <input asp-for="Surname" class="form-control">
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="EmailAddress" class="control-label "></label>
+                        <input asp-for="EmailAddress" class="form-control">
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Image" class="control-label "></label>
+                        <input asp-for="Image" class="form-control">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="drivingLicence" class="control-label">Prawo Jazdy</label>
+                        <input type="text" name="registerCustomer.DrivingLicence" id="drivingLicence" class="form-control" />
+                        <span class="text-danger" id="drivingLicenceError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="street" class="control-label">Ulica</label>
+                        <input type="text" name="registerCustomer.Street" id="street" class="form-control" />
+                        <span class="text-danger" id="streetError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="houseNumber" class="control-label">Numer Domu</label>
+                        <input type="text" name="registerCustomer.HouseNumber" id="houseNumber" class="form-control" />
+                        <span class="text-danger" id="houseNumberError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="control-label">Miasto</label>
+                        <input type="text" name="registerCustomer.City" id="city" class="form-control" />
+                        <span class="text-danger" id="cityError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="voivodeship" class="control-label">Województwo</label>
+                        <input type="text" name="registerCustomer.Voivodeship" id="voivodeship" class="form-control" />
+                        <span class="text-danger" id="voivodeshipError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip" class="control-label">Kod Pocztowy</label>
+                        <input type="text" name="registerCustomer.Zip" id="zip" class="form-control" />
+                        <span class="text-danger" id="zipError"></span>
+                    </div>
+                    <div class="mb-3" id="formContainer"></div>
+                    <div class="form-group mb-3">
+                        <input class="btn btn-outline-success float right " type="submit" value="Rejestruj" />
+                        <a class="btn btn-success btn-sm " asp-controller="Car" asp-action="Index">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
