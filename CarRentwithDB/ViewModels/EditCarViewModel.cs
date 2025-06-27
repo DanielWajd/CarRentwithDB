@@ -33,7 +33,7 @@ namespace CarRentwithDB.ViewModels
         public string Description { get; set; }
 
         public string Image { get; set; }
-        public CarDetailsViewModel CarDetails { get; set; }
+        public TechCarDetailsViewModel CarDetails { get; set; }
 
     }
 }
