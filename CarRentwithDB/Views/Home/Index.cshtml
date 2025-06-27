@@ -13,24 +13,29 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <p class="lead">
-                 Witaj w naszej wypożyczalni! Wybierz idealny samochód dla siebie i ciesz się komfortową podróżą.
-                </p>   
+                    Witaj w naszej wypożyczalni! Wybierz idealny samochód dla siebie i ciesz się komfortową podróżą.
+                </p>
             }
             else
             {
                 <p class="lead">Witaj w naszej wypożyczalni! Zaloguj się, aby móc wybrać idealny samochód dla siebie i cieszyć się komfortową podróżą.</p>
             }
-            <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="FilterCars" asp-controller="Car">
+            <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="Index" asp-controller="Car">
                 <input class="form-control me-2" name="makeModel" type="search" placeholder="Wpisz markę i model..." aria-label="Search" style="max-width: 400px;">
-                <input class="form-control me-2" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search" style="max-width: 400px;">
+                <div class="input-group me-2" style="max-width: 400px;">
+                    <span class="input-group-text bg-white" id="location-btn">
+                        <img src="~/img/location.png" alt="Lokalizacja" style="width: 20px; height: 20px;">
+                    </span>
+                    <input class="form-control" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search">
+                </div>
                 <select class="form-control me-2" name="type" style="max-width: 400px;">
-                    <option value="" >Wybierz typ samochodu</option>
+                    <option value="">Wybierz typ samochodu</option>
                     @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
                     {
                         <option value="@carType">@EnumExtensions.TranslateCarType((CarRentwithDB.Data.Enum.CarType)carType)</option>
                     }
                 </select>
-                
+
                 <button class="btn btn-success" type="submit">Szukaj</button>
             </form>
         </div>
@@ -40,115 +45,65 @@
     <h2 class="fw-bold mb-4">Wybierz swój idealny samochód</h2>
     <div class="cars-row d-flex flex-wrap justify-content-center align-items-center">
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="Sedan">
-            <img src="~/img/sedan.png" alt="Sedan">
-            <p class="mt-2"><strong>Sedan</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Sedan">
+                <img src="~/img/sedan.png" alt="Sedan">
+                <p class="mt-2"><strong>Sedan</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="SUV">
-            <img src="~/img/suv.png" alt="SUV">
-            <p class="mt-2"><strong>SUV</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="SUV">
+                <img src="~/img/suv.png" alt="SUV">
+                <p class="mt-2"><strong>SUV</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="Hatchback">
-            <img src="~/img/hatchback.png" alt="Hatchback">
-            <p class="mt-2"><strong>Hatchback</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Hatchback">
+                <img src="~/img/hatchback.png" alt="Hatchback">
+                <p class="mt-2"><strong>Hatchback</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="Convertible">
-            <img src="~/img/cabriolet.png" alt="Kabriolet">
-            <p class="mt-2"><strong>Kabriolet</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Convertible">
+                <img src="~/img/cabriolet.png" alt="Kabriolet">
+                <p class="mt-2"><strong>Kabriolet</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="Minivan">
-            <img src="~/img/minivan.png" alt="Minivan">
-            <p class="mt-2"><strong>Minivan</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Minivan">
+                <img src="~/img/minivan.png" alt="Minivan">
+                <p class="mt-2"><strong>Minivan</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="Coupe">
-            <img src="~/img/coupe.png" alt="Coupe">
-            <p class="mt-2"><strong>Coupe</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Coupe">
+                <img src="~/img/coupe.png" alt="Coupe">
+                <p class="mt-2"><strong>Coupe</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="StationWagon">
-            <img src="~/img/stationwagon.png" alt="Kombi">
-            <p class="mt-2"><strong>Kombi</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="StationWagon">
+                <img src="~/img/stationwagon.png" alt="Kombi">
+                <p class="mt-2"><strong>Kombi</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="PickupTruck">
-            <img src="~/img/pickuptruck.png" alt="Pickup">
-            <p class="mt-2"><strong>Pickup</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="PickupTruck">
+                <img src="~/img/pickuptruck.png" alt="Pickup">
+                <p class="mt-2"><strong>Pickup</strong></p>
             </a>
         </div>
         <div class="car-icon">
-            <a asp-area="" asp-controller="Car" asp-action="FilterCars" asp-route-type="SportsCar">
-            <img src="~/img/sportscar.png" alt="Auto sportowe">
-            <p class="mt-2"><strong>Sportowy</strong></p>
+            <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="SportsCar">
+                <img src="~/img/sportscar.png" alt="Auto sportowe">
+                <p class="mt-2"><strong>Sportowy</strong></p>
             </a>
         </div>
     </div>
 </div>
 
+@* <script src="~/js/location.js"></script> *@
 
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Najgorętsze oferty w tym miesiącu</h2>
-        </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                    <div class="card-body">
-                        <p class="card-text">Oferujemy szeroki wybór samochodów na każdą okazję. Sprawdź nasze najnowsze promocje!</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
-                            </div>
-                            <small class="text-muted">9 min temu</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                    <div class="card-body">
-                        <p class="card-text">Znajdź samochód idealny na rodzinne wakacje, weekendowy wypad lub podróż służbową.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
-                            </div>
-                            <small class="text-muted">15 min temu</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                    <div class="card-body">
-                        <p class="card-text">Nasze auta są regularnie serwisowane, aby zapewnić Ci pełne bezpieczeństwo.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Zobacz</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
-                            </div>
-                            <small class="text-muted">30 min temu</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
