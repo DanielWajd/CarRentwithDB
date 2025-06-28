@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using CarRentwithDB.ViewModels
+@model MapViewModel
+
+<h1>Gdzie możesz nas znaleźć</h1>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<div id="map"></div>
+
+<style>
+    #map {
+        width: 100%;
+        height: 80vh;
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+
+<script>
+    var map = L.map('map').setView([52.0, 19.0], 6);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // // Warszawa
+    // var marker = L.marker([52.237049, 21.017532]).addTo(map).openPopup();
+
+    // // Rzeszów
+    // var marker = L.marker([50.041187, 21.999120]).addTo(map).openPopup();
+
+    // // Wrocław
+    // var marker = L.marker([51.107883, 17.038538]).addTo(map).openPopup();
+
+    // // Lublin
+    // var marker = L.marker([51.246452, 22.568445]).addTo(map).openPopup();
+    const cityList = @Html.Raw(Json.Serialize(Model.Cities));
+    const cityCoordinates = {
+        "Warszawa": [52.237049, 21.017532],
+        "Rzeszów": [50.041187, 21.999120],
+        "Wrocław": [51.107883, 17.038538],
+        "Lublin": [51.246452, 22.568445],
+        "Kraków": [50.072620, 19.932500],
+        "Gdańsk": [54.352025, 18.646638],
+        "Poznań": [52.408418, 16.934318],
+        "Katowice": [50.264891, 19.023781],
+        "Łódź": [51.759248, 19.455983],
+        "Szczecin": [53.428543, 14.552812],
+        "Bydgoszcz": [53.123480, 18.008438],
+        "Olsztyn": [53.778422, 20.480119],
+        "Opole": [50.675106, 17.921297],
+        "Zielona Góra": [51.935524, 15.506186],
+        "Kielce": [50.866077, 20.628569],
+        "Torun": [53.013790, 18.598443]
+    };
+    cityList.forEach(city => {
+        const coords = cityCoordinates[city];
+        if (coords) {
+            L.marker(coords).addTo(map).bindPopup(`<b>${city}</b>`).openPopup();
+        }
+    });
+</script>

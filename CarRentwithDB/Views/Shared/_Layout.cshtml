@@ -97,14 +97,16 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - CarRentwithDB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            <br />
+        <div class="container d-flex justify-content-between flex-wrap">
             <small>
                 Reverse geocoding by
-                <a href="https://nominatim.openstreetmap.org/" target="_blank" rel="noopener noreferrer">Nominatim</a> –
-                map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>,
-                under <a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener noreferrer">ODbL</a>.
+                <a href="https://nominatim.openstreetmap.org/">Nominatim (OpenStreetMap)</a> –
+                map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>,
+                under <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>.
+            </small>
+            <small class="text-end ms-auto">
+                &copy; @DateTime.Now.Year - CarRentwithDB -
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </small>
         </div>
     </footer>
