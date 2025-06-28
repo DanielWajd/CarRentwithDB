@@ -38,5 +38,28 @@ namespace CarRentwithDB.Service
 
             return rentals;
         }
+        public async Task<IEnumerable<Rental>> GetFilteredRentals(string plate, string name, DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Rental.Include(r => r.Car).Include(r => r.AppUser).AsQueryable();
+
+            if (!string.IsNullOrEmpty(plate))
+            {
+                query = query.Where(r => r.Car.LicencePlate.Contains(plate));
+            }
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(r => r.AppUser.Surname.Contains(name));
+            }
+            if (startDate.HasValue)
+            {
+                query = query.Where(r => r.StartDate >= startDate.Value);
+            }
+            if (endDate.HasValue)
+            {
+                query = query.Where(r => r.EndDate <= endDate.Value);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

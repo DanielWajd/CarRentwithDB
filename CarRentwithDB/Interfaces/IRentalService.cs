@@ -6,5 +6,6 @@ namespace CarRentwithDB.Interfaces
     {
         Task<bool> CreateRental(Rental rental);
         Task<List<Rental>> GetAllRentals();
+        Task<IEnumerable<Rental>> GetFilteredRentals(string plate, string name, DateTime? startDate, DateTime? endDate);
     }
 }
