@@ -16,27 +16,45 @@ namespace CarRentwithDB.Controllers
             _carService = carService;
             _contextAccessor = contextAccessor;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
-            
-            var rentals = await _rentalService.GetAllRentals();
-            
-            
-            var allRentalsViewModel = rentals.Select(rental => new AllRentalsViewModel
+
+            //var rentals = await _rentalService.GetAllRentals();
+            var currentRentals = await _rentalService.GetCurrentRentals();
+            var rentalsFilter = await _rentalService.GetFilteredRentals(plate, name, startDate, endDate);
+
+            var currentRentalsViewModel = currentRentals.Select(rental => new AllRentalsViewModel
             {
                 RentalId = rental.RentalId,
                 StartDate = rental.StartDate,
                 EndDate = rental.EndDate,
                 Price = rental.Price,
-                Make = rental.Car.Make,  
+                Make = rental.Car.Make,
                 Model = rental.Car.Model,
-                Image = rental.Car.Image, 
-                UserName = rental.AppUser.Name,  
-                UserSurname = rental.AppUser.Surname 
+                Image = rental.Car.Image,
+                UserName = rental.AppUser.Name,
+                UserSurname = rental.AppUser.Surname
+            }).ToList();
+            var filteredRentalsViewModel = rentalsFilter.Select(rental => new AllRentalsViewModel
+            {
+                RentalId = rental.RentalId,
+                StartDate = rental.StartDate,
+                EndDate = rental.EndDate,
+                Price = rental.Price,
+                Make = rental.Car.Make,
+                Model = rental.Car.Model,
+                Image = rental.Car.Image,
+                UserName = rental.AppUser.Name,
+                UserSurname = rental.AppUser.Surname
             }).ToList();
 
-            
-            return View(allRentalsViewModel);
+            var rentalPageViewModel = new RentalPageViewModel
+            {
+                CurrentRentals = currentRentalsViewModel,
+                FilteredRentals = filteredRentalsViewModel,
+            };
+
+            return View("Index", rentalPageViewModel);
         }
         public async Task<IActionResult> Create(int carId)
         {

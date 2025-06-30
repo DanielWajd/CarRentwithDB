@@ -1,15 +1,28 @@
 ﻿@using CarRentwithDB.ViewModels
-@model List<AllRentalsViewModel>
+@model RentalPageViewModel
 
 <h1 class="display-4 fw-normal">Wypożyczenia klientów</h1>
 
-<div class="album py-5">
+<div class="album py-4">
     <div class="container">
-        <h2>Aktualne wypożyczenia</h2>
         <div class="row">
-            @if (Model != null && Model.Any(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
+            <div class="col-lg-10 col-md-4 mx-auto text-white">
+                <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="Index" asp-controller="Rental">
+                    <input class="form-control me-2" name="plate" type="search" placeholder="Wpisz numer rejestracyjny ..." aria-label="Search" style="max-width: 400px;">
+                    <input class="form-control me-2" name="name" type="search" placeholder="Wpisz nazwisko ..." aria-label="Search" style="max-width: 400px;">
+                    <div class="col-md-2 me-2">
+                        <input type="date" name="startDate" class="form-control text-muted" placeholder="Od:" />
+                    </div>
+                    <div class="col-md-2 me-2">
+                        <input type="date" name="endDate" class="form-control text-muted" placeholder="Do:" />
+                    </div>
+                    <button class="btn btn-success" type="submit">Szukaj</button>
+                </form>
+            </div>
+            <h2>Aktualne wypożyczenia</h2>
+            @if (Model.CurrentRentals != null && Model.CurrentRentals.Any())
             {
-                @foreach (var rental in Model.Where(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
+                @foreach (var rental in Model.CurrentRentals)
                 {
                     <div class="col-12 mb-4">
                         <div class="bg-white rounded shadow p-4">
@@ -37,11 +50,11 @@
             }
         </div>
 
-        <h2>Wszystkie wypożyczenia</h2>
+        <h2>Wyszukane wypożyczenia</h2>
         <div class="row">
-            @if (Model != null && Model.Any())
+            @if (Model != null && Model.FilteredRentals.Any())
             {
-                @foreach (var rental in Model)
+                @foreach (var rental in Model.FilteredRentals)
                 {
                     <div class="col-12 mb-4">
                         <div class="bg-white rounded shadow p-4">

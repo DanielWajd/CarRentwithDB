@@ -23,21 +23,21 @@ namespace CarRentwithDB.Service
             return saved > 0 ? true : false;
         }
         //All Rentals
-        public async Task<List<Rental>> GetAllRentals()
-        {
-            var rentals = await _context.Rental
-        .FromSqlRaw("EXEC GetAllRentals")
-        .ToListAsync();
+        //public async Task<List<Rental>> GetAllRentals()
+        //{
+        //    var rentals = await _context.Rental
+        //.FromSqlRaw("EXEC GetAllRentals")
+        //.ToListAsync();
 
             
-            foreach (var rental in rentals)
-            {
-                _context.Entry(rental).Reference(r => r.Car).Load();  
-                _context.Entry(rental).Reference(r => r.AppUser).Load();  
-            }
+        //    foreach (var rental in rentals)
+        //    {
+        //        _context.Entry(rental).Reference(r => r.Car).Load();  
+        //        _context.Entry(rental).Reference(r => r.AppUser).Load();  
+        //    }
 
-            return rentals;
-        }
+        //    return rentals;
+        //}
         public async Task<IEnumerable<Rental>> GetFilteredRentals(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
             var query = _context.Rental.Include(r => r.Car).Include(r => r.AppUser).AsQueryable();
@@ -61,5 +61,13 @@ namespace CarRentwithDB.Service
 
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<Rental>> GetCurrentRentals()
+        {
+            var time = DateTime.Now;
+            return await _context.Rental.Where(r => r.StartDate <= time && r.EndDate >= time).Include(r => r.Car).Include(r => r.AppUser).ToListAsync();
+        }
+
+        
     }
 }
