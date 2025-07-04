@@ -16,7 +16,6 @@ namespace CarRentwithDB.Models
         [StringLength(50)]
         public string Email { get; set; }
 
-
         [StringLength(20)]
         public string Phone { get; set; }
 

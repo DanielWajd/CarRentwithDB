@@ -5,7 +5,6 @@ namespace CarRentwithDB.ViewModels
 {
     public class RegisterEmployeeViewModel
     {
-        [Display(Name = "Typ pracownika")]
         [Required(ErrorMessage = "Wybierz typ pracownika.")]
         public EmployeeType EmployeeType { get; set; }
     }

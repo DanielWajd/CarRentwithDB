@@ -58,14 +58,14 @@ namespace CarRentwithDB.Controllers
             TempData["Error"] = "Nie ma takiego użytkownika";
             return View(loginViewModel);
         }
-        public IActionResult Register()
+        public IActionResult RegisterEmployee()
         {
             var response = new RegisterViewModel();
             return View(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> RegisterEmployee(RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
             {

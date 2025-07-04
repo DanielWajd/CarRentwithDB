@@ -31,6 +31,7 @@ namespace CarRentwithDB.ViewModels
         public CarColor carColor { get; set; }
 
         [Required(ErrorMessage = "Cena za dzień pojazdu jest wymagana")]
+        [Range(0, 999)]
         public decimal DailyRate { get; set; }
 
         [Required(ErrorMessage = "VIN pojazdu jest wymagany")]
