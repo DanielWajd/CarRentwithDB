@@ -6,7 +6,21 @@
 *@
 @{
 }
-<form method="post" asp-action="Edit">
+
+<div class="container mt-5">
+    <div class="shadow rounded p-4 bg-white border border-danger">
+        <div class="d-flex align-items-center text-danger mb-3" style="gap:1rem;">
+        <i class="bi bi-exclamation-triangle-fill" style="font-size: 2.5rem;"></i>
+        <h4>Czy na pewno chcesz usunąć @Model.Make @Model.Model?</h4>
+        </div>
+        <p>Samochód: <strong>@Model.Make @Model.Model</strong></p>
+        <p>Rok produkcji: <strong>@Model.Year</strong></p>
+        <p>VIN: <strong>@Model.VIN</strong></p>
+        <p>Numer rejestracyjny: <strong>@Model.LicencePlate</strong></p>
+
+    </div>
+</div>
+@* <form method="post" asp-action="Edit">
     <div asp-validation-summary="All" class="text-danger"></div>
     <input type="hidden" value="CarDetailsId" id="CarDetailsId" />
     <h4>Szczeóły ogólne</h4>
@@ -106,10 +120,13 @@
         </select>
     </div>
 
-</form>
+</form> *@
 <div class="form-group">
     <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="CarId" />
-        <input type="submit" value="Usuń" class="btn btn-danger float-right mt-3" />
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-success">Anuluj</a>
+        <input type="submit" value="Usuń" class="btn btn-danger float-right" />
+        </div>
     </form>
 </div>

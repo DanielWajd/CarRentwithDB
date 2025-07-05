@@ -79,7 +79,7 @@ namespace CarRentwithDB.Services
         }
         public async Task<IEnumerable<Car>> GetFilteredCars(string city, string type, string makeModel, string sortOrder)
         {
-            var query = _context.Cars.AsQueryable();
+            var query = _context.Cars.Where(car => car.IsActive == true).AsQueryable();
 
 
 

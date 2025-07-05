@@ -2,9 +2,8 @@
 {
     public enum UserType
     {
-        Employee,
-        Customer
-        
+        Customer,
+        Employee
     }
     public enum EmployeeType
     {
