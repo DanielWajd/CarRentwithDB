@@ -11,5 +11,6 @@ namespace CarRentwithDB.Interfaces
         Task<bool> Save();
         Task<bool> VerifyPasswordAsync(AppUser user, string currentPassword);
         Task<bool> UpdatePasswordAsync(AppUser user, string newPassword);
+        Task<IEnumerable<AppUser>> GetFilteredUsers(string name, string surname, string email, string phone);
     }
 }

@@ -51,7 +51,7 @@ namespace CarRentwithDB.Models
         public bool IsActive { get; set; } = true;
         [Required]
         public string Description { get; set; }
-
+        
         public string Image { get; set; }
         public CarDetails CarDetails { get; set; }
         [ForeignKey("AppUser")]

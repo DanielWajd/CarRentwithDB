@@ -27,17 +27,34 @@ namespace CarRentwithDB.Controllers
             {
                 cars = cars.Where(car => car.IsAvailable);
             }
+
+            //Paginacja
+            int pageSize = 6;
+            int pageIndex;
+            if (page.HasValue)
+            {
+                pageIndex = page.Value;
+            }
+            else
+            {
+                pageIndex = 1; 
+            }
+            int count = cars.Count();
+            int totalPages = (int)Math.Ceiling(count/(double)pageSize);
+            var items = cars.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+
+
             var carIndexViewModel = new CarIndexViewModel
             {
-                Cars = cars,
+                Cars = items,
                 City = city,
                 Type = type,
                 MakeModel = makeModel,
-                SortOrder = sortOrder
+                SortOrder = sortOrder,
+                //Paginacja
+                CurrentPage = pageIndex,
+                TotalPages = totalPages,
             };
-
-            int pageSize = 6;
-            int pageNumber = page ?? 1;
             //return View(cars.ToPagedList(pageNumber, pageSize));
             return View(carIndexViewModel);
         }

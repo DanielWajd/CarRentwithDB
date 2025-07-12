@@ -232,9 +232,9 @@ namespace CarRentwithDB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name, string surname, string email, string phone)
         {
-            IEnumerable<AppUser> users = await _userService.GetAllUsers();
+            IEnumerable<AppUser> users = await _userService.GetFilteredUsers(name, surname, email, phone);
             return View(users);
         }
         public async Task<IActionResult> Details(string id)

@@ -64,5 +64,29 @@ namespace CarRentwithDB.Service
                 return false;
             }
         }
+
+        public async Task<IEnumerable<AppUser>> GetFilteredUsers(string name, string surname, string email, string phone)
+        {
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(u => u.Name == name);
+            }
+            if (!string.IsNullOrEmpty(surname))
+            {
+                query = query.Where(u => u.Surname == surname);
+            }
+            if (!string.IsNullOrEmpty(email))
+            {
+                query = query.Where(u => u.Email == email);
+            }
+            if (!string.IsNullOrEmpty(phone))
+            {
+                query = query.Where(u => u.Phone == phone);
+            }
+
+            return await query.ToListAsync();
+        }
     } 
 }

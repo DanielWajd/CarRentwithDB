@@ -9,5 +9,9 @@ namespace CarRentwithDB.ViewModels
         public string Type { get; set; }
         public string MakeModel { get; set; }
         public string SortOrder { get; set; }
+
+        //Paginacja
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
     }
 }

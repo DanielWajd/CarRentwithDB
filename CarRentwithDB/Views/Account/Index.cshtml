@@ -9,6 +9,18 @@
 <div class="album py-5">
     <div class="container">
         <div class="row">
+            <div class="col-lg-10 col-md-4 mx-auto text-white">
+                <form class="d-flex justify-content-center mt-4" role="search" method="get" asp-action="Index" asp-controller="Account">
+                    <input class="form-control me-2" name="name" type="search" placeholder="Wpisz Imię ..." aria-label="Search" style="max-width: 400px;">
+                    <input class="form-control me-2" name="surname" type="search" placeholder="Wpisz Nazwisko ..." aria-label="Search" style="max-width: 400px;">
+                    <input class="form-control me-2" name="email" type="search" placeholder="Wpisz Email ..." aria-label="Search" style="max-width: 400px;">
+                    <input class="form-control me-2" name="phone" type="search" placeholder="Wpisz Numer Telefonu ..." aria-label="Search" style="max-width: 400px;">
+                    <button class="btn btn-success" type="submit">Szukaj</button>
+                </form>
+            </div>
+            <div class="mt-3">
+                <h3>Wyniki wyszukiwania</h3>
+                <hr/>
             @foreach (var item in Model)
             {
                 <div class="col-12 mb-4">
@@ -27,6 +39,7 @@
                     </div>
                 </div>
             }
+            </div>
         </div>
     </div>
 </div>
