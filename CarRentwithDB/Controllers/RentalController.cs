@@ -18,7 +18,10 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Index(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
-
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             //var rentals = await _rentalService.GetAllRentals();
             var currentRentals = await _rentalService.GetCurrentRentals();
             var rentalsFilter = await _rentalService.GetFilteredRentals(plate, name, startDate, endDate);
@@ -58,6 +61,10 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Create(int carId)
         {
+            if (!_contextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View("Error");
+            }
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var car = await _carService.GetByIdAsync(carId);
             if (car == null)

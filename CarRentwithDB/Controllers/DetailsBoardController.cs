@@ -15,6 +15,10 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             var userCar = await _detailsBoardService.GetAllCreatedCars();
             var detailsboardViewModel = new DetailsBoardViewModel()
             {
@@ -25,6 +29,7 @@ namespace CarRentwithDB.Controllers
         
         public async Task<IActionResult> UserRentals()
         {
+
             var userRentals = await _detailsBoardService.GetAllUserRentals();
 
             var detailsBoardViewModel = new DetailsBoardViewModel()

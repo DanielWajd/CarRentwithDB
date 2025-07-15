@@ -3,11 +3,13 @@
 @model DetailsBoardViewModel
 
 <h1 class="display-4 fw-normal">Szczegóły</h1>
+<hr />
 <a type="button" class="btn btn-success mb-4" asp-area="" asp-controller="Car" asp-action="Create">Dodaj auto</a>
 
 <div class="album py-5 ">
     <div class="container">
         <p class="display-4 fw-normal">Auta dodane przez ciebie</p>
+        <hr />
         <div class="row">
             @foreach (var item in Model.Cars)
             {

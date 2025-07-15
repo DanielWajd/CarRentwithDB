@@ -93,6 +93,10 @@ namespace CarRentwithDB.Controllers
 
         public async Task<IActionResult> Create()
         {
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var createCarViewModel = new CreateCarViewModel { AppUserId = curUserId };
             return View(createCarViewModel);
@@ -139,7 +143,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var car = await _carService.GetByIdAsyncNoTracking(id);
-            if (car == null)
+            if (car == null || !User.IsInRole("employee"))
             {
                 return View("Error");
             }
@@ -218,7 +222,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var carDetails = await _carService.GetByIdAsync(id);
-            if (carDetails == null)
+            if (carDetails == null || !User.IsInRole("employee"))
             {
                 return View("Error");
             }
@@ -229,7 +233,7 @@ namespace CarRentwithDB.Controllers
         {
             var carDetails = await _carService.GetByIdAsync(id);
 
-            if (carDetails == null)
+            if (carDetails == null || !User.IsInRole("employee"))
             {
                 return View("Error");
             }
@@ -245,6 +249,10 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> GetUnAvailableCarsToUpdate()
         {
             var unavailableCarsToUpade = await _carService.GetUnAvailableCarsAsyncToUpdate();
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             var model = new CarIndexViewModel
             {
                 Cars = unavailableCarsToUpade,
@@ -261,6 +269,10 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> GetUnAvailableCars()
         {
             var unavailableCars = await _carService.GetUnAvailableCarsAsync();
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             var model = new CarIndexViewModel
             {
                 Cars = unavailableCars,

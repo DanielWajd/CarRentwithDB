@@ -234,6 +234,10 @@ namespace CarRentwithDB.Controllers
 
         public async Task<IActionResult> Index(string name, string surname, string email, string phone)
         {
+            if (!User.IsInRole("employee"))
+            {
+                return View("Error");
+            }
             IEnumerable<AppUser> users = await _userService.GetFilteredUsers(name, surname, email, phone);
             return View(users);
         }

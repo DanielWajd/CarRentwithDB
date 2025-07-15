@@ -12,6 +12,7 @@
 <div class="album py-5">
     <div class="container">
         <h2>Aktualne wypożyczenia</h2>
+        <hr/>
         <div class="row">
             @if (Model.Rentals != null && Model.Rentals.Any(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now))
             {
@@ -24,10 +25,10 @@
                                     <img src="@rental.Car.Image" alt="@rental.Car.Make @rental.Car.Model" class="img-fluid rounded" style="max-width: 150px;">
                                 </div>
                                 <div>
-                                    <h5 class="mb-1">@rental.Car.Make @rental.Car.Model</h5>
-                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
-                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
-                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <h4 class="mb-1">@rental.Car.Make @rental.Car.Model</h4>
+                                    <p class="mb-1"><strong>Data rozpoczęcia:</strong> @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1"><strong>Data zakończenia:</strong> @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1"><strong>Cena:</strong> @rental.Price.ToString("C")</p>
                                     <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@rental.Car.CarId"
                                        class="btn btn-success btn-sm">Podgląd</a>
                                 </div>
@@ -45,6 +46,7 @@
         </div>
 
         <h2>Wszystkie wypożyczenia</h2>
+        <hr />
         <div class="row">
             @if (Model.Rentals != null && Model.Rentals.Any())
             {
@@ -57,10 +59,10 @@
                                     <img src="@rental.Car.Image" alt="@rental.Car.Make @rental.Car.Model" class="img-fluid rounded" style="max-width: 150px;">
                                 </div>
                                 <div>
-                                    <h5 class="mb-1">@rental.Car.Make @rental.Car.Model</h5>
-                                    <p class="mb-1">Data rozpoczęcia: @rental.StartDate.ToShortDateString()</p>
-                                    <p class="mb-1">Data zakończenia: @rental.EndDate.ToShortDateString()</p>
-                                    <p class="mb-1">Cena: @rental.Price.ToString("C")</p>
+                                    <h4 class="mb-1">@rental.Car.Make @rental.Car.Model</h4>
+                                    <p class="mb-1"><strong>Data rozpoczęcia:</strong> @rental.StartDate.ToShortDateString()</p>
+                                    <p class="mb-1"><strong>Data zakończenia:</strong> @rental.EndDate.ToShortDateString()</p>
+                                    <p class="mb-1"><strong>Cena:</strong> @rental.Price.ToString("C")</p>
                                     <a type="button" asp-controller="Car" asp-action="Details" asp-route-id="@rental.Car.CarId"
                                        class="btn btn-success btn-sm">Podgląd</a>
                                 </div>
