@@ -1,4 +1,5 @@
-﻿using CarRentwithDB.Interfaces;
+﻿using CarRentwithDB.Helpers;
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace CarRentwithDB.Controllers
                 Price = rental.Price,
                 Make = rental.Car.Make,
                 Model = rental.Car.Model,
-                Image = rental.Car.Image,
+                Image = ImageHelper.ConvertToImage(rental.Car.ImageData),
                 UserName = rental.AppUser.Name,
                 UserSurname = rental.AppUser.Surname
             }).ToList();
@@ -46,7 +47,7 @@ namespace CarRentwithDB.Controllers
                 Price = rental.Price,
                 Make = rental.Car.Make,
                 Model = rental.Car.Model,
-                Image = rental.Car.Image,
+                Image = ImageHelper.ConvertToImage(rental.Car.ImageData),
                 UserName = rental.AppUser.Name,
                 UserSurname = rental.AppUser.Surname
             }).ToList();
@@ -76,7 +77,7 @@ namespace CarRentwithDB.Controllers
                 CarId = carId,
                 AppUserId = curUserId,
                 DailyRate = car.DailyRate,
-                Image = car.Image,
+                Image = ImageHelper.ConvertToImage(car.ImageData),
                 Make = car.Make,
                 Model = car.Model
                 

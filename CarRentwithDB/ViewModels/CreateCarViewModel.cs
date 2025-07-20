@@ -46,7 +46,7 @@ namespace CarRentwithDB.ViewModels
         [Required(ErrorMessage = "Opis pojazdu jest wymagana")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Zdjęcie pojazdu jest wymagana")]
-        public string Image { get; set; }
+        public IFormFile Image { get; set; }
         public string AppUserId { get; set; }
         [Required(ErrorMessage = "Strona kierownicy pojazdu jest wymagana")]
         public SteeringSide steeringSide { get; set; }

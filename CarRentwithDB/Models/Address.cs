@@ -24,7 +24,6 @@ namespace CarRentwithDB.Models
         public string Voivodeship { get; set; }
 
         [Required]
-        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "Niepoprawny format kodu pocztowego")] 
         public string Zip { get; set; }
     }
 }

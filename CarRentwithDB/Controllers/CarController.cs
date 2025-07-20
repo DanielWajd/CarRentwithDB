@@ -1,4 +1,5 @@
 ﻿using CarRentwithDB.Data.Enum;
+using CarRentwithDB.Helpers;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.Services;
@@ -43,7 +44,12 @@ namespace CarRentwithDB.Controllers
             int totalPages = (int)Math.Ceiling(count/(double)pageSize);
             var items = cars.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
 
-
+            //Zdjecia
+            foreach (var car in items)
+            {
+                car.Image = ImageHelper.ConvertToImage(car.ImageData);
+            }
+            //Reszta
             var carIndexViewModel = new CarIndexViewModel
             {
                 Cars = items,
@@ -75,7 +81,7 @@ namespace CarRentwithDB.Controllers
                 DailyRate = car.DailyRate,
                 Description = car.Description,
                 IsAvailable = car.IsAvailable,
-                Image = car.Image,
+                Image = ImageHelper.ConvertToImage(car.ImageData),
                 steeringSide = car.steeringSide,
                 TechCarDetails = new TechCarDetailsViewModel
                 {
@@ -90,7 +96,8 @@ namespace CarRentwithDB.Controllers
 
             return View(carDetailsViewModel);
         }
-
+        //ImageData -- Do zapisu
+        //Image -- Do odczytu
         public async Task<IActionResult> Create()
         {
             if (!User.IsInRole("employee"))
@@ -125,7 +132,7 @@ namespace CarRentwithDB.Controllers
                 LicencePlate = createCarViewModel.LicencePlate,
                 IsAvailable = createCarViewModel.IsAvailable,
                 Description = createCarViewModel.Description,
-                Image = createCarViewModel.Image,
+                ImageData = ImageHelper.GetBytes(createCarViewModel.Image),
                 AppUserId = createCarViewModel.AppUserId,
                 CarDetails = new CarDetails
                 {
@@ -163,7 +170,7 @@ namespace CarRentwithDB.Controllers
                 LicencePlate = car.LicencePlate,
                 IsAvailable = car.IsAvailable,
                 Description = car.Description,
-                Image = car.Image,
+                Image = car.ImageData,
                 CarDetails = new TechCarDetailsViewModel
                 {
                     HorsePower = car.CarDetails.HorsePower,
@@ -203,8 +210,10 @@ namespace CarRentwithDB.Controllers
             car.LicencePlate = editCarViewModel.LicencePlate;
             car.IsAvailable = editCarViewModel.IsAvailable;
             car.Description = editCarViewModel.Description;
-            car.Image = editCarViewModel.Image;
-
+            if (editCarViewModel.ImageFile != null)
+            {
+                car.ImageData = ImageHelper.GetBytes(editCarViewModel.ImageFile);
+            }
             if (car.CarDetails != null)
             {
                 car.CarDetails.HorsePower = editCarViewModel.CarDetails.HorsePower;
@@ -253,6 +262,12 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
+            //Zdjecia
+            foreach (var car in unavailableCarsToUpade)
+            {
+                car.Image = ImageHelper.ConvertToImage(car.ImageData);
+            }
+            //Reszta
             var model = new CarIndexViewModel
             {
                 Cars = unavailableCarsToUpade,
@@ -273,6 +288,12 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
+            //Zdjecia
+            foreach (var car in unavailableCars)
+            {
+                car.Image = ImageHelper.ConvertToImage(car.ImageData);
+            }
+            //Reszta
             var model = new CarIndexViewModel
             {
                 Cars = unavailableCars,

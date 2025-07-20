@@ -10,9 +10,12 @@
         <h1 class="text-dark">
             @($"{Model.Name} {Model.Surname}")
         </h1>
-        @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
+       @*  @if (Model.UserType == CarRentwithDB.Data.Enum.UserType.Customer)
         {
             <a href="@Url.Action("EditUserProfile", "Account")" class="btn btn-success shadow">Edytuj profil</a>
+        } *@
+        @if(Model.IsCurrentUser){
+        <a href="@Url.Action("EditUserProfile", "Account")" class="btn btn-success shadow">Edytuj profil</a>
         }
     </div>
 

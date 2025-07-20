@@ -20,6 +20,7 @@ namespace CarRentwithDB.Models
         [Required]
         public int Year { get; set; }
         [Required]
+        [StringLength(50)]
         public string City { get; set; }
 
         [Required]
@@ -51,9 +52,17 @@ namespace CarRentwithDB.Models
         public bool IsActive { get; set; } = true;
         [Required]
         public string Description { get; set; }
-        
+        //Dawniej zdjecie z URL
+        //public string Image { get; set; }
+        //Do zdjecia z pliku
+        [Required]
+        public byte[] ImageData { get; set; }
+        [NotMapped]
         public string Image { get; set; }
+        ///
         public CarDetails CarDetails { get; set; }
+
+        //musi byc nullable - inaczej blad kaskadowosci. Walidacja w kontrolerach
         [ForeignKey("AppUser")]
         public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }

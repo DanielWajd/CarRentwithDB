@@ -1,4 +1,5 @@
-﻿using CarRentwithDB.Interfaces;
+﻿using CarRentwithDB.Helpers;
+using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,13 @@ namespace CarRentwithDB.Controllers
                 return View("Error");
             }
             var userCar = await _detailsBoardService.GetAllCreatedCars();
+
+            //do zdjec
+            foreach (var car in userCar)
+            {
+                car.Image = ImageHelper.ConvertToImage(car.ImageData);
+            }
+            //reszta
             var detailsboardViewModel = new DetailsBoardViewModel()
             {
                 Cars = userCar
@@ -32,6 +40,12 @@ namespace CarRentwithDB.Controllers
 
             var userRentals = await _detailsBoardService.GetAllUserRentals();
 
+            //do zdjec
+            foreach (var car in userRentals)
+            {
+                car.Car.Image = ImageHelper.ConvertToImage(car.Car.ImageData);
+            }
+            //reszta
             var detailsBoardViewModel = new DetailsBoardViewModel()
             {
                 Rentals = userRentals

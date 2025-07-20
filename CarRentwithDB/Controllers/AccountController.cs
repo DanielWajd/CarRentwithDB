@@ -244,6 +244,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var user = await _userService.GetUserById(id);
+            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             if (user == null)
             {
                 return NotFound();
@@ -262,7 +263,8 @@ namespace CarRentwithDB.Controllers
                 Image = user.Image,
                 UserType = user.UserType,
                 Cars = user.Cars ?? new List<Car>(),
-                Rentals = user.Rentals ?? new List<Rental>()
+                Rentals = user.Rentals ?? new List<Rental>(),
+                IsCurrentUser = (user.Id == curUserId)
             };
 
             return View(userDetailViewModel);
@@ -282,8 +284,8 @@ namespace CarRentwithDB.Controllers
                 Surname = user.Surname,
                 EmailAddress = user.Email,
                 Phone = user.Phone,
-                Image = user.Image
-
+                Image = user.Image,
+                
             };
             return View(editUserViewModel);
         }

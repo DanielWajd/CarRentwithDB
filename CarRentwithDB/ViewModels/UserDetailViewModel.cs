@@ -19,5 +19,6 @@ namespace CarRentwithDB.ViewModels
         public ICollection<Car> Cars { get; set; }
         public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
         public string? Image { get; set; }
+        public bool IsCurrentUser { get; set; }
     }
 }
