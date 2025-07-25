@@ -88,5 +88,10 @@ namespace CarRentwithDB.Service
 
             return await query.ToListAsync();
         }
+
+        public async Task<int> GetUsersCountAsync()
+        {
+            return await _context.Users.Where(u => u.UserType == Data.Enum.UserType.Customer).CountAsync();
+        }
     } 
 }

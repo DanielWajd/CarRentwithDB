@@ -68,6 +68,9 @@ namespace CarRentwithDB.Service
             return await _context.Rental.Where(r => r.StartDate <= time && r.EndDate >= time).Include(r => r.Car).Include(r => r.AppUser).ToListAsync();
         }
 
-        
+        public async Task<int> GetRentalCountAsync()
+        {
+            return await _context.Rental.CountAsync();
+        }
     }
 }

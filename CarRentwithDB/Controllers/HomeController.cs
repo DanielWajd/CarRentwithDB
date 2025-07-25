@@ -10,16 +10,26 @@ namespace CarRentwithDB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ICarService _carService;
+        private readonly IRentalService _rentalService;
+        private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, ICarService carService)
+        public HomeController(ILogger<HomeController> logger, ICarService carService, IRentalService rentalService, IUserService userService)
         {
             _logger = logger;
             _carService = carService;
+            _rentalService = rentalService;
+            _userService = userService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                TotalCars = await _carService.GetCarsCountAsync(),
+                TotalRentals = await _rentalService.GetRentalCountAsync(),
+                TotalUsers = await _userService.GetUsersCountAsync()
+            };
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

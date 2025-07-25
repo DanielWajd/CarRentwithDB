@@ -146,6 +146,11 @@ namespace CarRentwithDB.Services
         {
             return await _context.Cars.Where(c => c.IsAvailable).Select(c => c.City).Distinct().ToListAsync();
         }
+
+        public async Task<int> GetCarsCountAsync()
+        {
+            return await _context.Cars.CountAsync();
+        }
         //public async Task<List<Car>> GetSortedCars(string sort)
         //{
         //    return await _context.Cars.FromSqlRaw("EXEC GetCarsSortedByPrice @SortDirection = {0}", sort).ToListAsync();

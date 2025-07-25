@@ -1,5 +1,5 @@
 ﻿@using CarRentwithDB.ViewModels
-@model UserDetailViewModel
+@model HomeViewModel
 @{
     ViewData["Title"] = "Wypożyczalnia";
 }
@@ -28,7 +28,7 @@
                     </span>
                     <input class="form-control" name="city" type="search" placeholder="Szukaj miasta..." aria-label="Search">
                 </div>
-                <select class="form-control me-2" name="type" style="max-width: 400px;">
+                <select class="form-control me-2 text-muted" name="type" style="max-width: 400px;">
                     <option value="">Wybierz typ samochodu</option>
                     @foreach (var carType in Enum.GetValues(typeof(CarRentwithDB.Data.Enum.CarType)))
                     {
@@ -44,7 +44,7 @@
 </section>
 
 <div class="container py-5 text-center">
-    <h2 class="fw-bold mb-4">Wybierz swój idealny samochód</h2>
+    <h3 class="fw-bold mb-4">Wybierz swój idealny samochód</h3>
     <div class="cars-row d-flex flex-wrap justify-content-center align-items-center">
         <div class="car-icon">
             <a asp-area="" asp-controller="Car" asp-action="Index" asp-route-type="Sedan">
@@ -103,6 +103,45 @@
     </div>
 </div>
 
+<div class="text-center container py-5">
+    <h3 class="fw-bold mb-4">Dlaczego warto wybrać CarRentwithDB?</h3>
+    <p class="lead">CarRentwithDB oferuje Państwu szeroką gamę samochodów w różnych miastach. Dzięki wygodnym filtrom z łatwością znajdziesz samochód dopasowany do swoich potrzeb </p>
+    <p class="text-muted">
+        Nasza flota pojazdów jest na bieżąco serwisowana, ubezpieczona i gotowa do jazdy od ręki! Zapewniamy profesjonalną infolinie, obsługę oraz elastyczne warunki wynajmu. 
+        Dostępność samochodów możesz sprawdzić w zakładce <strong>Mapa.</strong>
+    </p>
+    <p class="text-muted">Masz pytanie lub chcesz odwołać wypożyczenie? Serdecznie zapraszamy do kontaktu z naszymi pracownikami - chętnie pomożemy!</p>
+    <div>
+    <p class ="text-muted">
+        <i class="bi bi-telephone-fill me-2"></i><strong>Infolinia:</strong> +48 777 163 998</p>
+    <p class="text-muted">
+        <i class="bi bi-envelope-fill me-2"></i><strong>Email:</strong> CarRentwithDB@kontakt.pl
+        </p>
+    </div>
+</div>
+<div class="container py-3   mt-5">
+    <h3 class="fw-bold mb-4 text-center">Zaufaj nam!</h3>
+    <div class="row justify-content-center text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 p-4">
+                <h4 class="fw-bold">@Model.TotalCars+</h4>
+                <p class="text-muted">Dostępnych samochodów</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 p-4">
+                <h4 class="fw-bold">@Model.TotalRentals+</h4>
+                <p class="text-muted">Zrealizowanych wypożyczeń</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 p-4">
+                <h4 class="fw-bold">@Model.TotalUsers+</h4>
+                <p class="text-muted">Zadowolonych klientów</p>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/js/location.js"></script>
 
 
