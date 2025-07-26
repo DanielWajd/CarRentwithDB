@@ -41,8 +41,7 @@
     {
         Manual,
         Automatic,
-        SemiAutomatic,
-        CVT
+        SemiAutomatic
     }
     public enum SteeringSide
     {

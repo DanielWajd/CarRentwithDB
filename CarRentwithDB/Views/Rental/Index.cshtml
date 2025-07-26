@@ -38,6 +38,11 @@
                                     <p class="mb-1"><strong>Cena:</strong> @rental.Price.ToString("C")</p>
                                     <p class="mb-1"><strong>Użytkownik:</strong> @rental.UserName @rental.UserSurname</p>
                                 </div>
+                                <div class="ms-auto">
+                                    <form asp-controller="Rental" asp-action="Cancel" asp-route-id="@rental.RentalId" method="post">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Anuluj</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -70,6 +75,11 @@
                                     <p class="mb-1"><strong>Data zakończenia:</strong> @rental.EndDate.ToShortDateString()</p>
                                     <p class="mb-1"><strong>Cena:</strong> @rental.Price.ToString("C")</p>
                                     <p class="mb-1"><strong>Użytkownik:</strong> @rental.UserName @rental.UserSurname</p>
+                                </div>
+                                <div class="ms-auto">
+                                    <form asp-controller="Rental" asp-action="Cancel" asp-route-id="@rental.RentalId" method="post">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Anuluj</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

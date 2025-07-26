@@ -133,8 +133,16 @@ namespace CarRentwithDB.Services
         public async Task<List<Car>> GetUnAvailableCarsAsyncToUpdate()
         {
             var today = DateTime.Today;
-           //return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCarsToUpdate").ToListAsync();
-           return await _context.Cars.Where(c => !c.IsAvailable && _context.Rental.Where(r => r.CarId == c.CarId).OrderByDescending(r => r.EndDate).Select(r => r.EndDate).FirstOrDefault() <= today).ToListAsync();
+            //return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCarsToUpdate").ToListAsync();
+            //return await _context.Cars.Where(c => !c.IsAvailable && _context.Rental.Where(r => r.CarId == c.CarId)
+            //.OrderByDescending(r => r.EndDate).Select(r => r.EndDate).FirstOrDefault() <= today ).ToListAsync();
+            return await _context.Cars.Where(c => !c.IsAvailable).Where(c =>_context.Rental
+                    .Where(r => r.CarId == c.CarId && (r.isCanceled || r.EndDate <= today))
+                    .OrderByDescending(r => r.EndDate).Any() || !_context.Rental.Any(r=> r.CarId == c.CarId)
+            )
+            .ToListAsync();
+
+            //return cars;
         }
         public async Task<List<Car>> GetUnAvailableCarsAsync()
         {

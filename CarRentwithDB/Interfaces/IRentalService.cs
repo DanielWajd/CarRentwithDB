@@ -9,5 +9,7 @@ namespace CarRentwithDB.Interfaces
         Task<IEnumerable<Rental>> GetFilteredRentals(string plate, string name, DateTime? startDate, DateTime? endDate);
         Task<IEnumerable<Rental>> GetCurrentRentals();
         Task<int> GetRentalCountAsync();
+        Task<Rental> GetByIdAsync(int id);
+        Task<bool> Update(Rental rental);
     }
 }

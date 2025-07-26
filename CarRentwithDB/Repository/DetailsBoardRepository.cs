@@ -18,7 +18,7 @@ namespace CarRentwithDB.Service
         public async Task<List<Car>> GetAllCreatedCars()
         {
             var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-            var userCars = _context.Cars.Where(r => r.AppUser.Id == curUser);
+            var userCars = _context.Cars.Where(c => c.AppUser.Id == curUser);
             return await userCars.ToListAsync();
         }
         //Customer rentals
@@ -26,7 +26,7 @@ namespace CarRentwithDB.Service
         {
             var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
 
-            var userRentals = await _context.Rental
+            var userRentals = await _context.Rental.Where(r=>!r.isCanceled)
                 .Include(r => r.Car) 
                 .Where(r => r.AppUserId == curUser)
                 .ToListAsync();

@@ -60,7 +60,6 @@ public static class EnumExtensions
             case TransmissionType.Manual: return "Ręczna";
             case TransmissionType.Automatic: return "Automatyczna";
             case TransmissionType.SemiAutomatic: return "Półautomatyczna";
-            case TransmissionType.CVT: return "CVT (przekładnia bezstopniowa)";
             default: return transmissionType.ToString();
         }
     }
@@ -91,10 +90,9 @@ public static class EnumExtensions
     {
         switch (employeeType)
         {
-            case EmployeeType.Administrator: return "Administrator";
             case EmployeeType.Manager: return "Menadżer";
             case EmployeeType.Salesperson: return "Sprzedawca";
-            case EmployeeType.SupportStaff: return "Personel wsparcia";
+            case EmployeeType.TechnicalStaff: return "Pracownik techniczny";
             case EmployeeType.Accountant: return "Księgowy";
             default: return employeeType.ToString();
         }

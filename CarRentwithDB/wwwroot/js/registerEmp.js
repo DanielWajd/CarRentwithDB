@@ -70,10 +70,9 @@
         employeeTypeDiv.innerHTML = `
             <label for="employeeType" class="control-label">Typ Pracownika</label>
             <select name="registerEmployee.EmployeeType" id="employeeType" class="form-control">
-                <option value="Administrator">Administrator</option>
                 <option value="Manager">Menadżer</option>
                 <option value="Salesperson">Sprzedawca</option>
-                <option value="SupportStaff">Personel wsparcia</option>
+                <option value="TechnicalStaff">Pracownik techniczny</option>
                 <option value="Accountant">Księgowy</option>
             </select>
             <span class="text-danger" id="employeeTypeError"></span>

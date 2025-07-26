@@ -7,10 +7,9 @@
     }
     public enum EmployeeType
     {
-        Administrator,
         Manager,
         Salesperson,
-        SupportStaff,
+        TechnicalStaff,
         Accountant
     }
 }

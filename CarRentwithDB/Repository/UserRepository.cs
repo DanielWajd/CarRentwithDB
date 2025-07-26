@@ -19,11 +19,17 @@ namespace CarRentwithDB.Service
 
         public async Task<AppUser> GetUserById(string id)
         {
-            return await _context.Users
+            var user = await _context.Users
                          .Include(u => u.Cars)    
                          .Include(u => u.Rentals) 
                          .ThenInclude(r => r.Car)  
                          .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user != null)
+            {
+                user.Rentals = user.Rentals.Where(r => !r.isCanceled).ToList();
+            }
+            return user;
         }
         public async Task<AppUser> GetIdByNoTracking(string id)
         {

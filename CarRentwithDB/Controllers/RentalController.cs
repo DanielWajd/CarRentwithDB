@@ -126,5 +126,17 @@ namespace CarRentwithDB.Controllers
             return RedirectToAction("UserRentals","DetailsBoard");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var rental = await _rentalService.GetByIdAsync(id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+            rental.isCanceled = true;
+            await _rentalService.Update(rental);
+            return RedirectToAction("Index", "Rental");
+        }
     }
 }

@@ -25,5 +25,6 @@ namespace CarRentwithDB.Models
         [Required]
         public decimal Price { get; set; }
         
+        public bool isCanceled { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace CarRentwithDB.Service
         //}
         public async Task<IEnumerable<Rental>> GetFilteredRentals(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
-            var query = _context.Rental.Include(r => r.Car).Include(r => r.AppUser).AsQueryable();
+            var query = _context.Rental.Where(r => !r.isCanceled).Include(r => r.Car).Include(r => r.AppUser).AsQueryable();
 
             if (!string.IsNullOrEmpty(plate))
             {
@@ -65,12 +65,23 @@ namespace CarRentwithDB.Service
         public async Task<IEnumerable<Rental>> GetCurrentRentals()
         {
             var time = DateTime.Now;
-            return await _context.Rental.Where(r => r.StartDate <= time && r.EndDate >= time).Include(r => r.Car).Include(r => r.AppUser).ToListAsync();
+            return await _context.Rental.Where(r => !r.isCanceled).Where(r => r.StartDate <= time && r.EndDate >= time).Include(r => r.Car).Include(r => r.AppUser).ToListAsync();
         }
 
         public async Task<int> GetRentalCountAsync()
         {
-            return await _context.Rental.CountAsync();
+            return await _context.Rental.Where(r => !r.isCanceled).CountAsync();
+        }
+
+        public async Task<Rental> GetByIdAsync(int id)
+        {
+            return await _context.Rental.FirstOrDefaultAsync(i => i.RentalId == id);
+        }
+
+        public async Task<bool> Update(Rental rental)
+        {
+            _context.Update(rental);
+            return await Save();
         }
     }
 }
