@@ -19,7 +19,7 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Index(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
-            if (!User.IsInRole("employee"))
+            if (!User.IsInRole("employee") && !User.IsInRole("admin"))
             {
                 return View("Error");
             }
@@ -136,6 +136,11 @@ namespace CarRentwithDB.Controllers
             }
             rental.isCanceled = true;
             await _rentalService.Update(rental);
+
+            //Zmianiam odrazu status auta na dostepny
+            var car = await _carService.GetByIdAsync(rental.CarId);
+            car.IsAvailable = true;
+            await _carService.Update(car);
             return RedirectToAction("Index", "Rental");
         }
     }

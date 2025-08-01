@@ -148,7 +148,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="CarDetails.TransmissionType">Typ skrzyni biegów</label>
-                <select asp-for="steeringSide" class="form-control">
+                <select asp-for="CarDetails.TransmissionType" class="form-control">
                     <option>--Wybierz--</option>
                     @foreach (TransmissionType transmissionType in Enum.GetValues(typeof(TransmissionType)))
                     {

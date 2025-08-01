@@ -18,7 +18,8 @@ namespace CarRentwithDB.Data
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Employee));
                 if (!await roleManager.RoleExistsAsync(UserRoles.Customer))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Customer));
-
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
                 //Users
 
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
@@ -65,14 +66,33 @@ namespace CarRentwithDB.Data
                             Voivodeship = "Podkrapackie",
                             Zip = "32-210"
                         }
-                        
+
                     };
                     await userManager.CreateAsync(newCustomerUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newCustomerUser, UserRoles.Customer);
                 }
+
+                string adminUserEmail = "admin@gmail.com";
+
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new AppUser()
+                    {
+                        UserName = adminUserEmail,
+                        Email = adminUserEmail,
+                        EmailConfirmed = true,
+                        Name = "Grzegorz",
+                        Surname = "Pierwszy",
+                        Phone = "123789456",
+                        UserType = UserType.Admin,
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
             }
         }
-        
+
     }
 }
 

@@ -234,7 +234,7 @@ namespace CarRentwithDB.Controllers
 
         public async Task<IActionResult> Index(string name, string surname, string email, string phone)
         {
-            if (!User.IsInRole("employee"))
+            if (!User.IsInRole("employee") && !User.IsInRole("admin"))
             {
                 return View("Error");
             }

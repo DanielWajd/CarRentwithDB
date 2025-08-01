@@ -27,8 +27,12 @@
         </div>
         <div class="form-group col-md-6">
             <label asp-for="carType">Rodzaj auta</label>
-            <select asp-for="carType" asp-items="@Html.GetEnumSelectList<CarType>()" class="form-control">
-                <option>--Wybierz--</option>
+            <select asp-for="carType" class="form-control">
+                <option value="">--Wybierz--</option>
+                @foreach (CarType carType in Enum.GetValues(typeof(CarType)))
+                {
+                    <option value="@carType">@EnumExtensions.TranslateCarType(carType)</option>
+                }
             </select>
         </div>
     </div>
@@ -39,8 +43,12 @@
     <div class="row">
         <div class="form-group col-md-4">
             <label asp-for="fuelType">Rodzaj paliwa</label>
-            <select asp-for="fuelType" asp-items="@Html.GetEnumSelectList<FuelType>()" class="form-control">
+            <select asp-for="fuelType" class="form-control">
                 <option>--Wybierz--</option>
+                @foreach (FuelType fuelType in Enum.GetValues(typeof(FuelType)))
+                {
+                    <option value="@fuelType">@EnumExtensions.TranslateFuelType(fuelType)</option>
+                }
             </select>
         </div>
         <div class="form-group col-md-4">
@@ -49,8 +57,12 @@
         </div>
         <div class="form-group col-md-4">
             <label asp-for="carColor">Kolor auta</label>
-            <select asp-for="carColor" asp-items="@Html.GetEnumSelectList<CarColor>()" class="form-control">
+            <select asp-for="carColor" class="form-control">
                 <option>--Wybierz--</option>
+                @foreach (CarColor carColor in Enum.GetValues(typeof(CarColor)))
+                {
+                    <option value="@carColor">@EnumExtensions.TranslateCarColor(carColor)</option>
+                }
             </select>
         </div>
     </div>
@@ -69,8 +81,12 @@
         </div>
         <div class="form-group col-md-3">
             <label asp-for="steeringSide">Strona kierownicy</label>
-            <select asp-for="steeringSide" asp-items="@Html.GetEnumSelectList<SteeringSide>()" class="form-control">
+            <select asp-for="steeringSide" class="form-control">
                 <option>--Wybierz--</option>
+                @foreach (SteeringSide steeringSide in Enum.GetValues(typeof(SteeringSide)))
+                {
+                    <option value="@steeringSide">@EnumExtensions.TranslateSteeringSide(steeringSide)</option>
+                }
             </select>
         </div>
     </div>
@@ -107,8 +123,12 @@
         </div>
         <div class="form-group col-md-6">
             <label asp-for="CarDetails.TransmissionType">Typ skrzyni biegów</label>
-            <select asp-for="CarDetails.TransmissionType" asp-items="@Html.GetEnumSelectList<TransmissionType>()" class="form-control">
+            <select asp-for="CarDetails.TransmissionType" class="form-control">
                 <option>--Wybierz--</option>
+                @foreach (TransmissionType transmissionType in Enum.GetValues(typeof(TransmissionType)))
+                {
+                    <option value="@transmissionType">@EnumExtensions.TranslateTransmissionType(transmissionType)</option>
+                }
             </select>
         </div>
     </div>
