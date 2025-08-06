@@ -39,7 +39,7 @@ namespace CarRentwithDB.Data
                         UserType = UserType.Employee,
                         EmployeeType = EmployeeType.Manager
                     };
-                    await userManager.CreateAsync(newEmployeeUser, "Coding@1234?");
+                    await userManager.CreateAsync(newEmployeeUser, "Hasło1234?");
                     await userManager.AddToRoleAsync(newEmployeeUser, UserRoles.Employee);
                 }
 
@@ -68,7 +68,7 @@ namespace CarRentwithDB.Data
                         }
 
                     };
-                    await userManager.CreateAsync(newCustomerUser, "Coding@1234?");
+                    await userManager.CreateAsync(newCustomerUser, "Hasło1234?");
                     await userManager.AddToRoleAsync(newCustomerUser, UserRoles.Customer);
                 }
 
@@ -87,7 +87,7 @@ namespace CarRentwithDB.Data
                         Phone = "123789456",
                         UserType = UserType.Admin,
                     };
-                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.CreateAsync(newAdminUser, "Hasło1234?");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
             }

@@ -9,6 +9,9 @@
 @{
 
 }
+@{
+    ViewData["Title"] = "Samochody";
+}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row py-lg-4 position-relative">
@@ -73,35 +76,45 @@
                 </div>
 
             }
-            @foreach (var item in Model.Cars)
+            @if (!Model.Cars.Any())
             {
-                <div class="col-12 col-md-4">
-                    <div class="card shadow-sm">
-                        <img class="card-img-top img-fluid" src="@item.Image" alt="Card image cap" style="height: 225px; object-fit: cover;">
-                        <div class="overlay-category" style="position: absolute; top: 0; left: 0; width: 30%; background-color: rgba(0, 0, 0, 0.3); color: white; padding: 5px; text-align: center; border-radius: 4px;">
-                            @item.City
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@($"{item.Make} {item.Model}")</h5>
-                            <p class="text-primary fw-bold">Cena: @item.DailyRate PLN / dzień</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Podgląd</a>
-                                    @if (User.IsInRole("employee"))
-                                    {
-                                        <a asp-controller="Car" asp-action="Edit" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Edytuj</a>
-                                        <a asp-controller="Car" asp-action="Delete" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Usuń</a>
-                                    }
+                <div class="col-12 text-center my-5">
+                    <p class="text-muted">
+                        Brak pojazdów do wyświetlenia.
+                    </p>
+                </div>
+            }
+            else{
+                @foreach (var item in Model.Cars)
+                {
+                    <div class="col-12 col-md-4">
+                        <div class="card shadow-sm">
+                            <img class="card-img-top img-fluid" src="@item.Image" alt="Card image cap" style="height: 225px; object-fit: cover;">
+                            <div class="overlay-category" style="position: absolute; top: 0; left: 0; width: 30%; background-color: rgba(0, 0, 0, 0.3); color: white; padding: 5px; text-align: center; border-radius: 4px;">
+                                @item.City
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@($"{item.Make} {item.Model}")</h5>
+                                <p class="text-primary fw-bold">Cena: @item.DailyRate PLN / dzień</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a asp-controller="Car" asp-action="Details" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Podgląd</a>
+                                        @if (User.IsInRole("employee"))
+                                        {
+                                            <a asp-controller="Car" asp-action="Edit" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Edytuj</a>
+                                            <a asp-controller="Car" asp-action="Delete" asp-route-id="@item.CarId" class="btn btn-sm btn-outline-secondary">Usuń</a>
+                                        }
+                                    </div>
+                                    <small class="d-block mt-2 text-muted fw-bold">
+                                        <span class="badge @(item.IsAvailable ? "bg-success" : "bg-danger")">
+                                            @EnumExtensions.TranslateAvailability(item.IsAvailable)
+                                        </span>
+                                    </small>
                                 </div>
-                                <small class="d-block mt-2 text-muted fw-bold">
-                                    <span class="badge @(item.IsAvailable ? "bg-success" : "bg-danger")">
-                                        @EnumExtensions.TranslateAvailability(item.IsAvailable)
-                                    </span>
-                                </small>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>

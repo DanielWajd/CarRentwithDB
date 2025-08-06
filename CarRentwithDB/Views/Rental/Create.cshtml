@@ -1,6 +1,9 @@
 ﻿@using CarRentwithDB.ViewModels
 @model RentalViewModel
 
+@{
+    ViewData["Title"] = "Wypożyczenie";
+}
 <form method="post" asp-action="Create">
     <div asp-validation-summary="All" class="text-danger"></div>
     <h4>Szczegóły wypożyczenia</h4>
