@@ -51,26 +51,26 @@ html, body {
     text-align: center;
 }
 
-    .car-icon img {
-        width: 100%;
-        height: auto;
-    }
-    /*Delete hyperlinks from car icons*/
-    .car-icon a {
-        text-decoration: none;
-        color: inherit;
-    }
-        /*Extra effects for icons*/
-        .car-icon a:hover {
-            color: #198754;
-            text-decoration: underline;
-        }
+.car-icon img {
+    width: 100%;
+    height: auto;
+}
+/*Delete hyperlinks from car icons*/
+.car-icon a {
+    text-decoration: none;
+    color: inherit;
+}
+/*Extra effects for icons*/
+.car-icon a:hover {
+    color: #198754;
+    text-decoration: underline;
+}
 /*Effect for car Index*/
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
+.card:hover {
+transform: scale(1.05);
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}

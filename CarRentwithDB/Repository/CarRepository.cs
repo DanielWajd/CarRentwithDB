@@ -87,24 +87,17 @@ namespace CarRentwithDB.Services
             {
                 query = query.Where(car => car.carType == carTypeEnum);
             }
+
             if (!string.IsNullOrEmpty(makeModel))
             {
                 var parts = makeModel.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length > 1)
+                foreach (var part in parts)
                 {
-                    var make = parts[0];
-                    var model = string.Join(" ", parts.Skip(1));
-
-                    query = query.Where(car => car.Make.Contains(make) && car.Model.Contains(model));
+                    var temp = part.ToLower();
+                    query = query.Where(car => car.Make.ToLower().Contains(temp) || car.Model.ToLower().Contains(temp));
                 }
-                else
-                {
-                    var search = parts[0];
-                    query = query.Where(car => car.Make.Contains(search) || car.Model.Contains(search));
-                }
-
             }
+
             if (!string.IsNullOrEmpty(city))
             {
                 query = query.Where(car => car.City.Contains(city));

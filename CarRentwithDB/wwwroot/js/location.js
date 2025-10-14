@@ -28,7 +28,7 @@ function success(position) {
 function error(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            alert("Użytkowik odmówił dostępu do lokalizacji")
+            alert("Użytkownik odmówił dostępu do lokalizacji")
             break;
         case error.POSITION_UNAVAILABLE:
             alert("Lokalizacja niedostępna")

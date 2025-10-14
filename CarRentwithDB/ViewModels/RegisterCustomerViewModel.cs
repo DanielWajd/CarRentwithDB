@@ -7,6 +7,7 @@ namespace CarRentwithDB.ViewModels
     {
 
         [Required(ErrorMessage = "Wpisz numer prawa jazdy.")]
+        [MaxLength(11, ErrorMessage ="Numer prawa jazdy nie może być dłuższy niż 11 znaków.")]
         public string DrivingLicence { get; set; }
 
         [Required(ErrorMessage = "Wpisz nazwę ulicy.")]
@@ -22,6 +23,7 @@ namespace CarRentwithDB.ViewModels
         public string Voivodeship { get; set; }
 
         [Required(ErrorMessage = "Wpisz kod pocztowy.")]
+        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage ="Kod pocztowy musi mieć format XX-XXX.")]
         public string Zip { get; set; }
     }
 }
