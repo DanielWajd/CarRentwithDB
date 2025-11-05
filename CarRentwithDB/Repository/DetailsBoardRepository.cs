@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Service
 {
-    public class DetailsBoardRepository : IDetailsBoardService
+    public class DetailsBoardRepository : IDetailsBoardRepository
     {
         private readonly CarRentDBContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;

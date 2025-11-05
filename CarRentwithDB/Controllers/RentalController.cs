@@ -8,10 +8,10 @@ namespace CarRentwithDB.Controllers
 {
     public class RentalController : Controller
     {
-        private readonly IRentalService _rentalService;
-        private readonly ICarService _carService;
+        private readonly IRentalRepository _rentalService;
+        private readonly ICarRepository _carService;
         public readonly IHttpContextAccessor _contextAccessor;
-        public RentalController(IRentalService rentalService, ICarService carService, IHttpContextAccessor contextAccessor)
+        public RentalController(IRentalRepository rentalService, ICarRepository carService, IHttpContextAccessor contextAccessor)
         {
             _rentalService = rentalService;
             _carService = carService;

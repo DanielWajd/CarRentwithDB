@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Service
 {
-    public class RentalRepository : IRentalService
+    public class RentalRepository : IRentalRepository
     {
         private readonly CarRentDBContext _context;
         public RentalRepository(CarRentDBContext context)

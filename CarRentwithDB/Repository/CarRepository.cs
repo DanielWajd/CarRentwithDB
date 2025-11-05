@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Services
 {
-    public class CarRepository : ICarService
+    public class CarRepository : ICarRepository
     {
         private readonly CarRentDBContext _context;
 

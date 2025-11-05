@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentwithDB.Service
 {
-    public class UserRepository : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly CarRentDBContext _context;
 

@@ -11,10 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ICarService, CarRepository>();
-builder.Services.AddScoped<IUserService, UserRepository>();
-builder.Services.AddScoped<IRentalService, RentalRepository>();
-builder.Services.AddScoped<IDetailsBoardService, DetailsBoardRepository>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+builder.Services.AddScoped<IDetailsBoardRepository, DetailsBoardRepository>();
 builder.Services.AddDbContext<CarRentDBContext>(options =>
 {
     

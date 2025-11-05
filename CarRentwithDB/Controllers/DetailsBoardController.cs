@@ -8,9 +8,9 @@ namespace CarRentwithDB.Controllers
 {
     public class DetailsBoardController : Controller
     {
-        private readonly IDetailsBoardService _detailsBoardService;
+        private readonly IDetailsBoardRepository _detailsBoardService;
 
-        public DetailsBoardController(IDetailsBoardService detailsBoardService)
+        public DetailsBoardController(IDetailsBoardRepository detailsBoardService)
         {
             _detailsBoardService = detailsBoardService;
         }

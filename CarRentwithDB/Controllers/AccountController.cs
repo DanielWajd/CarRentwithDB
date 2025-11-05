@@ -12,10 +12,10 @@ namespace CarRentwithDB.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userService;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountController(IUserService userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
+        public AccountController(IUserRepository userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
             CarRentDBContext context)
         {
             _userService = userService;

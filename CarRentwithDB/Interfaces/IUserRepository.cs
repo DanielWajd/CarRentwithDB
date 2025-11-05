@@ -2,7 +2,7 @@
 
 namespace CarRentwithDB.Interfaces
 {
-    public interface IUserService
+    public interface IUserRepository
     {
         Task<IEnumerable<AppUser>> GetAllUsers();
         Task<AppUser> GetUserById(string id);

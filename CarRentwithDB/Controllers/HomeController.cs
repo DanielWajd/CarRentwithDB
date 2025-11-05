@@ -9,11 +9,11 @@ namespace CarRentwithDB.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICarService _carService;
-        private readonly IRentalService _rentalService;
-        private readonly IUserService _userService;
+        private readonly ICarRepository _carService;
+        private readonly IRentalRepository _rentalService;
+        private readonly IUserRepository _userService;
 
-        public HomeController(ILogger<HomeController> logger, ICarService carService, IRentalService rentalService, IUserService userService)
+        public HomeController(ILogger<HomeController> logger, ICarRepository carService, IRentalRepository rentalService, IUserRepository userService)
         {
             _logger = logger;
             _carService = carService;

@@ -13,9 +13,9 @@ namespace CarRentwithDB.Controllers
 
     public class CarController : Controller
     {
-        private readonly ICarService _carService;
+        private readonly ICarRepository _carService;
         private readonly IHttpContextAccessor _contextAccessor;
-        public CarController(ICarService carService, IHttpContextAccessor contextAccessor)
+        public CarController(ICarRepository carService, IHttpContextAccessor contextAccessor)
         {
             _carService = carService;
             _contextAccessor = contextAccessor;
@@ -178,6 +178,7 @@ namespace CarRentwithDB.Controllers
                     EngineCapacity = car.CarDetails.EngineCapacity,
                     TrunkCapacity = car.CarDetails.TrunkCapacity,
                     TransmissionType = car.CarDetails.TransmissionType
+                    
                 }
             };
             return View(carViewModel);

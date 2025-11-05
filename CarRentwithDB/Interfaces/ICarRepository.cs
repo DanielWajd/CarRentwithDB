@@ -3,7 +3,7 @@ using CarRentwithDB.ViewModels;
 
 namespace CarRentwithDB.Interfaces
 {
-    public interface ICarService
+    public interface ICarRepository
     {
 
         Task<IEnumerable<Car>> GetAll();
