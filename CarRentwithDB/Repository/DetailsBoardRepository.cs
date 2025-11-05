@@ -2,7 +2,7 @@
 using CarRentwithDB.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRentwithDB.Service
+namespace CarRentwithDB.Repository
 {
     public class DetailsBoardRepository : IDetailsBoardRepository
     {
@@ -34,12 +34,5 @@ namespace CarRentwithDB.Service
             return userRentals;
         }
         
-        //public async Task<List<Car>> GetAllRentedCars()
-        //{
-        //    var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-        //    var userCars = await _context.Rental.Where(r =>r.AppUser.Id == curUser).
-        //        Select(r => r.Car).ToListAsync();
-        //    return userCars;
-        //}
     }
 }

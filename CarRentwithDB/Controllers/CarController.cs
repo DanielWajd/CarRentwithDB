@@ -2,7 +2,6 @@
 using CarRentwithDB.Helpers;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
-using CarRentwithDB.Services;
 using CarRentwithDB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Index(int? page, string city, string type, string makeModel, string sortOrder)
         {
-            //IEnumerable<Car> cars = await _carService.GetAll();
+            //IEnumerable<Car> cars = await _carRepository.GetAll();
             var cars = await _carRepository.GetFilteredCars(city, type, makeModel, sortOrder);
             if (User.IsInRole("customer") || !User.Identity.IsAuthenticated)
             {
@@ -248,7 +247,7 @@ namespace CarRentwithDB.Controllers
                 return View("Error");
             }
             //To do usuwania całkowitego z bazy danych
-            //_carService.Delete(carDetails);
+            //_carRepository.Delete(carDetails);
 
             carDetails.IsActive = false;
             await _carRepository.Update(carDetails);
@@ -279,7 +278,6 @@ namespace CarRentwithDB.Controllers
             };
 
             return View("Index", model);
-            //return View("Index", unavailableCarsToUpade);
         }
         [HttpGet]
         public async Task<IActionResult> GetUnAvailableCars()
@@ -305,13 +303,7 @@ namespace CarRentwithDB.Controllers
             };
 
             return View("Index", model);
-            //return View("Index", unavailableCars);
         }
-        //[HttpGet]
-        //public async Task<IActionResult> SortCars(string? sort)
-        //{
-        //    var cars = await _carService.GetSortedCars(sort);
-        //    return View("Index", cars);
-        //}
+        
     }
 }

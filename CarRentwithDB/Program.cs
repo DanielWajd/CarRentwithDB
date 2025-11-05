@@ -1,8 +1,7 @@
 using CarRentwithDB.Data;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
-using CarRentwithDB.Service;
-using CarRentwithDB.Services;
+using CarRentwithDB.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

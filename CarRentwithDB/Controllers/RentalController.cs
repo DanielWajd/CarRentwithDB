@@ -23,7 +23,6 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
-            //var rentals = await _rentalService.GetAllRentals();
             var currentRentals = await _rentalRepository.GetCurrentRentals();
             var rentalsFilter = await _rentalRepository.GetFilteredRentals(plate, name, startDate, endDate);
 

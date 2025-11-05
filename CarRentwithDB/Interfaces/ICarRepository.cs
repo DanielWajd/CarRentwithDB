@@ -21,6 +21,5 @@ namespace CarRentwithDB.Interfaces
         Task<List<Car>> GetUnAvailableCarsAsync();
         Task<List<string>> GetCarsCities();
         Task<int> GetCarsCountAsync();
-        //Task<List<Car>> GetSortedCars(string sort);
     }
 }

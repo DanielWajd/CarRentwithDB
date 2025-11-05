@@ -3,7 +3,7 @@ using CarRentwithDB.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRentwithDB.Service
+namespace CarRentwithDB.Repository
 {
     public class UserRepository : IUserRepository
     {

@@ -2,7 +2,7 @@
 {
     public static class ImageHelper
     {
-        //static po metoda pomocnicza, nie trzeba tworzyc new
+        //static bo metoda pomocnicza, nie trzeba tworzyc new
         public static string ConvertToImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length ==0)

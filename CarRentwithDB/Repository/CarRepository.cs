@@ -4,7 +4,7 @@ using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRentwithDB.Services
+namespace CarRentwithDB.Repository
 {
     public class CarRepository : ICarRepository
     {
@@ -126,7 +126,6 @@ namespace CarRentwithDB.Services
         public async Task<List<Car>> GetUnAvailableCarsAsyncToUpdate()
         {
             var today = DateTime.Today;
-            //return await _context.Cars.FromSqlRaw("EXEC GetUnAvailableCarsToUpdate").ToListAsync();
             return await _context.Cars.Where(c => !c.IsAvailable && _context.Rental.Where(r => r.CarId == c.CarId)
             .OrderByDescending(r => r.EndDate).Select(r => r.EndDate).FirstOrDefault() <= today).ToListAsync();
 
@@ -134,7 +133,6 @@ namespace CarRentwithDB.Services
         }
         public async Task<List<Car>> GetUnAvailableCarsAsync()
         {
-            //return await _context.Cars.FromSqlRaw("EXEC GetUnavailableCars").ToListAsync();
             return await _context.Cars.Where(c => !c.IsAvailable).ToListAsync();
         }
 
@@ -147,9 +145,6 @@ namespace CarRentwithDB.Services
         {
             return await _context.Cars.CountAsync();
         }
-        //public async Task<List<Car>> GetSortedCars(string sort)
-        //{
-        //    return await _context.Cars.FromSqlRaw("EXEC GetCarsSortedByPrice @SortDirection = {0}", sort).ToListAsync();
-        //}
+
     }
 }
