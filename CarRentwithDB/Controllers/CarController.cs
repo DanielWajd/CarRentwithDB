@@ -13,17 +13,17 @@ namespace CarRentwithDB.Controllers
 
     public class CarController : Controller
     {
-        private readonly ICarRepository _carService;
+        private readonly ICarRepository _carRepository;
         private readonly IHttpContextAccessor _contextAccessor;
-        public CarController(ICarRepository carService, IHttpContextAccessor contextAccessor)
+        public CarController(ICarRepository carRepository, IHttpContextAccessor contextAccessor)
         {
-            _carService = carService;
+            _carRepository = carRepository;
             _contextAccessor = contextAccessor;
         }
         public async Task<IActionResult> Index(int? page, string city, string type, string makeModel, string sortOrder)
         {
             //IEnumerable<Car> cars = await _carService.GetAll();
-            var cars = await _carService.GetFilteredCars(city, type, makeModel, sortOrder);
+            var cars = await _carRepository.GetFilteredCars(city, type, makeModel, sortOrder);
             if (User.IsInRole("customer") || !User.Identity.IsAuthenticated)
             {
                 cars = cars.Where(car => car.IsAvailable);
@@ -66,7 +66,7 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var car = await _carService.GetByIdAsync(id);
+            var car = await _carRepository.GetByIdAsync(id);
             var carDetailsViewModel = new CarDetailsViewModel
             {
                 CarId = car.CarId,
@@ -144,12 +144,12 @@ namespace CarRentwithDB.Controllers
                 }
             };
 
-            await _carService.Add(car);
+            await _carRepository.Add(car);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Edit(int id)
         {
-            var car = await _carService.GetByIdAsyncNoTracking(id);
+            var car = await _carRepository.GetByIdAsyncNoTracking(id);
             if (car == null || !User.IsInRole("employee"))
             {
                 return View("Error");
@@ -191,7 +191,7 @@ namespace CarRentwithDB.Controllers
                 ModelState.AddModelError("", "Nie można dokonać edycji");
                 return View("Edit", editCarViewModel);
             }
-            var car = await _carService.GetByIdAsyncNoTracking(id);
+            var car = await _carRepository.GetByIdAsyncNoTracking(id);
             if (car == null)
             {
                 return View("Error");
@@ -224,14 +224,14 @@ namespace CarRentwithDB.Controllers
                 car.CarDetails.TransmissionType = editCarViewModel.CarDetails.TransmissionType;
             }
 
-            await _carService.Update(car);
+            await _carRepository.Update(car);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var carDetails = await _carService.GetByIdAsync(id);
+            var carDetails = await _carRepository.GetByIdAsync(id);
             if (carDetails == null || !User.IsInRole("employee"))
             {
                 return View("Error");
@@ -241,7 +241,7 @@ namespace CarRentwithDB.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteCar(int id)
         {
-            var carDetails = await _carService.GetByIdAsync(id);
+            var carDetails = await _carRepository.GetByIdAsync(id);
 
             if (carDetails == null || !User.IsInRole("employee"))
             {
@@ -251,14 +251,14 @@ namespace CarRentwithDB.Controllers
             //_carService.Delete(carDetails);
 
             carDetails.IsActive = false;
-            await _carService.Update(carDetails);
+            await _carRepository.Update(carDetails);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUnAvailableCarsToUpdate()
         {
-            var unavailableCarsToUpade = await _carService.GetUnAvailableCarsAsyncToUpdate();
+            var unavailableCarsToUpade = await _carRepository.GetUnAvailableCarsAsyncToUpdate();
             if (!User.IsInRole("employee"))
             {
                 return View("Error");
@@ -284,7 +284,7 @@ namespace CarRentwithDB.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUnAvailableCars()
         {
-            var unavailableCars = await _carService.GetUnAvailableCarsAsync();
+            var unavailableCars = await _carRepository.GetUnAvailableCarsAsync();
             if (!User.IsInRole("employee"))
             {
                 return View("Error");

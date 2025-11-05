@@ -9,25 +9,25 @@ namespace CarRentwithDB.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICarRepository _carService;
-        private readonly IRentalRepository _rentalService;
-        private readonly IUserRepository _userService;
+        private readonly ICarRepository _carRepository;
+        private readonly IRentalRepository _rentalRepository;
+        private readonly IUserRepository _userRepository;
 
-        public HomeController(ILogger<HomeController> logger, ICarRepository carService, IRentalRepository rentalService, IUserRepository userService)
+        public HomeController(ILogger<HomeController> logger, ICarRepository carRepository, IRentalRepository rentalRepository, IUserRepository userRepository)
         {
             _logger = logger;
-            _carService = carService;
-            _rentalService = rentalService;
-            _userService = userService;
+            _carRepository = carRepository;
+            _rentalRepository = rentalRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IActionResult> Index()
         {
             var homeViewModel = new HomeViewModel
             {
-                TotalCars = await _carService.GetCarsCountAsync(),
-                TotalRentals = await _rentalService.GetRentalCountAsync(),
-                TotalUsers = await _userService.GetUsersCountAsync()
+                TotalCars = await _carRepository.GetCarsCountAsync(),
+                TotalRentals = await _rentalRepository.GetRentalCountAsync(),
+                TotalUsers = await _userRepository.GetUsersCountAsync()
             };
             return View(homeViewModel);
         }
@@ -39,7 +39,7 @@ namespace CarRentwithDB.Controllers
 
         public async Task<IActionResult> Map()
         {
-            var cities = await _carService.GetCarsCities();
+            var cities = await _carRepository.GetCarsCities();
             var mapViewModel = new MapViewModel
             {
                 Cities = cities,

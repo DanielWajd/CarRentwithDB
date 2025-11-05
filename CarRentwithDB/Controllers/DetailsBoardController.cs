@@ -8,11 +8,11 @@ namespace CarRentwithDB.Controllers
 {
     public class DetailsBoardController : Controller
     {
-        private readonly IDetailsBoardRepository _detailsBoardService;
+        private readonly IDetailsBoardRepository _detailsBoardRepository;
 
-        public DetailsBoardController(IDetailsBoardRepository detailsBoardService)
+        public DetailsBoardController(IDetailsBoardRepository detailsBoardRepository)
         {
-            _detailsBoardService = detailsBoardService;
+            _detailsBoardRepository = detailsBoardRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -20,7 +20,7 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
-            var userCar = await _detailsBoardService.GetAllCreatedCars();
+            var userCar = await _detailsBoardRepository.GetAllCreatedCars();
 
             //do zdjec
             foreach (var car in userCar)
@@ -38,7 +38,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> UserRentals()
         {
 
-            var userRentals = await _detailsBoardService.GetAllUserRentals();
+            var userRentals = await _detailsBoardRepository.GetAllUserRentals();
 
             //do zdjec
             foreach (var car in userRentals)

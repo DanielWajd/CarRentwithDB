@@ -12,13 +12,13 @@ namespace CarRentwithDB.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IUserRepository _userService;
+        private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountController(IUserRepository userService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
+        public AccountController(IUserRepository userRepository, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
             CarRentDBContext context)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _userManager = userManager;
             _contextAccessor = httpContextAccessor;
             _signInManager = signInManager;
@@ -238,12 +238,12 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
-            IEnumerable<AppUser> users = await _userService.GetFilteredUsers(name, surname, email, phone);
+            IEnumerable<AppUser> users = await _userRepository.GetFilteredUsers(name, surname, email, phone);
             return View(users);
         }
         public async Task<IActionResult> Details(string id)
         {
-            var user = await _userService.GetUserById(id);
+            var user = await _userRepository.GetUserById(id);
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             if (user == null)
             {
@@ -272,7 +272,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> EditUserProfile()
         {
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
-            var user = await _userService.GetUserById(curUserId);
+            var user = await _userRepository.GetUserById(curUserId);
             if (user == null)
             {
                 return View("Error");
@@ -297,7 +297,7 @@ namespace CarRentwithDB.Controllers
                 ModelState.AddModelError("", "Niepowodzenie w edycji profilu");
                 return View("EditUserProfile", editUserProfile);
             }
-            var user = await _userService.GetIdByNoTracking(editUserProfile.Id);
+            var user = await _userRepository.GetIdByNoTracking(editUserProfile.Id);
 
             if (user == null)
             {
@@ -314,7 +314,7 @@ namespace CarRentwithDB.Controllers
 
             if (!string.IsNullOrEmpty(editUserProfile.CurrentPassword) && !string.IsNullOrEmpty(editUserProfile.NewPassword) && !string.IsNullOrEmpty(editUserProfile.ConfirmNewPassword))
             {
-                var passwordCheck = await _userService.VerifyPasswordAsync(user, editUserProfile.CurrentPassword);
+                var passwordCheck = await _userRepository.VerifyPasswordAsync(user, editUserProfile.CurrentPassword);
                 if (!passwordCheck)
                 {
                     ModelState.AddModelError("", "Aktualne hasło jest nieprawidłowe.");
@@ -327,7 +327,7 @@ namespace CarRentwithDB.Controllers
                     return View("EditUserProfile", editUserProfile);
                 }
 
-                var passwordUpdateResult = await _userService.UpdatePasswordAsync(user, editUserProfile.NewPassword);
+                var passwordUpdateResult = await _userRepository.UpdatePasswordAsync(user, editUserProfile.NewPassword);
                 if (!passwordUpdateResult)
                 {
                     ModelState.AddModelError("", "Nie udało się zaktualizować hasła.");
@@ -335,7 +335,7 @@ namespace CarRentwithDB.Controllers
                 }
             }
 
-            await _userService.UpdateUser(user);
+            await _userRepository.UpdateUser(user);
 
             TempData["Success"] = "Profil został zaktualizowany.";
             return RedirectToAction("Index", "Car");

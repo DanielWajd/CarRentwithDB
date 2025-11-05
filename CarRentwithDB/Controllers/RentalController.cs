@@ -8,13 +8,13 @@ namespace CarRentwithDB.Controllers
 {
     public class RentalController : Controller
     {
-        private readonly IRentalRepository _rentalService;
-        private readonly ICarRepository _carService;
+        private readonly IRentalRepository _rentalRepository;
+        private readonly ICarRepository _carRepository;
         public readonly IHttpContextAccessor _contextAccessor;
-        public RentalController(IRentalRepository rentalService, ICarRepository carService, IHttpContextAccessor contextAccessor)
+        public RentalController(IRentalRepository rentalRepository, ICarRepository carRepository, IHttpContextAccessor contextAccessor)
         {
-            _rentalService = rentalService;
-            _carService = carService;
+            _rentalRepository = rentalRepository;
+            _carRepository = carRepository;
             _contextAccessor = contextAccessor;
         }
         public async Task<IActionResult> Index(string plate, string name, DateTime? startDate, DateTime? endDate)
@@ -24,8 +24,8 @@ namespace CarRentwithDB.Controllers
                 return View("Error");
             }
             //var rentals = await _rentalService.GetAllRentals();
-            var currentRentals = await _rentalService.GetCurrentRentals();
-            var rentalsFilter = await _rentalService.GetFilteredRentals(plate, name, startDate, endDate);
+            var currentRentals = await _rentalRepository.GetCurrentRentals();
+            var rentalsFilter = await _rentalRepository.GetFilteredRentals(plate, name, startDate, endDate);
 
             var currentRentalsViewModel = currentRentals.Select(rental => new AllRentalsViewModel
             {
@@ -67,7 +67,7 @@ namespace CarRentwithDB.Controllers
                 return View("Error");
             }
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
-            var car = await _carService.GetByIdAsync(carId);
+            var car = await _carRepository.GetByIdAsync(carId);
             if (car == null)
             {
                 return NotFound();
@@ -92,7 +92,7 @@ namespace CarRentwithDB.Controllers
                 return View(rentalViewModel);
             }
 
-            var car = await _carService.GetByIdAsync(rentalViewModel.CarId);
+            var car = await _carRepository.GetByIdAsync(rentalViewModel.CarId);
             if (car == null)
             {
                 return View(rentalViewModel);
@@ -121,26 +121,26 @@ namespace CarRentwithDB.Controllers
                 AppUserId = rentalViewModel.AppUserId,
                 Price = rentalViewModel.Price
             };
-            await _rentalService.CreateRental(rent);
-            await _carService.UpdateCarAvailability(rentalViewModel.CarId, false);
+            await _rentalRepository.CreateRental(rent);
+            await _carRepository.UpdateCarAvailability(rentalViewModel.CarId, false);
             return RedirectToAction("UserRentals","DetailsBoard");
         }
 
         [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
-            var rental = await _rentalService.GetByIdAsync(id);
+            var rental = await _rentalRepository.GetByIdAsync(id);
             if (rental == null)
             {
                 return NotFound();
             }
             rental.isCanceled = true;
-            await _rentalService.Update(rental);
+            await _rentalRepository.Update(rental);
 
             //Zmianiam odrazu status auta na dostepny
-            var car = await _carService.GetByIdAsync(rental.CarId);
+            var car = await _carRepository.GetByIdAsync(rental.CarId);
             car.IsAvailable = true;
-            await _carService.Update(car);
+            await _carRepository.Update(car);
             return RedirectToAction("Index", "Rental");
         }
     }
