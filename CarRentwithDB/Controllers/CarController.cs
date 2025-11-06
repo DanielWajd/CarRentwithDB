@@ -3,6 +3,7 @@ using CarRentwithDB.Helpers;
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -13,11 +14,11 @@ namespace CarRentwithDB.Controllers
     public class CarController : Controller
     {
         private readonly ICarRepository _carRepository;
-        private readonly IHttpContextAccessor _contextAccessor;
-        public CarController(ICarRepository carRepository, IHttpContextAccessor contextAccessor)
+        private readonly UserManager<AppUser> _userManager;
+        public CarController(ICarRepository carRepository, UserManager<AppUser> userManager)
         {
             _carRepository = carRepository;
-            _contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index(int? page, string city, string type, string makeModel, string sortOrder)
         {
@@ -103,7 +104,7 @@ namespace CarRentwithDB.Controllers
             {
                 return View("Error");
             }
-            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            string curUserId = _userManager.GetUserId(User);
             var createCarViewModel = new CreateCarViewModel { AppUserId = curUserId };
             return View(createCarViewModel);
         }

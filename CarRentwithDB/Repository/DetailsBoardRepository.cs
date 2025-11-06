@@ -7,28 +7,24 @@ namespace CarRentwithDB.Repository
     public class DetailsBoardRepository : IDetailsBoardRepository
     {
         private readonly CarRentDBContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DetailsBoardRepository(CarRentDBContext context, IHttpContextAccessor httpContextAccessor)
+        public DetailsBoardRepository(CarRentDBContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
         //Created cars by employee
-        public async Task<List<Car>> GetAllCreatedCars()
+        public async Task<List<Car>> GetAllCreatedCars(string userId)
         {
-            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-            var userCars = _context.Cars.Where(c => c.AppUser.Id == curUser);
+            var userCars = _context.Cars.Where(c => c.AppUser.Id == userId);
             return await userCars.ToListAsync();
         }
         //Customer rentals
-        public async Task<List<Rental>> GetAllUserRentals()
+        public async Task<List<Rental>> GetAllUserRentals(string userId)
         {
-            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
 
             var userRentals = await _context.Rental.Where(r=>!r.isCanceled)
                 .Include(r => r.Car) 
-                .Where(r => r.AppUserId == curUser)
+                .Where(r => r.AppUserId == userId)
                 .ToListAsync();
 
             return userRentals;

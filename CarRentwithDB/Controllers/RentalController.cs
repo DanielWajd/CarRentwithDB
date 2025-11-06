@@ -2,6 +2,7 @@
 using CarRentwithDB.Interfaces;
 using CarRentwithDB.Models;
 using CarRentwithDB.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentwithDB.Controllers
@@ -10,12 +11,12 @@ namespace CarRentwithDB.Controllers
     {
         private readonly IRentalRepository _rentalRepository;
         private readonly ICarRepository _carRepository;
-        public readonly IHttpContextAccessor _contextAccessor;
-        public RentalController(IRentalRepository rentalRepository, ICarRepository carRepository, IHttpContextAccessor contextAccessor)
+        private readonly UserManager<AppUser> _userManager;
+        public RentalController(IRentalRepository rentalRepository, ICarRepository carRepository, UserManager<AppUser> userManager)
         {
             _rentalRepository = rentalRepository;
             _carRepository = carRepository;
-            _contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index(string plate, string name, DateTime? startDate, DateTime? endDate)
         {
@@ -61,11 +62,11 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> Create(int carId)
         {
-            if (!_contextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            if(!User.Identity.IsAuthenticated)
             {
                 return View("Error");
             }
-            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            string curUserId = _userManager.GetUserId(User);
             var car = await _carRepository.GetByIdAsync(carId);
             if (car == null)
             {

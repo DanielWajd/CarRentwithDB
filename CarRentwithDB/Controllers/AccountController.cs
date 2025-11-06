@@ -13,14 +13,12 @@ namespace CarRentwithDB.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IUserRepository _userRepository;
-        private readonly IHttpContextAccessor _contextAccessor;
 
-        public AccountController(IUserRepository userRepository, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor,
+        public AccountController(IUserRepository userRepository, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             CarRentDBContext context)
         {
             _userRepository = userRepository;
             _userManager = userManager;
-            _contextAccessor = httpContextAccessor;
             _signInManager = signInManager;
         }
         //Get
@@ -244,7 +242,7 @@ namespace CarRentwithDB.Controllers
         public async Task<IActionResult> Details(string id)
         {
             var user = await _userRepository.GetUserById(id);
-            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            string curUserId = _userManager.GetUserId(User);
             if (user == null)
             {
                 return NotFound();
@@ -271,7 +269,7 @@ namespace CarRentwithDB.Controllers
         }
         public async Task<IActionResult> EditUserProfile()
         {
-            var curUserId = _contextAccessor.HttpContext.User.GetUserId();
+            string curUserId = _userManager.GetUserId(User);
             var user = await _userRepository.GetUserById(curUserId);
             if (user == null)
             {

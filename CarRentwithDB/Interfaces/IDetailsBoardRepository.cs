@@ -4,7 +4,7 @@ namespace CarRentwithDB.Interfaces
 {
     public interface IDetailsBoardRepository
     {
-        Task<List<Car>> GetAllCreatedCars();
-        Task<List<Rental>> GetAllUserRentals();
+        Task<List<Car>> GetAllCreatedCars(string userId);
+        Task<List<Rental>> GetAllUserRentals(string userId);
     }
 }
