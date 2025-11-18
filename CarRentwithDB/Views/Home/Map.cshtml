@@ -69,35 +69,24 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // // Warszawa
-    // var marker = L.marker([52.237049, 21.017532]).addTo(map).openPopup();
-
-    // // Rzeszów
-    // var marker = L.marker([50.041187, 21.999120]).addTo(map).openPopup();
-
-    // // Wrocław
-    // var marker = L.marker([51.107883, 17.038538]).addTo(map).openPopup();
-
-    // // Lublin
-    // var marker = L.marker([51.246452, 22.568445]).addTo(map).openPopup();
     const cityList = @Html.Raw(Json.Serialize(Model.Cities));
     const cityCoordinates = {
-        "Warszawa": [52.237049, 21.017532],
-        "Rzeszów": [50.041187, 21.999120],
-        "Wrocław": [51.107883, 17.038538],
-        "Lublin": [51.246452, 22.568445],
-        "Kraków": [50.072620, 19.932500],
-        "Gdańsk": [54.352025, 18.646638],
-        "Poznań": [52.408418, 16.934318],
-        "Katowice": [50.264891, 19.023781],
-        "Łódź": [51.759248, 19.455983],
-        "Szczecin": [53.428543, 14.552812],
-        "Bydgoszcz": [53.123480, 18.008438],
-        "Olsztyn": [53.778422, 20.480119],
-        "Opole": [50.675106, 17.921297],
-        "Zielona Góra": [51.935524, 15.506186],
-        "Kielce": [50.866077, 20.628569],
-        "Torun": [53.013790, 18.598443]
+        "Warszawa": [52.22826, 21.01334],
+        "Rzeszów": [50.04115, 21.98980],
+        "Wrocław": [51.10823, 17.03847],
+        "Lublin": [51.24933, 22.57808],
+        "Kraków": [50.06354, 19.93955],
+        "Gdańsk": [54.35205, 18.64516],
+        "Poznań": [52.40692, 16.93866],
+        "Katowice": [50.26413, 19.02583],
+        "Łódź": [51.75855, 19.45774],
+        "Szczecin": [53.42806, 14.53529],
+        "Bydgoszcz": [53.12331, 18.00679],
+        "Olsztyn": [53.77936, 20.47961],
+        "Opole": [50.66825, 17.92482],
+        "Zielona Góra": [51.93737, 15.50920],
+        "Kielce": [50.86629, 20.62758],
+        "Torun": [53.01466, 18.59801]
     };
     cityList.forEach(city => {
         const coords = cityCoordinates[city];
@@ -107,8 +96,3 @@
     });
 </script>
 
-         @* var map = L.map('map').setView([52.0, 19.0], 6);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map); *@
